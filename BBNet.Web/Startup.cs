@@ -18,7 +18,7 @@ namespace BBNet.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<BBNetDbContext>(
-                options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<BBNetDbContext>()
