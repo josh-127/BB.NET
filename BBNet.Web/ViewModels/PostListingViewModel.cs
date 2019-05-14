@@ -1,4 +1,5 @@
 ﻿using System;
+using BBNet.Data;
 
 namespace BBNet.Web.ViewModels
 {
@@ -11,5 +12,17 @@ namespace BBNet.Web.ViewModels
         public string Body { get; set; }
 
         public DateTime Created { get; set; }
+    }
+
+    public static class PostExtensions
+    {
+        public static PostListingViewModel ToPostListing(this Post post)
+            => new PostListingViewModel
+            {
+                Id = post.Id,
+                Title = post.Title,
+                Body = post.Body,
+                Created = post.Created
+            };
     }
 }

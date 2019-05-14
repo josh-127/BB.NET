@@ -25,13 +25,7 @@ namespace BBNet.Web.Controllers
             var posts = postService.GetPostsByTopicId(id);
 
             var postListings = from p in posts
-                               select new PostListingViewModel
-                               {
-                                   Id = p.Id,
-                                   Title = p.Title,
-                                   Body = p.Body,
-                                   Created = p.Created
-                               };
+                               select p.ToPostListing();
 
             var viewModel = new TopicIndexViewModel
             {
