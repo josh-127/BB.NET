@@ -10,6 +10,6 @@ namespace BBNet.Data
 
         IEnumerable<Topic> GetTopicsByForumId(int forumId);
 
-        void AddTopic(Topic topic);
+        void AddTopic(Topic topic, Post openingPost, Forum forum);
     }
 }

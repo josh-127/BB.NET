@@ -21,9 +21,13 @@ namespace BBNet.Data
         public IEnumerable<Topic> GetTopicsByForumId(int forumId)
             => context.Topics.Where(t => t.Forum.Id == forumId);
 
-        public void AddTopic(Topic topic)
+        public void AddTopic(Topic topic, Post openingPost, Forum forum)
         {
+            topic.Forum = forum;
+            openingPost.Topic = topic;
+
             context.Topics.Add(topic);
+            context.Posts.Add(openingPost);
             context.SaveChanges();
         }
     }
