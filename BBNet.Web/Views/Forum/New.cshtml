@@ -1,0 +1,16 @@
+﻿@model ForumNewViewModel
+
+<h1>New Forum</h1>
+
+<form asp-controller="Forum" asp-action="New" method="post">
+    <label asp-for="Name"></label>
+    <input asp-for="Name" />
+    <br />
+    <label asp-for="Description"></label>
+    <input asp-for="Description" />
+    <br />
+    <label asp-for="ImageUrl"></label>
+    <input asp-for="ImageUrl" />
+    <br />
+    <button type="submit">Submit</button>
+</form>

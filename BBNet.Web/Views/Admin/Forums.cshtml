@@ -2,6 +2,12 @@
 
 <h1>Forums | Admin Control Panel</h1>
 
+<div>
+    <a asp-controller="Forum" asp-action="New">
+        Add Forum
+    </a>
+</div>
+
 <table>
     <tbody>
         @foreach (var f in Model.Forums)

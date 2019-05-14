@@ -33,5 +33,29 @@ namespace BBNet.Web.Controllers
 
             return View(viewModel);
         }
+
+        [HttpGet]
+        public IActionResult New()
+        {
+            return View(new ForumNewViewModel());
+        }
+
+        [HttpPost]
+        [ActionName("New")]
+        public IActionResult NewSubmission(ForumNewViewModel submission)
+        {
+            var forum = BuildForum(submission);
+            forumService.AddForum(forum);
+
+            return RedirectToAction("Index", "Forum", new { id = forum.Id });
+        }
+
+        private Forum BuildForum(ForumNewViewModel submission)
+            => new Forum
+        {
+            Name = submission.Name,
+            Description = submission.Description,
+            ImageUrl = submission.ImageUrl
+        };
     }
 }
