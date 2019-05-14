@@ -15,6 +15,6 @@ namespace BBNet.Data
 
         public virtual Forum Forum { get; set; }
 
-        public virtual IEnumerable<Post> Posts { get; set; }
+        public virtual IList<Post> Posts { get; set; }
     }
 }

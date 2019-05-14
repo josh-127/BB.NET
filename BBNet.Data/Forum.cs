@@ -15,6 +15,6 @@ namespace BBNet.Data
 
         public DateTime Created { get; set; }
 
-        public virtual IEnumerable<Topic> Topics { get; set; }
+        public virtual IList<Topic> Topics { get; set; }
     }
 }
