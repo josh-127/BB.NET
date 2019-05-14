@@ -3,6 +3,12 @@
 <h1>@Model.Forum.Name</h1>
 <p>@Model.Forum.Description</p>
 
+<div>
+    <a asp-controller="Topic" asp-action="New" asp-route-id="@Model.Forum.Id">
+        New Topic
+    </a>
+</div>
+
 <table>
     <tbody>
         @foreach (var topic in Model.Topics)
