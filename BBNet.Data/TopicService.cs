@@ -23,11 +23,12 @@ namespace BBNet.Data
 
         public void AddTopic(Topic topic, Post openingPost, Forum forum)
         {
-            topic.Forum = forum;
             openingPost.Topic = topic;
+            topic.Forum = forum;
 
             context.Topics.Add(topic);
             context.Posts.Add(openingPost);
+
             context.SaveChanges();
         }
     }
