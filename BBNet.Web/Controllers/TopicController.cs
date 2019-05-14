@@ -1,8 +1,8 @@
-﻿using BBNet.Data;
+﻿using System;
+using System.Linq;
+using BBNet.Data;
 using BBNet.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Linq;
 
 namespace BBNet.Web.Controllers
 {
@@ -61,6 +61,33 @@ namespace BBNet.Web.Controllers
             return RedirectToAction("Index", "Topic", new { id = topic.Id });
         }
 
+        [HttpGet]
+        public IActionResult NewPost(int id)
+        {
+            var topic = topicService.GetTopicById(id);
+
+            return View(new TopicNewPostViewModel
+            {
+                TopicId = id,
+                Title = topic.Title,
+                Body = ""
+            });
+        }
+
+        [HttpPost]
+        public IActionResult NewPost(TopicNewPostViewModel submission)
+        {
+            var now = DateTime.Now;
+
+            var topicId = submission.TopicId;
+            var topic = topicService.GetTopicById(topicId);
+            var post = BuildPost(submission, now);
+
+            postService.AddPost(post, topic);
+
+            return RedirectToAction("Index", "Topic", new { id = topicId });
+        }
+
         private Topic BuildTopic(TopicNewViewModel submission, DateTime created)
             => new Topic
             {
@@ -74,6 +101,13 @@ namespace BBNet.Web.Controllers
             {
                 Title = submission.Title,
                 Body = submission.OpeningPostBody
+            };
+
+        private Post BuildPost(TopicNewPostViewModel submission, DateTime created)
+            => new Post
+            {
+                Title = submission.Title,
+                Body = submission.Body
             };
     }
 }
