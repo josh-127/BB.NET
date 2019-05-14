@@ -2,6 +2,7 @@
 using BBNet.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 
 namespace BBNet.Web.Controllers
 {
@@ -9,13 +10,35 @@ namespace BBNet.Web.Controllers
     {
         private readonly IForumService forumService;
         private readonly ITopicService topicService;
+        private readonly IPostService postService;
 
-        public TopicController(IForumService forumService, ITopicService topicService)
-            => (this.forumService, this.topicService) = (forumService, topicService);
-
-        public IActionResult Index()
+        public TopicController(IForumService forumService, ITopicService topicService, IPostService postService)
         {
-            return View();
+            this.forumService = forumService;
+            this.topicService = topicService;
+            this.postService = postService;
+        }
+
+        public IActionResult Index(int id)
+        {
+            var topic = topicService.GetTopicById(id);
+            var posts = postService.GetPostsByTopicId(id);
+
+            var postListings = from p in posts
+                               select new PostListingViewModel
+                               {
+                                   Id = p.Id,
+                                   Title = p.Title,
+                                   Body = p.Body
+                               };
+
+            var viewModel = new TopicIndexViewModel
+            {
+                Topic = topic.ToTopicListing(),
+                Posts = postListings
+            };
+
+            return View(viewModel);
         }
 
         [HttpGet]

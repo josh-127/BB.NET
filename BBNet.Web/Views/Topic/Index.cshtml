@@ -1,2 +1,25 @@
-﻿
-<h1>Topic</h1>
+﻿@model TopicIndexViewModel
+
+<h1>@Model.Topic.Title</h1>
+
+<div>
+    <a asp-controller="Post" asp-action="New" asp-route-id="@Model.Topic.Id">
+        New Post
+    </a>
+</div>
+
+<table>
+    <tbody>
+        @foreach (var p in Model.Posts)
+        {
+            <tr>
+                <td>
+                    @p.Title
+                </td>
+                <td>
+                    @p.Body
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

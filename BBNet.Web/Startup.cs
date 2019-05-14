@@ -26,6 +26,7 @@ namespace BBNet.Web
 
             services.AddScoped<IForumService, ForumService>();
             services.AddScoped<ITopicService, TopicService>();
+            services.AddScoped<IPostService, PostService>();
 
             services.AddMvc();
         }
