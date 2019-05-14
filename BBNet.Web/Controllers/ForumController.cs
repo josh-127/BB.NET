@@ -20,22 +20,10 @@ namespace BBNet.Web.Controllers
             var forum = forumService.GetForumById(id);
             var topics = topicService.GetTopicsByForumId(id);
 
-            var forumListing = new ForumListingViewModel
-            {
-                Id = forum.Id,
-                Name = forum.Name,
-                Description = forum.Description,
-                ImageUrl = forum.ImageUrl
-            };
+            var forumListing = forum.ToForumListing();
 
             var topicListings = from t in topics
-                                select new TopicListingViewModel
-                                {
-                                    Id = t.Id,
-                                    Title = t.Title,
-                                    Description = t.Description,
-                                    Created = t.Created
-                                };
+                                select t.ToTopicListing();
 
             var viewModel = new ForumIndexViewModel
             {

@@ -17,13 +17,7 @@ namespace BBNet.Web.Controllers
             var forums = forumService.GetAllForums();
 
             var forumListings = from f in forums
-                                select new ForumListingViewModel
-                                {
-                                    Id = f.Id,
-                                    Name = f.Name,
-                                    Description = f.Description,
-                                    ImageUrl = f.ImageUrl,
-                                };
+                                select f.ToForumListing();
 
             var viewModel = new HomeIndexViewModel
             {

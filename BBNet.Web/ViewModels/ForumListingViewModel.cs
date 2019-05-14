@@ -1,4 +1,5 @@
-﻿
+﻿using BBNet.Data;
+
 namespace BBNet.Web.ViewModels
 {
     public class ForumListingViewModel
@@ -10,5 +11,17 @@ namespace BBNet.Web.ViewModels
         public string Description { get; set; }
 
         public string ImageUrl { get; set; }
+    }
+
+    public static class ForumExtensions
+    {
+        public static ForumListingViewModel ToForumListing(this Forum forum)
+            => new ForumListingViewModel
+            {
+                Id = forum.Id,
+                Name = forum.Name,
+                Description = forum.Description,
+                ImageUrl = forum.ImageUrl
+            };
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using BBNet.Data;
 
 namespace BBNet.Web.ViewModels
 {
@@ -11,5 +12,17 @@ namespace BBNet.Web.ViewModels
         public string Description { get; set; }
 
         public DateTime Created { get; set; }
+    }
+
+    public static class TopicExtensions
+    {
+        public static TopicListingViewModel ToTopicListing(this Topic topic)
+            => new TopicListingViewModel
+            {
+                Id = topic.Id,
+                Title = topic.Title,
+                Description = topic.Description,
+                Created = topic.Created
+            };
     }
 }
