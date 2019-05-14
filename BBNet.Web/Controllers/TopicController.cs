@@ -29,7 +29,8 @@ namespace BBNet.Web.Controllers
                                {
                                    Id = p.Id,
                                    Title = p.Title,
-                                   Body = p.Body
+                                   Body = p.Body,
+                                   Created = p.Created
                                };
 
             var viewModel = new TopicIndexViewModel
@@ -100,14 +101,16 @@ namespace BBNet.Web.Controllers
             => new Post
             {
                 Title = submission.Title,
-                Body = submission.OpeningPostBody
+                Body = submission.OpeningPostBody,
+                Created = created
             };
 
         private Post BuildPost(TopicNewPostViewModel submission, DateTime created)
             => new Post
             {
                 Title = submission.Title,
-                Body = submission.Body
+                Body = submission.Body,
+                Created = created
             };
     }
 }
