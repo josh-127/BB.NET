@@ -25,6 +25,7 @@ namespace BBNet.Web
                 .AddDefaultTokenProviders();
 
             services.AddScoped<IForumService, ForumService>();
+            services.AddScoped<ITopicService, TopicService>();
 
             services.AddMvc();
         }
