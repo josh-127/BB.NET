@@ -7,6 +7,16 @@
 </head>
 <body>
     <div>
+        <ul>
+            <li>
+                <a asp-controller="Home" asp-action="Index">Home</a>
+            </li>
+            <li>
+                <a asp-controller="Admin" asp-action="Index">Admin Control Panel</a>
+            </li>
+        </ul>
+    </div>
+    <div>
         @RenderBody()
     </div>
 </body>
