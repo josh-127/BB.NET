@@ -1,0 +1,21 @@
+﻿@model AdminForumsViewModel
+
+<h1>Forums | Admin Control Panel</h1>
+
+<table>
+    <tbody>
+        @foreach (var f in Model.Forums)
+        {
+            <tr>
+                <td>
+                    <a asp-controller="Forum" asp-action="Index" asp-route-id="@f.Id">
+                        @f.Name
+                    </a>
+                </td>
+                <td>
+                    @f.Description
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
