@@ -8,11 +8,11 @@ namespace BBNet.Web.Controllers
 {
     public class TopicController : Controller
     {
-        private readonly IForumService forumService;
-        private readonly ITopicService topicService;
-        private readonly IPostService postService;
+        private readonly ForumService forumService;
+        private readonly TopicService topicService;
+        private readonly PostService postService;
 
-        public TopicController(IForumService forumService, ITopicService topicService, IPostService postService)
+        public TopicController(ForumService forumService, TopicService topicService, PostService postService)
         {
             this.forumService = forumService;
             this.topicService = topicService;

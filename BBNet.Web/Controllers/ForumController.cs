@@ -9,10 +9,10 @@ namespace BBNet.Web.Controllers
 {
     public class ForumController : Controller
     {
-        private readonly IForumService forumService;
-        private readonly ITopicService topicService;
+        private readonly ForumService forumService;
+        private readonly TopicService topicService;
 
-        public ForumController(IForumService forumService, ITopicService topicService)
+        public ForumController(ForumService forumService, TopicService topicService)
             => (this.forumService, this.topicService) = (forumService, topicService);
 
         public IActionResult Index(int id)

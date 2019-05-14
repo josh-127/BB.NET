@@ -7,9 +7,9 @@ namespace BBNet.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IForumService forumService;
+        private readonly ForumService forumService;
 
-        public HomeController(IForumService forumService)
+        public HomeController(ForumService forumService)
             => this.forumService = forumService;
 
         public IActionResult Index()

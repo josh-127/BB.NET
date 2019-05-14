@@ -24,9 +24,9 @@ namespace BBNet.Web
                 .AddEntityFrameworkStores<BBNetDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddScoped<IForumService, ForumService>();
-            services.AddScoped<ITopicService, TopicService>();
-            services.AddScoped<IPostService, PostService>();
+            services.AddScoped<ForumService>();
+            services.AddScoped<TopicService>();
+            services.AddScoped<PostService>();
 
             services.AddMvc();
         }

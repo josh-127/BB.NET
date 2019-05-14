@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace BBNet.Data
 {
-    public class ForumService : IForumService
+    public class ForumService
     {
         private readonly BBNetDbContext context;
 

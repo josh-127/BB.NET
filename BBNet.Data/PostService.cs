@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace BBNet.Data
 {
-    public class PostService : IPostService
+    public class PostService
     {
         private readonly BBNetDbContext context;
 
