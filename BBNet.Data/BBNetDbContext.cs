@@ -11,7 +11,7 @@ namespace BBNet.Data
 
         public DbSet<Forum> Forums { get; set; }
 
-        public DbSet<Topic> Topic { get; set; }
+        public DbSet<Topic> Topics { get; set; }
 
         public DbSet<Post> Posts { get; set; }
     }
