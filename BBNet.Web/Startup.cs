@@ -34,6 +34,7 @@ namespace BBNet.Web
                 options.Password.RequireUppercase = false;
             });
 
+            services.AddScoped<CommunityService>();
             services.AddScoped<ForumService>();
             services.AddScoped<TopicService>();
             services.AddScoped<PostService>();
