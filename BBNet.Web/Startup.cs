@@ -28,7 +28,8 @@ namespace BBNet.Web
             services.AddScoped<TopicService>();
             services.AddScoped<PostService>();
 
-            services.AddMvc();
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
