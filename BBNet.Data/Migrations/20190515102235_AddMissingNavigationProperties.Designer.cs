@@ -4,14 +4,16 @@ using BBNet.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BBNet.Data.Migrations
 {
     [DbContext(typeof(BBNetDbContext))]
-    partial class BBNetDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190515102235_AddMissingNavigationProperties")]
+    partial class AddMissingNavigationProperties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
