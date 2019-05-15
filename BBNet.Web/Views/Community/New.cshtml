@@ -1,0 +1,10 @@
+﻿@model CommunityNewViewModel
+
+<h1>New Community</h1>
+
+<form asp-controller="Community" asp-action="New" method="post">
+    <label asp-for="Name"></label>
+    <input asp-for="Name" />
+    <br />
+    <button type="submit">Submit</button>
+</form>
