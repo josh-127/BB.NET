@@ -2,7 +2,7 @@
 
 namespace BBNet.Data
 {
-    public class User : IdentityUser
+    public class BBNetUser : IdentityUser
     {
     }
 }
