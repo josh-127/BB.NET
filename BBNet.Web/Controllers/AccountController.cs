@@ -80,6 +80,8 @@ namespace BBNet.Web.Controllers
             {
                 foreach (var error in result.Errors)
                     ModelState.AddModelError(error.Code, error.Description);
+
+                return View(submission);
             }
 
             return RedirectToAction("Index", "Home");
