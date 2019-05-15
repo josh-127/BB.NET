@@ -9,6 +9,8 @@ namespace BBNet.Data
             base(options)
         { }
 
+        public DbSet<Community> Communities { get; set; }
+
         public DbSet<Forum> Forums { get; set; }
 
         public DbSet<Topic> Topics { get; set; }
