@@ -4,19 +4,13 @@
 
 <table>
     <tbody>
-        @foreach (var f in Model.Forums)
+        @foreach (var c in Model.Communities)
         {
             <tr>
                 <td>
-                    <a asp-controller="Forum" asp-action="Index" asp-route-id="@f.Id">
-                        @f.Name
+                    <a asp-controller="Community" asp-action="Index" asp-route-id="@c.Id">
+                        @c.Name
                     </a>
-                </td>
-                <td>
-                    @f.Description
-                </td>
-                <td>
-                    <img src="@f.ImageUrl" />
                 </td>
             </tr>
         }

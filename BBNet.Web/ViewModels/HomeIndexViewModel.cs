@@ -4,6 +4,6 @@ namespace BBNet.Web.ViewModels
 {
     public class HomeIndexViewModel
     {
-        public IEnumerable<ForumListingViewModel> Forums { get; set; }
+        public IEnumerable<CommunityListingViewModel> Communities { get; set; }
     }
 }

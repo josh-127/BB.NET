@@ -1,27 +1,27 @@
-﻿using BBNet.Data;
+﻿using System.Linq;
+using BBNet.Data;
 using BBNet.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 
 namespace BBNet.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ForumService forumService;
+        private readonly CommunityService communityService;
 
-        public HomeController(ForumService forumService)
-            => this.forumService = forumService;
+        public HomeController(CommunityService communityService)
+            => this.communityService = communityService;
 
         public IActionResult Index()
         {
-            var forums = forumService.GetAllForums();
+            var communities = communityService.GetAllCommunities();
 
-            var forumListings = from f in forums
-                                select f.ToForumListing();
+            var communityListings = from c in communities
+                                    select c.ToCommunityListing();
 
             var viewModel = new HomeIndexViewModel
             {
-                Forums = forumListings
+                Communities = communityListings
             };
 
             return View(viewModel);
