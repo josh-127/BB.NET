@@ -1,6 +1,6 @@
 ﻿using BBNet.Data;
 
-namespace BBNet.Web.ViewModels
+namespace BBNet.Web.ViewModels.Shared
 {
     public class CommunityListingViewModel
     {

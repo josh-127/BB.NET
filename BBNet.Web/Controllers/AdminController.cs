@@ -1,10 +1,8 @@
-﻿using BBNet.Data;
+﻿using System.Linq;
+using BBNet.Data;
 using BBNet.Web.ViewModels;
+using BBNet.Web.ViewModels.Shared;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BBNet.Web.Controllers
 {

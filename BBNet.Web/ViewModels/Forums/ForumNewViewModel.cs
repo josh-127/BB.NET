@@ -1,7 +1,6 @@
-﻿
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace BBNet.Web.ViewModels
+namespace BBNet.Web.ViewModels.Forums
 {
     public class ForumNewViewModel
     {

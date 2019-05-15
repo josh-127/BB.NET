@@ -1,5 +1,5 @@
 ﻿
-namespace BBNet.Web.ViewModels
+namespace BBNet.Web.ViewModels.Topics
 {
     public class TopicNewPostViewModel
     {

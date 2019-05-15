@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using BBNet.Data;
-using BBNet.Web.ViewModels;
+using BBNet.Web.ViewModels.Forums;
+using BBNet.Web.ViewModels.Shared;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BBNet.Web.Controllers
@@ -52,10 +51,10 @@ namespace BBNet.Web.Controllers
 
         private Forum BuildForum(ForumNewViewModel submission)
             => new Forum
-        {
-            Name = submission.Name,
-            Description = submission.Description,
-            ImageUrl = submission.ImageUrl
-        };
+            {
+                Name = submission.Name,
+                Description = submission.Description,
+                ImageUrl = submission.ImageUrl
+            };
     }
 }

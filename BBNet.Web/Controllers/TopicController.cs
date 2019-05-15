@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Linq;
 using BBNet.Data;
-using BBNet.Web.ViewModels;
+using BBNet.Web.ViewModels.Shared;
+using BBNet.Web.ViewModels.Topics;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BBNet.Web.Controllers

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using BBNet.Web.ViewModels.Shared;
 
-namespace BBNet.Web.ViewModels
+namespace BBNet.Web.ViewModels.Forums
 {
     public class ForumIndexViewModel
     {

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using BBNet.Data;
-using BBNet.Web.ViewModels;
+using BBNet.Web.ViewModels.Accounts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

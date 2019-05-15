@@ -1,5 +1,6 @@
 ﻿using BBNet.Data;
-using BBNet.Web.ViewModels;
+using BBNet.Web.ViewModels.Communities;
+using BBNet.Web.ViewModels.Shared;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 

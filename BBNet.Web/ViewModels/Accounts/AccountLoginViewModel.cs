@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BBNet.Web.ViewModels
+namespace BBNet.Web.ViewModels.Accounts
 {
     public class AccountLoginViewModel
     {
