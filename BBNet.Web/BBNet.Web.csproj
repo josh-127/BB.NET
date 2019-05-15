@@ -11,7 +11,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\BBNet.Data\BBNet.Data.csproj" />
+        <ProjectReference Include="..\BBNet.Data\BBNet.Data.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="wwwroot\" />
     </ItemGroup>
 
 </Project>
