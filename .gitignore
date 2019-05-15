@@ -1,6 +1,6 @@
 
-# Created by https://www.gitignore.io/api/linux,macos,csharp,windows,aspnetcore,visualstudio,visualstudiocode
-# Edit at https://www.gitignore.io/?templates=linux,macos,csharp,windows,aspnetcore,visualstudio,visualstudiocode
+# Created by https://www.gitignore.io/api/bower,linux,macos,csharp,windows,aspnetcore,visualstudio,visualstudiocode
+# Edit at https://www.gitignore.io/?templates=bower,linux,macos,csharp,windows,aspnetcore,visualstudio,visualstudiocode
 
 ### ASPNETCore ###
 ## Ignore Visual Studio temporary files, build results, and
@@ -271,6 +271,12 @@ __pycache__/
 
 # Cake - Uncomment if you are using it
 # tools/
+
+### Bower ###
+bower_components
+.bower-cache
+.bower-registry
+.bower-tmp
 
 ### Csharp ###
 ##
@@ -705,4 +711,4 @@ $RECYCLE.BIN/
 
 # Backup folder for Package Reference Convert tool in Visual Studio 2017
 
-# End of https://www.gitignore.io/api/linux,macos,csharp,windows,aspnetcore,visualstudio,visualstudiocode
+# End of https://www.gitignore.io/api/bower,linux,macos,csharp,windows,aspnetcore,visualstudio,visualstudiocode
