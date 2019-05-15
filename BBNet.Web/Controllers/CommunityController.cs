@@ -44,7 +44,8 @@ namespace BBNet.Web.Controllers
 
             var community = new Community
             {
-                Name = submission.Name
+                Name = submission.Name,
+                Description = submission.Description
             };
 
             communityService.AddCommunity(community);

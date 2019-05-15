@@ -8,6 +8,8 @@ namespace BBNet.Data
 
         public string Name { get; set; }
 
+        public string Description { get; set; }
+
         public virtual IList<Forum> Forums { get; set; }
 
         public virtual IList<BBNetUser> Users { get; set; }
