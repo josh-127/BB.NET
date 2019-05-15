@@ -13,6 +13,10 @@ namespace BBNet.Data
         public IEnumerable<Forum> GetAllForums()
             => context.Forums;
 
+        public IEnumerable<Forum> GetForumsByCommunityId(int communityId)
+            => context.Forums
+                .Where(f => f.Community.Id == communityId);
+
         public Forum GetForumById(int forumId)
             => context.Forums
                 .Where(f => f.Id == forumId)
