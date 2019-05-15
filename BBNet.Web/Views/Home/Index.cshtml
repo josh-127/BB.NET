@@ -1,18 +1,3 @@
 ﻿@model HomeIndexViewModel
 
 <h1>Home</h1>
-
-<table>
-    <tbody>
-        @foreach (var c in Model.Communities)
-        {
-            <tr>
-                <td>
-                    <a asp-controller="Community" asp-action="Index" asp-route-id="@c.Id">
-                        @c.Name
-                    </a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>

@@ -15,12 +15,17 @@ namespace BBNet.Web.Controllers
 
         public IActionResult Index()
         {
+            return View();
+        }
+
+        public IActionResult Community()
+        {
             var communities = communityService.GetAllCommunities();
 
             var communityListings = from c in communities
                                     select c.ToCommunityListing();
 
-            var viewModel = new HomeIndexViewModel
+            var viewModel = new HomeCommunityViewModel
             {
                 Communities = communityListings
             };
