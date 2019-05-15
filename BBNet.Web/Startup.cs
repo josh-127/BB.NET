@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,9 +22,17 @@ namespace BBNet.Web
             services.AddDbContext<BBNetDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<User, IdentityRole>()
+            services.AddIdentity<BBNetUser, IdentityRole>()
                 .AddEntityFrameworkStores<BBNetDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+            });
 
             services.AddScoped<ForumService>();
             services.AddScoped<TopicService>();
@@ -38,6 +48,7 @@ namespace BBNet.Web
                 app.UseDeveloperExceptionPage();
 
             app.UseStaticFiles();
+
             app.UseAuthentication();
 
             app.UseMvc(routes =>
