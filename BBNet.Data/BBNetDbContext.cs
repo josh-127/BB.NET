@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BBNet.Data
 {
-    public class BBNetDbContext : IdentityDbContext<BBNetUser>
+    public class BBNetDbContext : IdentityDbContext<Member>
     {
         public BBNetDbContext(DbContextOptions<BBNetDbContext> options) :
             base(options)

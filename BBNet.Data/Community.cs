@@ -12,6 +12,6 @@ namespace BBNet.Data
 
         public virtual IList<Forum> Forums { get; set; }
 
-        public virtual IList<BBNetUser> Users { get; set; }
+        public virtual IList<Member> Members { get; set; }
     }
 }

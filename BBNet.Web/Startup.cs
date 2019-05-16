@@ -22,7 +22,7 @@ namespace BBNet.Web
             services.AddDbContext<BBNetDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<BBNetUser, IdentityRole>()
+            services.AddIdentity<Member, IdentityRole>()
                 .AddEntityFrameworkStores<BBNetDbContext>()
                 .AddDefaultTokenProviders();
 

@@ -10,10 +10,10 @@ namespace BBNet.Web.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private readonly UserManager<BBNetUser> userManager;
-        private readonly SignInManager<BBNetUser> signInManager;
+        private readonly UserManager<Member> userManager;
+        private readonly SignInManager<Member> signInManager;
 
-        public AccountController(UserManager<BBNetUser> userManager, SignInManager<BBNetUser> signInManager)
+        public AccountController(UserManager<Member> userManager, SignInManager<Member> signInManager)
             => (this.userManager, this.signInManager) = (userManager, signInManager);
 
         [HttpGet]
@@ -68,7 +68,7 @@ namespace BBNet.Web.Controllers
             if (!ModelState.IsValid)
                 return View(submission);
 
-            var newUser = new BBNetUser
+            var newUser = new Member
             {
                 Email = submission.Email,
                 UserName = submission.UserName

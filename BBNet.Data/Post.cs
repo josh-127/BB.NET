@@ -14,6 +14,6 @@ namespace BBNet.Data
 
         public virtual Topic Topic { get; set; }
 
-        public virtual BBNetUser Author { get; set; }
+        public virtual Member Author { get; set; }
     }
 }
