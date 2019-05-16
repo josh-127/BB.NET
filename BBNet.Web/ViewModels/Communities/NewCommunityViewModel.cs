@@ -2,7 +2,7 @@
 
 namespace BBNet.Web.ViewModels.Communities
 {
-    public class CommunityNewViewModel
+    public class NewCommunityViewModel
     {
         [Required]
         public string Name { get; set; }

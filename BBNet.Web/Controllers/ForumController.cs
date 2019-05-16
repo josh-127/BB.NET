@@ -42,12 +42,12 @@ namespace BBNet.Web.Controllers
         [HttpGet]
         public IActionResult New(int id)
         {
-            return View(new ForumNewViewModel { CommunityId = id });
+            return View(new NewForumViewModel { CommunityId = id });
         }
 
         [HttpPost]
         [ActionName("New")]
-        public IActionResult NewSubmission(ForumNewViewModel submission)
+        public IActionResult NewSubmission(NewForumViewModel submission)
         {
             var community = communityService.GetCommunityById(submission.CommunityId);
             var forum = BuildForum(submission);
@@ -56,7 +56,7 @@ namespace BBNet.Web.Controllers
             return RedirectToAction("Index", "Forum", new { id = forum.Id });
         }
 
-        private Forum BuildForum(ForumNewViewModel submission)
+        private Forum BuildForum(NewForumViewModel submission)
             => new Forum
             {
                 Name = submission.Name,

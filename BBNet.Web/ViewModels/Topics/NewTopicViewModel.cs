@@ -2,7 +2,7 @@
 
 namespace BBNet.Web.ViewModels.Topics
 {
-    public class TopicNewViewModel
+    public class NewTopicViewModel
     {
         public int ForumId { get; set; }
 

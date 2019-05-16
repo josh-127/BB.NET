@@ -35,13 +35,13 @@ namespace BBNet.Web.Controllers
         [Authorize]
         public IActionResult New()
         {
-            return View(new CommunityNewViewModel());
+            return View(new NewCommunityViewModel());
         }
 
         [HttpPost]
         [Authorize]
         [AutoValidateAntiforgeryToken]
-        public IActionResult New(CommunityNewViewModel submission)
+        public IActionResult New(NewCommunityViewModel submission)
         {
             if (!ModelState.IsValid)
                 return View(submission);

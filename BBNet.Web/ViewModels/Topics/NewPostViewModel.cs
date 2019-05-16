@@ -1,7 +1,7 @@
 ﻿
 namespace BBNet.Web.ViewModels.Topics
 {
-    public class TopicNewPostViewModel
+    public class NewPostViewModel
     {
         public int TopicId { get; set; }
 

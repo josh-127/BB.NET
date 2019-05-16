@@ -40,12 +40,12 @@ namespace BBNet.Web.Controllers
         [HttpGet]
         public IActionResult New(int id)
         {
-            return View(new TopicNewViewModel { ForumId = id });
+            return View(new NewTopicViewModel { ForumId = id });
         }
 
         [HttpPost]
         [ActionName("New")]
-        public IActionResult New(TopicNewViewModel submission)
+        public IActionResult New(NewTopicViewModel submission)
         {
             var now = DateTime.Now;
 
@@ -62,7 +62,7 @@ namespace BBNet.Web.Controllers
         {
             var topic = topicService.GetTopicById(id);
 
-            return View(new TopicNewPostViewModel
+            return View(new NewPostViewModel
             {
                 TopicId = id,
                 Title = topic.Title,
@@ -71,7 +71,7 @@ namespace BBNet.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult NewPost(TopicNewPostViewModel submission)
+        public IActionResult NewPost(NewPostViewModel submission)
         {
             var now = DateTime.Now;
 
@@ -84,7 +84,7 @@ namespace BBNet.Web.Controllers
             return RedirectToAction("Index", "Topic", new { id = topicId });
         }
 
-        private Topic BuildTopic(TopicNewViewModel submission, DateTime created)
+        private Topic BuildTopic(NewTopicViewModel submission, DateTime created)
             => new Topic
             {
                 Title = submission.Title,
@@ -92,7 +92,7 @@ namespace BBNet.Web.Controllers
                 Created = created
             };
 
-        private Post BuildOpeningPost(TopicNewViewModel submission, DateTime created)
+        private Post BuildOpeningPost(NewTopicViewModel submission, DateTime created)
             => new Post
             {
                 Title = submission.Title,
@@ -100,7 +100,7 @@ namespace BBNet.Web.Controllers
                 Created = created
             };
 
-        private Post BuildPost(TopicNewPostViewModel submission, DateTime created)
+        private Post BuildPost(NewPostViewModel submission, DateTime created)
             => new Post
             {
                 Title = submission.Title,
