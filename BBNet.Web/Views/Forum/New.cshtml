@@ -6,6 +6,8 @@
 <h1>New Forum</h1>
 
 <form asp-controller="Forum" asp-action="New" method="post">
+    <input asp-for="CommunityId" type="hidden" />
+
     <label asp-for="Name"></label>
     <input asp-for="Name" />
     <br />

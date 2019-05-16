@@ -8,11 +8,17 @@ namespace BBNet.Web.Controllers
 {
     public class ForumController : Controller
     {
+        private readonly CommunityService communityService;
         private readonly ForumService forumService;
         private readonly TopicService topicService;
 
-        public ForumController(ForumService forumService, TopicService topicService)
-            => (this.forumService, this.topicService) = (forumService, topicService);
+        public ForumController(
+            CommunityService communityService, ForumService forumService, TopicService topicService)
+        {
+            this.communityService = communityService;
+            this.forumService = forumService;
+            this.topicService = topicService;
+        }
 
         public IActionResult Index(int id)
         {
@@ -34,17 +40,18 @@ namespace BBNet.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult New()
+        public IActionResult New(int id)
         {
-            return View(new ForumNewViewModel());
+            return View(new ForumNewViewModel { CommunityId = id });
         }
 
         [HttpPost]
         [ActionName("New")]
         public IActionResult NewSubmission(ForumNewViewModel submission)
         {
+            var community = communityService.GetCommunityById(submission.CommunityId);
             var forum = BuildForum(submission);
-            forumService.AddForum(forum);
+            forumService.AddForum(forum, community);
 
             return RedirectToAction("Index", "Forum", new { id = forum.Id });
         }

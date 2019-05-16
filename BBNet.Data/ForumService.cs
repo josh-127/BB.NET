@@ -22,8 +22,10 @@ namespace BBNet.Data
                 .Where(f => f.Id == forumId)
                 .SingleOrDefault();
 
-        public void AddForum(Forum forum)
+        public void AddForum(Forum forum, Community community)
         {
+            forum.Community = community;
+
             context.Forums.Add(forum);
             context.SaveChanges();
         }

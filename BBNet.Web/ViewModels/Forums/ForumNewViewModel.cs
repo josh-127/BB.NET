@@ -4,6 +4,8 @@ namespace BBNet.Web.ViewModels.Forums
 {
     public class ForumNewViewModel
     {
+        public int CommunityId { get; set; }
+
         [Required]
         public string Name { get; set; }
 
