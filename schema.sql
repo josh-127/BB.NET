@@ -28,3 +28,42 @@ CREATE TABLE IF NOT EXISTS `Topic` (
     `Created`       TIMESTAMP       NOT NULL    DEFAULT CURRENT_TIMESTAMP,
     `ForumId`       INT             NOT NULL    REFERENCES `Forum`
 );
+
+DELIMITER $$
+CREATE PROCEDURE CreateCommunity(IN `name` VARCHAR(79), IN `description` VARCHAR(255))
+BEGIN
+    INSERT INTO `Community` (`Name`, `Description`) VALUES (`name`, `description`);
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE GetCommunityListings()
+BEGIN
+    SELECT `Id`, `Name`, `Description`, `Created` FROM `Community`;
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE CreateForum(
+    IN `name` VARCHAR(79),
+    IN `description` VARCHAR(255),
+    IN `imageUrl` VARCHAR(255),
+    IN `communityId` INT)
+BEGIN
+    INSERT INTO `Forum` (`Name`, `Description`, `ImageUrl`, `CommunityId`)
+        VALUES (`name`, `description`, `imageUrl`, `communityId`);
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE GetForumIndex(IN `communityId` INT)
+BEGIN
+    SELECT `Name`, `Description`
+        FROM `Community`
+        WHERE `Id` = `communityId`;
+
+    SELECT `Id`, `Name`, `Description`, `ImageUrl`
+        FROM `Forum`
+        WHERE `CommunityId` = `communityId`;
+END $$
+DELIMITER ;
