@@ -1,3 +1,5 @@
+*.mwb
+*.mwb.bak
 
 # Created by https://www.gitignore.io/api/bower,linux,macos,csharp,windows,aspnetcore,visualstudio,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=bower,linux,macos,csharp,windows,aspnetcore,visualstudio,visualstudiocode
