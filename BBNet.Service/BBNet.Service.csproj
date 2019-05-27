@@ -4,4 +4,9 @@
         <TargetFramework>netstandard2.0</TargetFramework>
     </PropertyGroup>
 
+    <ItemGroup>
+        <PackageReference Include="Tortuga.Chain.Core" Version="2.1.7009.31212" />
+        <PackageReference Include="Tortuga.Chain.MySql" Version="2.1.7009.31590" />
+    </ItemGroup>
+
 </Project>
