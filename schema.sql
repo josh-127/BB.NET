@@ -260,6 +260,18 @@ CREATE TABLE IF NOT EXISTS `forum_group_permission` (
         REFERENCES `forum_capability` (`forum_capability_id`)
 );
 
+CREATE TABLE IF NOT EXISTS `default_forum_group_permission` (
+    `group_id`              INT         NOT NULL,
+    `forum_capability_id`   VARCHAR(19) NOT NULL,
+    PRIMARY KEY (`group_id`, `forum_capability_id`),
+    CONSTRAINT `fk_default_forum_group_permission_group_id`
+        FOREIGN KEY (`group_id`)
+        REFERENCES `group` (`group_id`),
+    CONSTRAINT `fk_default_forum_group_permission_forum_capability_id`
+        FOREIGN KEY (`forum_capability_id`)
+        REFERENCES `forum_capability` (`forum_capability_id`)
+);
+
 CREATE TABLE IF NOT EXISTS `forum_user_permission` (
     `forum_id`              INT         NOT NULL,
     `user_id`               INT         NOT NULL,
@@ -274,6 +286,18 @@ CREATE TABLE IF NOT EXISTS `forum_user_permission` (
         FOREIGN KEY (`user_id`)
         REFERENCES `user` (`user_id`),
     CONSTRAINT `fk_forum_user_permission_forum_capability_id`
+        FOREIGN KEY (`forum_capability_id`)
+        REFERENCES `forum_capability` (`forum_capability_id`)
+);
+
+CREATE TABLE IF NOT EXISTS `default_forum_user_permission` (
+    `user_id`               INT         NOT NULL,
+    `forum_capability_id`   VARCHAR(19) NOT NULL,
+    PRIMARY KEY (`user_id`, `forum_capability_id`),
+    CONSTRAINT `fk_default_forum_user_permission_user_id`
+        FOREIGN KEY (`user_id`)
+        REFERENCES `user` (`user_id`),
+    CONSTRAINT `fk_default_forum_user_permission_forum_capability_id`
         FOREIGN KEY (`forum_capability_id`)
         REFERENCES `forum_capability` (`forum_capability_id`)
 );
