@@ -12,5 +12,8 @@ namespace BBNet.Service.Models
             Validator.TryValidateObject(instance, context, results);
             return results;
         }
+
+        public static bool IsValid(this object instance)
+            => instance.GetValidationResult().IsSuccessful;
     }
 }
