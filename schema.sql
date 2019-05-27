@@ -1,328 +1,328 @@
 
-CREATE SCHEMA IF NOT EXISTS `bbnet`
+CREATE SCHEMA IF NOT EXISTS `BBNet`
     DEFAULT CHARACTER SET utf8mb4
     DEFAULT COLLATE utf8mb4_0900_ai_ci;
 
-USE `bbnet`;
+USE `BBNet`;
 
-CREATE TABLE IF NOT EXISTS `category` (
-    `category_id`   INT         NOT NULL    AUTO_INCREMENT,
-    `name`          VARCHAR(45),
-    PRIMARY KEY (`category_id`)
+CREATE TABLE IF NOT EXISTS `Category` (
+    `CategoryId`    INT         NOT NULL    AUTO_INCREMENT,
+    `Name`          VARCHAR(45),
+    PRIMARY KEY (`CategoryId`)
 );
 
-CREATE TABLE IF NOT EXISTS `forum` (
-    `forum_id`      INT         NOT NULL    AUTO_INCREMENT,
-    `category_id`   INT         NOT NULL,
-    `name`          VARCHAR(45) NOT NULL,
-    `description`   TINYTEXT,
-    `image_url`     TINYTEXT,
-    `created`       TIMESTAMP   NOT NULL    DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (`forum_id`),
-    INDEX `idx_forum_category_id` (`category_id`),
-    CONSTRAINT `fk_forum_category_id`
-        FOREIGN KEY (`category_id`)
-        REFERENCES `category` (`category_id`)
+CREATE TABLE IF NOT EXISTS `Forum` (
+    `ForumId`       INT         NOT NULL    AUTO_INCREMENT,
+    `CategoryId`   INT         NOT NULL,
+    `Name`          VARCHAR(45) NOT NULL,
+    `Description`   TINYTEXT,
+    `ImageUrl`      TINYTEXT,
+    `Created`       TIMESTAMP   NOT NULL    DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`ForumId`),
+    INDEX `idx_Forum_CategoryId` (`CategoryId`),
+    CONSTRAINT `fk_Forum_CategoryId`
+        FOREIGN KEY (`CategoryId`)
+        REFERENCES `Category` (`CategoryId`)
 );
 
-CREATE TABLE IF NOT EXISTS `topic_banner` (
-    `topic_banner_id`   INT         NOT NULL    AUTO_INCREMENT,
-    `image_url`         VARCHAR(45) NOT NULL,
-    PRIMARY KEY (`topic_banner_id`)
+CREATE TABLE IF NOT EXISTS `TopicBanner` (
+    `TopicBannerId` INT         NOT NULL    AUTO_INCREMENT,
+    `ImageUrl`      VARCHAR(45) NOT NULL,
+    PRIMARY KEY (`TopicBannerId`)
 );
 
-CREATE TABLE IF NOT EXISTS `topic` (
-    `topic_id`          INT         NOT NULL    AUTO_INCREMENT,
-    `forum_id`          INT         NOT NULL,
-    `name`              VARCHAR(45) NOT NULL,
-    `description`       VARCHAR(45),
-    `topic_banner_id`   INT,
-    `created`           TIMESTAMP   NOT NULL    DEFAULT CURRENT_TIMESTAMP,
-    `is_locked`         TINYINT     NOT NULL,
-    `is_sticky`         TINYINT     NOT NULL,
-    PRIMARY KEY (`topic_id`),
-    INDEX `idx_topic_forum_id` (`forum_id`),
-    INDEX `idx_topic_topic_banner_id` (`topic_banner_id`),
-    CONSTRAINT `fk_topic_forum_id`
-        FOREIGN KEY (`forum_id`)
-        REFERENCES `forum` (`forum_id`),
-    CONSTRAINT `fk_topic_topic_banner_id`
-        FOREIGN KEY (`topic_banner_id`)
-        REFERENCES `topic_banner` (`topic_banner_id`)
+CREATE TABLE IF NOT EXISTS `Topic` (
+    `TopicId`       INT         NOT NULL    AUTO_INCREMENT,
+    `ForumId`       INT         NOT NULL,
+    `Name`          VARCHAR(45) NOT NULL,
+    `Description`   VARCHAR(45),
+    `TopicBannerId` INT,
+    `Created`       TIMESTAMP   NOT NULL    DEFAULT CURRENT_TIMESTAMP,
+    `IsLocked`      TINYINT     NOT NULL,
+    `IsSticky`      TINYINT     NOT NULL,
+    PRIMARY KEY (`TopicId`),
+    INDEX `idx_Topic_ForumId` (`ForumId`),
+    INDEX `idx_Topic_TopicBannerId` (`TopicBannerId`),
+    CONSTRAINT `fk_Topic_ForumId`
+        FOREIGN KEY (`ForumId`)
+        REFERENCES `Forum` (`ForumId`),
+    CONSTRAINT `fk_Topic_TopicBannerId`
+        FOREIGN KEY (`TopicBannerId`)
+        REFERENCES `TopicBanner` (`TopicBannerId`)
 );
 
-CREATE TABLE IF NOT EXISTS `group` (
-    `group_id`      INT         NOT NULL    AUTO_INCREMENT,
-    `name`          VARCHAR(45) NOT NULL,
-    `description`   VARCHAR(45),
-    PRIMARY KEY (`group_id`)
+CREATE TABLE IF NOT EXISTS `Group` (
+    `GroupId`       INT         NOT NULL    AUTO_INCREMENT,
+    `Name`          VARCHAR(45) NOT NULL,
+    `Description`   VARCHAR(45),
+    PRIMARY KEY (`GroupId`)
 );
 
-CREATE TABLE IF NOT EXISTS `gender` (
-    `gender_id`     INT             NOT NULL    AUTO_INCREMENT,
-    `name`          VARCHAR(45)     NOT NULL,
-    `image_url`     VARCHAR(45),
-    PRIMARY KEY (`gender_id`)
+CREATE TABLE IF NOT EXISTS `Gender` (
+    `GenderId`      INT             NOT NULL    AUTO_INCREMENT,
+    `Name`          VARCHAR(45)     NOT NULL,
+    `ImageUrl`      VARCHAR(45),
+    PRIMARY KEY (`GenderId`)
 );
 
-CREATE TABLE IF NOT EXISTS `country` (
-    `country_id`    INT             NOT NULL    AUTO_INCREMENT,
-    `name`          VARCHAR(45)     NOT NULL,
-    `image_url`     VARCHAR(45),
-    PRIMARY KEY (`country_id`)
+CREATE TABLE IF NOT EXISTS `Country` (
+    `CountryId`     INT             NOT NULL    AUTO_INCREMENT,
+    `Name`          VARCHAR(45)     NOT NULL,
+    `ImageUrl`      VARCHAR(45),
+    PRIMARY KEY (`CountryId`)
 );
 
-CREATE TABLE IF NOT EXISTS `profile_image` (
-    `profile_image_id`  INT         NOT NULL    AUTO_INCREMENT,
-    `file_name`         VARCHAR(45) NOT NULL,
-    `image_url`         VARCHAR(45) NOT NULL,
-    PRIMARY KEY (`profile_image_id`)
+CREATE TABLE IF NOT EXISTS `ProfileImage` (
+    `ProfileImageId`    INT         NOT NULL    AUTO_INCREMENT,
+    `FileName`          VARCHAR(45) NOT NULL,
+    `ImageUrl`          VARCHAR(45) NOT NULL,
+    PRIMARY KEY (`ProfileImageId`)
 );
 
-CREATE TABLE IF NOT EXISTS `user` (
-    `user_id`           INT         NOT NULL    AUTO_INCREMENT,
-    `group_id`          INT         NOT NULL,
-    `email`             VARCHAR(45) NOT NULL,
-    `username`          VARCHAR(45) NOT NULL,
-    `password`          VARCHAR(45) NOT NULL,
-    `gender_id`         INT,
-    `country_id`        INT,
-    `profile_image_id`  INT         NOT NULL,
-    `birthday`          DATE,
-    `interests`         MEDIUMTEXT,
-    `occupation`        MEDIUMTEXT,
-    `location`          VARCHAR(45),
-    `signature`         MEDIUMTEXT,
-    PRIMARY KEY (`user_id`),
-    INDEX `idx_user_group_id` (`group_id`),
-    INDEX `idx_user_gender_id` (`gender_id`),
-    INDEX `idx_user_country_id` (`country_id`),
-    INDEX `idx_user_profile_image_id` (`profile_image_id`),
-    CONSTRAINT `fk_user_group_id`
-        FOREIGN KEY (`group_id`)
-        REFERENCES `group` (`group_id`),
-    CONSTRAINT `fk_user_gender_id`
-        FOREIGN KEY (`gender_id`)
-        REFERENCES `gender` (`gender_id`),
-    CONSTRAINT `fk_user_country_id`
-        FOREIGN KEY (`country_id`)
-        REFERENCES `country` (`country_id`),
-    CONSTRAINT `fk_user_profile_image_id`
-        FOREIGN KEY (`profile_image_id`)
-        REFERENCES `profile_image` (`profile_image_id`)
+CREATE TABLE IF NOT EXISTS `User` (
+    `UserId`            INT         NOT NULL    AUTO_INCREMENT,
+    `GroupId`           INT         NOT NULL,
+    `Email`             VARCHAR(45) NOT NULL,
+    `UserName`          VARCHAR(45) NOT NULL,
+    `Password`          VARCHAR(45) NOT NULL,
+    `GenderId`          INT,
+    `CountryId`         INT,
+    `ProfileImageId`    INT         NOT NULL,
+    `Birthday`          DATE,
+    `Interests`         MEDIUMTEXT,
+    `Occupation`        MEDIUMTEXT,
+    `Location`          VARCHAR(45),
+    `Signature`         MEDIUMTEXT,
+    PRIMARY KEY (`UserId`),
+    INDEX `idx_User_GroupId` (`GroupId`),
+    INDEX `idx_User_GenderId` (`GenderId`),
+    INDEX `idx_User_CountryId` (`CountryId`),
+    INDEX `idx_User_ProfileImageId` (`ProfileImageId`),
+    CONSTRAINT `fk_User_GroupId`
+        FOREIGN KEY (`GroupId`)
+        REFERENCES `Group` (`GroupId`),
+    CONSTRAINT `fk_User_GenderId`
+        FOREIGN KEY (`GenderId`)
+        REFERENCES `Gender` (`GenderId`),
+    CONSTRAINT `fk_User_CountryId`
+        FOREIGN KEY (`CountryId`)
+        REFERENCES `Country` (`CountryId`),
+    CONSTRAINT `fk_User_ProfileImageId`
+        FOREIGN KEY (`ProfileImageId`)
+        REFERENCES `ProfileImage` (`ProfileImageId`)
 );
 
-CREATE TABLE IF NOT EXISTS `post` (
-    `post_id`               INT         NOT NULL    AUTO_INCREMENT,
-    `topic_id`              INT         NOT NULL,
-    `user_id`               INT         NOT NULL,
-    `name`                  VARCHAR(45) NOT NULL,
-    `body`                  MEDIUMTEXT  NOT NULL,
-    `created`               TIMESTAMP   NOT NULL    DEFAULT CURRENT_TIMESTAMP,
-    `modified`              TIMESTAMP   NOT NULL    DEFAULT CURRENT_TIMESTAMP,
-    `formatting_enabled`    TINYINT     NOT NULL    DEFAULT 1,
-    `smilies_enabled`       TINYINT     NOT NULL    DEFAULT 1,
-    `parse_urls`            TINYINT     NOT NULL    DEFAULT 1,
-    `attach_signature`      TINYINT     NOT NULL    DEFAULT 1,
-    PRIMARY KEY (`post_id`),
-    INDEX `idx_post_topic_id` (`topic_id`),
-    INDEX `idx_post_user_id` (`user_id`),
-    CONSTRAINT `fk_post_topic_id`
-        FOREIGN KEY (`topic_id`)
-        REFERENCES `topic` (`topic_id`),
-    CONSTRAINT `fk_post_user_id`
-        FOREIGN KEY (`user_id`)
-        REFERENCES `user` (`user_id`)
+CREATE TABLE IF NOT EXISTS `Post` (
+    `PostId`            INT         NOT NULL    AUTO_INCREMENT,
+    `TopicId`           INT         NOT NULL,
+    `UserId`            INT         NOT NULL,
+    `Name`              VARCHAR(45) NOT NULL,
+    `Body`              MEDIUMTEXT  NOT NULL,
+    `Created`           TIMESTAMP   NOT NULL    DEFAULT CURRENT_TIMESTAMP,
+    `Modified`          TIMESTAMP   NOT NULL    DEFAULT CURRENT_TIMESTAMP,
+    `FormattingEnabled` TINYINT     NOT NULL    DEFAULT 1,
+    `SmiliesEnabled`    TINYINT     NOT NULL    DEFAULT 1,
+    `ParseUrls`         TINYINT     NOT NULL    DEFAULT 1,
+    `AttachSignature`   TINYINT     NOT NULL    DEFAULT 1,
+    PRIMARY KEY (`PostId`),
+    INDEX `idx_Post_TopicId` (`TopicId`),
+    INDEX `idx_Post_UserId` (`UserId`),
+    CONSTRAINT `fk_Post_TopicId`
+        FOREIGN KEY (`TopicId`)
+        REFERENCES `Topic` (`TopicId`),
+    CONSTRAINT `fk_Post_UserId`
+        FOREIGN KEY (`UserId`)
+        REFERENCES `User` (`UserId`)
 );
 
-CREATE TABLE IF NOT EXISTS `attachment` (
-    `attachment_id` INT         NOT NULL    AUTO_INCREMENT,
-    `post_id`       INT         NOT NULL,
-    `file_name`     VARCHAR(45) NOT NULL,
-    `contents`      MEDIUMBLOB  NOT NULL,
-    PRIMARY KEY (`attachment_id`),
-    INDEX `idx_attachment_post_id` (`post_id`),
-    CONSTRAINT `fk_attachment_post_id`
-        FOREIGN KEY (`post_id`)
-        REFERENCES `post` (`post_id`)
+CREATE TABLE IF NOT EXISTS `Attachment` (
+    `AttachmentId`  INT         NOT NULL    AUTO_INCREMENT,
+    `PostId`        INT         NOT NULL,
+    `FileName`      VARCHAR(45) NOT NULL,
+    `Contents`      MEDIUMBLOB  NOT NULL,
+    PRIMARY KEY (`AttachmentId`),
+    INDEX `idx_Attachment_PostId` (`PostId`),
+    CONSTRAINT `fk_Attachment_PostId`
+        FOREIGN KEY (`PostId`)
+        REFERENCES `Post` (`PostId`)
 );
 
-CREATE TABLE IF NOT EXISTS `capability` (
-    `capability_id` VARCHAR(19) NOT NULL,
-    `description`   MEDIUMTEXT,
-    PRIMARY KEY (`capability_id`)
+CREATE TABLE IF NOT EXISTS `Capability` (
+    `CapabilityId`  VARCHAR(19) NOT NULL,
+    `Description`   MEDIUMTEXT,
+    PRIMARY KEY (`CapabilityId`)
 );
 
-CREATE TABLE IF NOT EXISTS `group_permission` (
-    `group_id`      INT         NOT NULL,
-    `capability_id` VARCHAR(19) NOT NULL,
-    PRIMARY KEY (`group_id`, `capability_id`),
-    INDEX `idx_group_permission_capability_id` (`capability_id`),
-    CONSTRAINT `fk_group_permission_group_id`
-        FOREIGN KEY (`group_id`)
-        REFERENCES `group` (`group_id`),
-    CONSTRAINT `fk_group_permission_capability_id`
-        FOREIGN KEY (`capability_id`)
-        REFERENCES `capability` (`capability_id`)
+CREATE TABLE IF NOT EXISTS `GroupPermission` (
+    `GroupId`       INT         NOT NULL,
+    `CapabilityId`  VARCHAR(19) NOT NULL,
+    PRIMARY KEY (`GroupId`, `CapabilityId`),
+    INDEX `idx_GroupPermission_CapabilityId` (`CapabilityId`),
+    CONSTRAINT `fk_GroupPermission_GroupId`
+        FOREIGN KEY (`GroupId`)
+        REFERENCES `Group` (`GroupId`),
+    CONSTRAINT `fk_GroupPermission_CapabilityId`
+        FOREIGN KEY (`CapabilityId`)
+        REFERENCES `Capability` (`CapabilityId`)
 );
 
-CREATE TABLE IF NOT EXISTS `user_permission` (
-    `user_id`       INT         NOT NULL,
-    `capability_id` VARCHAR(19) NOT NULL,
-    PRIMARY KEY (`user_id`, `capability_id`),
-    INDEX `idx_user_permission_capability_id` (`capability_id`),
-    CONSTRAINT `fk_user_permission_user_id`
-        FOREIGN KEY (`user_id`)
-        REFERENCES `user` (`user_id`),
-    CONSTRAINT `fk_user_permission_capability_id`
-        FOREIGN KEY (`capability_id`)
-        REFERENCES `capability` (`capability_id`)
+CREATE TABLE IF NOT EXISTS `UserPermission` (
+    `UserId`        INT         NOT NULL,
+    `CapabilityId`  VARCHAR(19) NOT NULL,
+    PRIMARY KEY (`UserId`, `CapabilityId`),
+    INDEX `idx_UserPermission_CapabilityId` (`CapabilityId`),
+    CONSTRAINT `fk_UserPermission_UserId`
+        FOREIGN KEY (`UserId`)
+        REFERENCES `User` (`UserId`),
+    CONSTRAINT `fk_UserPermission_CapabilityId`
+        FOREIGN KEY (`CapabilityId`)
+        REFERENCES `Capability` (`CapabilityId`)
 );
 
-CREATE TABLE IF NOT EXISTS `poll` (
-    `poll_id`       INT         NOT NULL    AUTO_INCREMENT,
-    `topic_id`      INT         NOT NULL,
-    `prompt`        VARCHAR(45) NOT NULL,
-    `expiration`    DATETIME,
-    `max_choices`   INT         NOT NULL,
-    PRIMARY KEY (`poll_id`),
-    INDEX `idx_poll_topic_id` (`topic_id`),
-    CONSTRAINT `fk_poll_topic_id`
-        FOREIGN KEY (`topic_id`)
-        REFERENCES `topic` (`topic_id`)
+CREATE TABLE IF NOT EXISTS `Poll` (
+    `PollId`        INT         NOT NULL    AUTO_INCREMENT,
+    `TopicId`       INT         NOT NULL,
+    `Prompt`        VARCHAR(45) NOT NULL,
+    `Expiration`    DATETIME,
+    `MaxChoices`    INT         NOT NULL,
+    PRIMARY KEY (`PollId`),
+    INDEX `idx_Poll_TopicId` (`TopicId`),
+    CONSTRAINT `fk_Poll_TopicId`
+        FOREIGN KEY (`TopicId`)
+        REFERENCES `Topic` (`TopicId`)
 );
 
-CREATE TABLE IF NOT EXISTS `poll_choice` (
-    `poll_choice_id`    INT         NOT NULL    AUTO_INCREMENT,
-    `poll_id`           INT         NOT NULL,
-    `text`              VARCHAR(45) NOT NULL,
-    PRIMARY KEY (`poll_choice_id`),
-    INDEX `idx_poll_choice_poll_id` (`poll_id`),
-    CONSTRAINT `fk_poll_choice_poll_id`
-        FOREIGN KEY (`poll_id`)
-        REFERENCES `poll` (`poll_id`)
+CREATE TABLE IF NOT EXISTS `PollChoice` (
+    `PollChoiceId`  INT         NOT NULL    AUTO_INCREMENT,
+    `PollId`        INT         NOT NULL,
+    `Text`          VARCHAR(45) NOT NULL,
+    PRIMARY KEY (`PollChoiceId`),
+    INDEX `idx_PollChoice_PollId` (`PollId`),
+    CONSTRAINT `fk_PollChoice_PollId`
+        FOREIGN KEY (`PollId`)
+        REFERENCES `Poll` (`PollId`)
 );
 
-CREATE TABLE IF NOT EXISTS `poll_vote` (
-    `poll_choice_id`    INT NOT NULL,
-    `user_id`           INT NOT NULL,
-    PRIMARY KEY (`poll_choice_id`, `user_id`),
-    CONSTRAINT `fk_poll_vote_poll_choice_id`
-        FOREIGN KEY (`poll_choice_id`)
-        REFERENCES `poll_choice` (`poll_choice_id`),
-    CONSTRAINT `fk_poll_vote_user_id`
-        FOREIGN KEY (`user_id`)
-        REFERENCES `user` (`user_id`)
+CREATE TABLE IF NOT EXISTS `PollVote` (
+    `PollChoiceId`  INT NOT NULL,
+    `UserId`        INT NOT NULL,
+    PRIMARY KEY (`PollChoiceId`, `UserId`),
+    CONSTRAINT `fk_PollVote_PollChoiceId`
+        FOREIGN KEY (`PollChoiceId`)
+        REFERENCES `PollChoice` (`PollChoiceId`),
+    CONSTRAINT `fk_PollVote_UserId`
+        FOREIGN KEY (`UserId`)
+        REFERENCES `User` (`UserId`)
 );
 
-CREATE TABLE IF NOT EXISTS `forum_capability` (
-    `forum_capability_id`   VARCHAR(19) NOT NULL,
-    `description`           TEXT,
-    PRIMARY KEY (`forum_capability_id`)
+CREATE TABLE IF NOT EXISTS `ForumCapability` (
+    `ForumCapabilityId` VARCHAR(19) NOT NULL,
+    `Description`       TEXT,
+    PRIMARY KEY (`ForumCapabilityId`)
 );
 
-CREATE TABLE IF NOT EXISTS `forum_group_permission` (
-    `forum_id`              INT         NOT NULL,
-    `group_id`              INT         NOT NULL,
-    `forum_capability_id`   VARCHAR(19) NOT NULL,
-    PRIMARY KEY (`forum_id`, `group_id`, `forum_capability_id`),
-    INDEX `idx_forum_group_permission_group_id` (`group_id`),
-    INDEX `idx_forum_group_permission_forum_capability_id` (`forum_capability_id`),
-    CONSTRAINT `fk_forum_group_permission_forum_id`
-        FOREIGN KEY (`forum_id`)
-        REFERENCES `forum` (`forum_id`),
-    CONSTRAINT `fk_forum_group_permission_group_id`
-        FOREIGN KEY (`group_id`)
-        REFERENCES `group` (`group_id`),
-    CONSTRAINT `fk_forum_group_permission_forum_capability_id`
-        FOREIGN KEY (`forum_capability_id`)
-        REFERENCES `forum_capability` (`forum_capability_id`)
+CREATE TABLE IF NOT EXISTS `ForumGroupPermission` (
+    `ForumId`           INT         NOT NULL,
+    `GroupId`           INT         NOT NULL,
+    `ForumCapabilityId` VARCHAR(19) NOT NULL,
+    PRIMARY KEY (`ForumId`, `GroupId`, `ForumCapabilityId`),
+    INDEX `idx_ForumGroupPermission_group_id` (`GroupId`),
+    INDEX `idx_ForumGroupPermission_forum_capability_id` (`ForumCapabilityId`),
+    CONSTRAINT `fk_ForumGroupPermission_ForumId`
+        FOREIGN KEY (`ForumId`)
+        REFERENCES `Forum` (`ForumId`),
+    CONSTRAINT `fk_ForumGroupPermission_GroupId`
+        FOREIGN KEY (`GroupId`)
+        REFERENCES `Group` (`GroupId`),
+    CONSTRAINT `fk_ForumGroupPermission_ForumCapabilityId`
+        FOREIGN KEY (`ForumCapabilityId`)
+        REFERENCES `ForumCapability` (`ForumCapabilityId`)
 );
 
-CREATE TABLE IF NOT EXISTS `default_forum_group_permission` (
-    `group_id`              INT         NOT NULL,
-    `forum_capability_id`   VARCHAR(19) NOT NULL,
-    PRIMARY KEY (`group_id`, `forum_capability_id`),
-    CONSTRAINT `fk_default_forum_group_permission_group_id`
-        FOREIGN KEY (`group_id`)
-        REFERENCES `group` (`group_id`),
-    CONSTRAINT `fk_default_forum_group_permission_forum_capability_id`
-        FOREIGN KEY (`forum_capability_id`)
-        REFERENCES `forum_capability` (`forum_capability_id`)
+CREATE TABLE IF NOT EXISTS `DefaultForumGroupPermission` (
+    `GroupId`           INT         NOT NULL,
+    `ForumCapabilityId` VARCHAR(19) NOT NULL,
+    PRIMARY KEY (`GroupId`, `ForumCapabilityId`),
+    CONSTRAINT `fk_DefaultForumGroupPermission_GroupId`
+        FOREIGN KEY (`GroupId`)
+        REFERENCES `Group` (`GroupId`),
+    CONSTRAINT `fk_DefaultForumGroupPermission_ForumCapabilityId`
+        FOREIGN KEY (`ForumCapabilityId`)
+        REFERENCES `ForumCapability` (`ForumCapabilityId`)
 );
 
-CREATE TABLE IF NOT EXISTS `forum_user_permission` (
-    `forum_id`              INT         NOT NULL,
-    `user_id`               INT         NOT NULL,
-    `forum_capability_id`   VARCHAR(19) NOT NULL,
-    PRIMARY KEY (`forum_id`, `user_id`, `forum_capability_id`),
-    INDEX `idx_forum_user_permission_user_id` (`user_id`),
-    INDEX `idx_forum_user_permission_forum_capability` (`forum_capability_id`),
-    CONSTRAINT `fk_forum_user_permission_forum_id`
-        FOREIGN KEY (`forum_id`)
-        REFERENCES `forum` (`forum_id`),
-    CONSTRAINT `fk_forum_user_permission_user_id`
-        FOREIGN KEY (`user_id`)
-        REFERENCES `user` (`user_id`),
-    CONSTRAINT `fk_forum_user_permission_forum_capability_id`
-        FOREIGN KEY (`forum_capability_id`)
-        REFERENCES `forum_capability` (`forum_capability_id`)
+CREATE TABLE IF NOT EXISTS `ForumUserPermission` (
+    `ForumId`           INT         NOT NULL,
+    `UserId`            INT         NOT NULL,
+    `ForumCapabilityId` VARCHAR(19) NOT NULL,
+    PRIMARY KEY (`ForumId`, `UserId`, `ForumCapabilityId`),
+    INDEX `idx_ForumUserPermission_UserId` (`UserId`),
+    INDEX `idx_ForumUserPermission_ForumCapabilityId` (`ForumCapabilityId`),
+    CONSTRAINT `fk_ForumUserPermission_ForumId`
+        FOREIGN KEY (`ForumId`)
+        REFERENCES `Forum` (`ForumId`),
+    CONSTRAINT `fk_ForumUserPermission_UserId`
+        FOREIGN KEY (`UserId`)
+        REFERENCES `User` (`UserId`),
+    CONSTRAINT `fk_ForumUserPermission_ForumCapabilityId`
+        FOREIGN KEY (`ForumCapabilityId`)
+        REFERENCES `ForumCapability` (`ForumCapabilityId`)
 );
 
-CREATE TABLE IF NOT EXISTS `default_forum_user_permission` (
-    `user_id`               INT         NOT NULL,
-    `forum_capability_id`   VARCHAR(19) NOT NULL,
-    PRIMARY KEY (`user_id`, `forum_capability_id`),
-    CONSTRAINT `fk_default_forum_user_permission_user_id`
-        FOREIGN KEY (`user_id`)
-        REFERENCES `user` (`user_id`),
-    CONSTRAINT `fk_default_forum_user_permission_forum_capability_id`
-        FOREIGN KEY (`forum_capability_id`)
-        REFERENCES `forum_capability` (`forum_capability_id`)
+CREATE TABLE IF NOT EXISTS `DefaultForumUserPermission` (
+    `UserId`            INT         NOT NULL,
+    `ForumCapabilityId` VARCHAR(19) NOT NULL,
+    PRIMARY KEY (`UserId`, `ForumCapabilityId`),
+    CONSTRAINT `fk_DefaultForumUserPermission_UserId`
+        FOREIGN KEY (`UserId`)
+        REFERENCES `User` (`UserId`),
+    CONSTRAINT `fk_DefaultForumUserPermission_ForumCapabilityId`
+        FOREIGN KEY (`ForumCapabilityId`)
+        REFERENCES `ForumCapability` (`ForumCapabilityId`)
 );
 
-CREATE TABLE IF NOT EXISTS `post_like` (
-    `post_id`   INT NOT NULL,
-    `user_id`   INT NOT NULL,
-    PRIMARY KEY (`post_id`, `user_id`),
-    INDEX `idx_post_like_user_id` (`user_id`),
-    CONSTRAINT `fk_post_like_post_id`
-        FOREIGN KEY (`post_id`)
-        REFERENCES `post` (`post_id`),
-    CONSTRAINT `fk_post_like_user_id`
-        FOREIGN KEY (`user_id`)
-        REFERENCES `user` (`user_id`)
+CREATE TABLE IF NOT EXISTS `PostLike` (
+    `PostId`    INT NOT NULL,
+    `UserId`    INT NOT NULL,
+    PRIMARY KEY (`PostId`, `UserId`),
+    INDEX `idx_PostLike_UserId` (`UserId`),
+    CONSTRAINT `fk_PostLike_PostId`
+        FOREIGN KEY (`PostId`)
+        REFERENCES `Post` (`PostId`),
+    CONSTRAINT `fk_PostLike_UserId`
+        FOREIGN KEY (`UserId`)
+        REFERENCES `User` (`UserId`)
 );
 
-CREATE TABLE IF NOT EXISTS `unread_topic` (
-    `topic_id`  INT NOT NULL,
-    `user_id`   INT NOT NULL,
-    PRIMARY KEY (`topic_id`, `user_id`),
-    INDEX `idx_unread_topic_user_id` (`user_id`),
-    CONSTRAINT `fk_unread_topic_topic_id`
-        FOREIGN KEY (`topic_id`)
-        REFERENCES `topic` (`topic_id`),
-    CONSTRAINT `fk_unread_topic_user_id`
-        FOREIGN KEY (`user_id`)
-        REFERENCES `user` (`user_id`)
+CREATE TABLE IF NOT EXISTS `UnreadTopic` (
+    `TopicId`   INT NOT NULL,
+    `UserId`    INT NOT NULL,
+    PRIMARY KEY (`TopicId`, `UserId`),
+    INDEX `idx_UnreadTopic_UserId` (`UserId`),
+    CONSTRAINT `fk_UnreadTopic_TopicId`
+        FOREIGN KEY (`TopicId`)
+        REFERENCES `Topic` (`TopicId`),
+    CONSTRAINT `fk_UnreadTopic_UserId`
+        FOREIGN KEY (`UserId`)
+        REFERENCES `User` (`UserId`)
 );
 
-INSERT INTO `group`
-    (`name`, `description`)
+INSERT INTO `Group`
+    (`Name`, `Description`)
     VALUES
     ("Administrator", NULL),
     ("Global Moderator", NULL),
     ("Member", NULL);
 
-INSERT INTO `gender`
-    (`name`, `image_url`)
+INSERT INTO `Gender`
+    (`Name`, `ImageUrl`)
     VALUES
     ("Male", NULL),
     ("Female", NULL),
     ("Other", NULL);
 
-INSERT INTO `country`
-    (`name`, `image_url`)
+INSERT INTO `Country`
+    (`Name`, `ImageUrl`)
     VALUES
     ("Brazil", NULL),
     ("Canada", NULL),
