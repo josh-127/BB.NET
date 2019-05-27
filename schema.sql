@@ -65,34 +65,12 @@ CREATE TABLE IF NOT EXISTS `gender` (
     PRIMARY KEY (`gender_id`)
 );
 
-INSERT INTO `gender`
-    (`name`, `image_url`)
-    VALUES
-    ("Male", NULL),
-    ("Female", NULL),
-    ("Other", NULL),
-    ("Prefer not to say", NULL);
-
 CREATE TABLE IF NOT EXISTS `country` (
     `country_id`    INT             NOT NULL    AUTO_INCREMENT,
     `name`          VARCHAR(45)     NOT NULL,
     `image_url`     VARCHAR(45),
     PRIMARY KEY (`country_id`)
 );
-
-INSERT INTO `country`
-    (`name`, `image_url`)
-    VALUES
-    ("Brazil", NULL),
-    ("Canada", NULL),
-    ("China", NULL),
-    ("France", NULL),
-    ("Germany", NULL),
-    ("India", NULL),
-    ("Italy", NULL),
-    ("Japan", NULL),
-    ("United Kingdom", NULL),
-    ("United States", NULL);
 
 CREATE TABLE IF NOT EXISTS `profile_image` (
     `profile_image_id`  INT         NOT NULL    AUTO_INCREMENT,
@@ -327,3 +305,25 @@ CREATE TABLE IF NOT EXISTS `unread_topic` (
         FOREIGN KEY (`user_id`)
         REFERENCES `user` (`user_id`)
 );
+
+INSERT INTO `gender`
+    (`name`, `image_url`)
+    VALUES
+    ("Male", NULL),
+    ("Female", NULL),
+    ("Other", NULL),
+    ("Prefer not to say", NULL);
+
+INSERT INTO `country`
+    (`name`, `image_url`)
+    VALUES
+    ("Brazil", NULL),
+    ("Canada", NULL),
+    ("China", NULL),
+    ("France", NULL),
+    ("Germany", NULL),
+    ("India", NULL),
+    ("Italy", NULL),
+    ("Japan", NULL),
+    ("United Kingdom", NULL),
+    ("United States", NULL);
