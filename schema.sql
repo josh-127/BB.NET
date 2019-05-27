@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `User` (
     `Password`          VARCHAR(45) NOT NULL,
     `GenderId`          INT,
     `CountryId`         INT,
-    `ProfileImageId`    INT         NOT NULL,
+    `ProfileImageId`    INT,
     `Birthday`          DATE,
     `Interests`         MEDIUMTEXT,
     `Occupation`        MEDIUMTEXT,
