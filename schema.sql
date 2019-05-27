@@ -306,6 +306,13 @@ CREATE TABLE IF NOT EXISTS `unread_topic` (
         REFERENCES `user` (`user_id`)
 );
 
+INSERT INTO `group`
+    (`name`, `description`)
+    VALUES
+    ("Administrator", NULL),
+    ("Global Moderator", NULL),
+    ("Member", NULL);
+
 INSERT INTO `gender`
     (`name`, `image_url`)
     VALUES
