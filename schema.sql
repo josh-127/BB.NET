@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `forum` (
     `image_url`     TINYTEXT,
     `created`       TIMESTAMP   NOT NULL    DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`forum_id`),
-    INDEX `idx_forum_category_id` (`category_id` ASC) VISIBLE,
+    INDEX `idx_forum_category_id` (`category_id`),
     CONSTRAINT `fk_forum_category_id`
         FOREIGN KEY (`category_id`)
         REFERENCES `category` (`category_id`)
@@ -41,8 +41,8 @@ CREATE TABLE IF NOT EXISTS `topic` (
     `is_locked`         TINYINT     NOT NULL,
     `is_sticky`         TINYINT     NOT NULL,
     PRIMARY KEY (`topic_id`),
-    INDEX `idx_topic_forum_id` (`forum_id` ASC) VISIBLE,
-    INDEX `idx_topic_topic_banner_id` (`topic_banner_id` ASC) VISIBLE,
+    INDEX `idx_topic_forum_id` (`forum_id`),
+    INDEX `idx_topic_topic_banner_id` (`topic_banner_id`),
     CONSTRAINT `fk_topic_forum_id`
         FOREIGN KEY (`forum_id`)
         REFERENCES `forum` (`forum_id`),
@@ -115,10 +115,10 @@ CREATE TABLE IF NOT EXISTS `user` (
     `location`          VARCHAR(45),
     `signature`         MEDIUMTEXT,
     PRIMARY KEY (`user_id`),
-    INDEX `idx_user_group_id` (`group_id` ASC) VISIBLE,
-    INDEX `idx_user_gender_id` (`gender_id` ASC) VISIBLE,
-    INDEX `idx_user_country_id` (`country_id` ASC) VISIBLE,
-    INDEX `idx_user_profile_image_id` (`profile_image_id` ASC) VISIBLE,
+    INDEX `idx_user_group_id` (`group_id`),
+    INDEX `idx_user_gender_id` (`gender_id`),
+    INDEX `idx_user_country_id` (`country_id`),
+    INDEX `idx_user_profile_image_id` (`profile_image_id`),
     CONSTRAINT `fk_user_group_id`
         FOREIGN KEY (`group_id`)
         REFERENCES `group` (`group_id`),
@@ -146,8 +146,8 @@ CREATE TABLE IF NOT EXISTS `post` (
     `parse_urls`            TINYINT     NOT NULL    DEFAULT 1,
     `attach_signature`      TINYINT     NOT NULL    DEFAULT 1,
     PRIMARY KEY (`post_id`),
-    INDEX `idx_post_topic_id` (`topic_id` ASC) VISIBLE,
-    INDEX `idx_post_user_id` (`user_id` ASC) VISIBLE,
+    INDEX `idx_post_topic_id` (`topic_id`),
+    INDEX `idx_post_user_id` (`user_id`),
     CONSTRAINT `fk_post_topic_id`
         FOREIGN KEY (`topic_id`)
         REFERENCES `topic` (`topic_id`),
@@ -162,7 +162,7 @@ CREATE TABLE IF NOT EXISTS `attachment` (
     `file_name`     VARCHAR(45) NOT NULL,
     `contents`      MEDIUMBLOB  NOT NULL,
     PRIMARY KEY (`attachment_id`),
-    INDEX `idx_attachment_post_id` (`post_id` ASC) VISIBLE,
+    INDEX `idx_attachment_post_id` (`post_id`),
     CONSTRAINT `fk_attachment_post_id`
         FOREIGN KEY (`post_id`)
         REFERENCES `post` (`post_id`)
@@ -178,7 +178,7 @@ CREATE TABLE IF NOT EXISTS `group_permission` (
     `group_id`      INT         NOT NULL,
     `capability_id` VARCHAR(19) NOT NULL,
     PRIMARY KEY (`group_id`, `capability_id`),
-    INDEX `idx_group_permission_capability_id` (`capability_id` ASC) VISIBLE,
+    INDEX `idx_group_permission_capability_id` (`capability_id`),
     CONSTRAINT `fk_group_permission_group_id`
         FOREIGN KEY (`group_id`)
         REFERENCES `group` (`group_id`),
@@ -191,7 +191,7 @@ CREATE TABLE IF NOT EXISTS `user_permission` (
     `user_id`       INT         NOT NULL,
     `capability_id` VARCHAR(19) NOT NULL,
     PRIMARY KEY (`user_id`, `capability_id`),
-    INDEX `idx_user_permission_capability_id` (`capability_id` ASC) VISIBLE,
+    INDEX `idx_user_permission_capability_id` (`capability_id`),
     CONSTRAINT `fk_user_permission_user_id`
         FOREIGN KEY (`user_id`)
         REFERENCES `user` (`user_id`),
@@ -207,7 +207,7 @@ CREATE TABLE IF NOT EXISTS `poll` (
     `expiration`    DATETIME,
     `max_choices`   INT         NOT NULL,
     PRIMARY KEY (`poll_id`),
-    INDEX `idx_poll_topic_id` (`topic_id` ASC) VISIBLE,
+    INDEX `idx_poll_topic_id` (`topic_id`),
     CONSTRAINT `fk_poll_topic_id`
         FOREIGN KEY (`topic_id`)
         REFERENCES `topic` (`topic_id`)
@@ -218,7 +218,7 @@ CREATE TABLE IF NOT EXISTS `poll_choice` (
     `poll_id`           INT         NOT NULL,
     `text`              VARCHAR(45) NOT NULL,
     PRIMARY KEY (`poll_choice_id`),
-    INDEX `idx_poll_choice_poll_id` (`poll_id` ASC) VISIBLE,
+    INDEX `idx_poll_choice_poll_id` (`poll_id`),
     CONSTRAINT `fk_poll_choice_poll_id`
         FOREIGN KEY (`poll_id`)
         REFERENCES `poll` (`poll_id`)
@@ -247,8 +247,8 @@ CREATE TABLE IF NOT EXISTS `forum_group_permission` (
     `group_id`              INT         NOT NULL,
     `forum_capability_id`   VARCHAR(19) NOT NULL,
     PRIMARY KEY (`forum_id`, `group_id`, `forum_capability_id`),
-    INDEX `idx_forum_group_permission_group_id` (`group_id` ASC) VISIBLE,
-    INDEX `idx_forum_group_permission_forum_capability_id` (`forum_capability_id` ASC) VISIBLE,
+    INDEX `idx_forum_group_permission_group_id` (`group_id`),
+    INDEX `idx_forum_group_permission_forum_capability_id` (`forum_capability_id`),
     CONSTRAINT `fk_forum_group_permission_forum_id`
         FOREIGN KEY (`forum_id`)
         REFERENCES `forum` (`forum_id`),
@@ -277,8 +277,8 @@ CREATE TABLE IF NOT EXISTS `forum_user_permission` (
     `user_id`               INT         NOT NULL,
     `forum_capability_id`   VARCHAR(19) NOT NULL,
     PRIMARY KEY (`forum_id`, `user_id`, `forum_capability_id`),
-    INDEX `idx_forum_user_permission_user_id` (`user_id` ASC) VISIBLE,
-    INDEX `idx_forum_user_permission_forum_capability` (`forum_capability_id` ASC) VISIBLE,
+    INDEX `idx_forum_user_permission_user_id` (`user_id`),
+    INDEX `idx_forum_user_permission_forum_capability` (`forum_capability_id`),
     CONSTRAINT `fk_forum_user_permission_forum_id`
         FOREIGN KEY (`forum_id`)
         REFERENCES `forum` (`forum_id`),
@@ -306,7 +306,7 @@ CREATE TABLE IF NOT EXISTS `post_like` (
     `post_id`   INT NOT NULL,
     `user_id`   INT NOT NULL,
     PRIMARY KEY (`post_id`, `user_id`),
-    INDEX `idx_post_like_user_id` (`user_id` ASC) VISIBLE,
+    INDEX `idx_post_like_user_id` (`user_id`),
     CONSTRAINT `fk_post_like_post_id`
         FOREIGN KEY (`post_id`)
         REFERENCES `post` (`post_id`),
@@ -319,7 +319,7 @@ CREATE TABLE IF NOT EXISTS `unread_topic` (
     `topic_id`  INT NOT NULL,
     `user_id`   INT NOT NULL,
     PRIMARY KEY (`topic_id`, `user_id`),
-    INDEX `idx_unread_topic_user_id` (`user_id` ASC) VISIBLE,
+    INDEX `idx_unread_topic_user_id` (`user_id`),
     CONSTRAINT `fk_unread_topic_topic_id`
         FOREIGN KEY (`topic_id`)
         REFERENCES `topic` (`topic_id`),
