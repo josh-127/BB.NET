@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BBNet.Data", "BBNet.Data\BB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BBNet.Service", "BBNet.Service\BBNet.Service.csproj", "{E305099C-64D4-4945-B5BF-C66E27ED294A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BBNet.Service.Tests", "BBNet.Service.Tests\BBNet.Service.Tests.csproj", "{4418CFCC-C975-4E6E-A847-B280022927EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{E305099C-64D4-4945-B5BF-C66E27ED294A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E305099C-64D4-4945-B5BF-C66E27ED294A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E305099C-64D4-4945-B5BF-C66E27ED294A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4418CFCC-C975-4E6E-A847-B280022927EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4418CFCC-C975-4E6E-A847-B280022927EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4418CFCC-C975-4E6E-A847-B280022927EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4418CFCC-C975-4E6E-A847-B280022927EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
