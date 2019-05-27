@@ -307,6 +307,15 @@ CREATE TABLE IF NOT EXISTS `UnreadTopic` (
         REFERENCES `User` (`UserId`)
 );
 
+CREATE TABLE IF NOT EXISTS `GlobalConfiguration` (
+    `GlobalConfigurationId` ENUM("0")   NOT NULL    DEFAULT "0",
+    `DefaultGroupId`        INT         NOT NULL,
+    PRIMARY KEY (`GlobalConfigurationId`),
+    CONSTRAINT `fk_GlobalConfiguration_DefaultGroupId`
+        FOREIGN KEY (`DefaultGroupId`)
+        REFERENCES `Group` (`GroupId`)
+);
+
 INSERT INTO `Group`
     (`Name`, `Description`)
     VALUES
@@ -334,3 +343,8 @@ INSERT INTO `Country`
     ("Japan", NULL),
     ("United Kingdom", NULL),
     ("United States", NULL);
+
+INSERT INTO `GlobalConfiguration`
+    (`DefaultGroupId`)
+    VALUES
+    ((SELECT `GroupId` FROM `Group` WHERE `Name` = "Member"));
