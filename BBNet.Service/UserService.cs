@@ -1,5 +1,4 @@
-﻿using System;
-using BBNet.Service.Models;
+﻿using BBNet.Service.Models;
 using Tortuga.Chain;
 
 namespace BBNet.Service
@@ -11,9 +10,13 @@ namespace BBNet.Service
         public UserService(MySqlDataSource dataSource)
             => this.dataSource = dataSource;
 
-        public int RegisterUser(UserRegistrationModel model)
-        {
-            throw new NotImplementedException();
-        }
+        public int? RegisterUser(UserRegistrationModel model)
+            => dataSource.Insert("User", new
+            {
+                GroupId = 2,
+                model.Email,
+                model.UserName,
+                model.Password
+            }).Execute();
     }
 }
