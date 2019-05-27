@@ -15,9 +15,14 @@ namespace BBNet.Service
             if (!model.IsValid())
                 return null;
 
+            var config = dataSource.GetByKey("GlobalConfiguration", "0")
+                .ToObject<GlobalConfiguration>()
+                .ReadOrCache("GlobalConfiguration")
+                .Execute();
+
             return dataSource.Insert("User", new
             {
-                GroupId = 2,
+                GroupId = config.DefaultGroupId,
                 model.Email,
                 model.UserName,
                 model.Password

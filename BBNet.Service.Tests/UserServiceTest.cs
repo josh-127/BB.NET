@@ -1,4 +1,5 @@
-﻿using BBNet.Service.Models;
+﻿using System;
+using BBNet.Service.Models;
 using Tortuga.Chain;
 using Xunit;
 
