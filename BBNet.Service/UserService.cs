@@ -3,7 +3,7 @@ using Tortuga.Chain;
 
 namespace BBNet.Service
 {
-    public class UserService
+    public sealed class UserService
     {
         private readonly IClass2DataSource dataSource;
 
