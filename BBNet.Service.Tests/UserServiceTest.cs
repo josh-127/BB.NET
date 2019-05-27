@@ -6,7 +6,7 @@ namespace BBNet.Service.Tests
 {
     public class UserServiceTest
     {
-        private static MySqlDataSource CreateDataSource()
+        private static IClass2DataSource CreateDataSource()
             => new MySqlDataSource(Configuration.ConnectionString);
 
         [Fact]

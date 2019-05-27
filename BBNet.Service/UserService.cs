@@ -5,9 +5,9 @@ namespace BBNet.Service
 {
     public class UserService
     {
-        private readonly MySqlDataSource dataSource;
+        private readonly IClass2DataSource dataSource;
 
-        public UserService(MySqlDataSource dataSource)
+        public UserService(IClass2DataSource dataSource)
             => this.dataSource = dataSource;
 
         public int? RegisterUser(UserRegistrationModel model)
