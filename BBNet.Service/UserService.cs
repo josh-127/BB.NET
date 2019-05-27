@@ -11,7 +11,7 @@ namespace BBNet.Service
         public UserService(MySqlDataSource dataSource)
             => this.dataSource = dataSource;
 
-        public void RegisterUser(UserRegistrationModel model)
+        public int RegisterUser(UserRegistrationModel model)
         {
             throw new NotImplementedException();
         }
