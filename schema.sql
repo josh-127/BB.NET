@@ -84,6 +84,7 @@ CREATE TABLE IF NOT EXISTS `user` (
     `group_id`          INT         NOT NULL,
     `email`             VARCHAR(45) NOT NULL,
     `username`          VARCHAR(45) NOT NULL,
+    `password`          VARCHAR(45) NOT NULL,
     `gender_id`         INT,
     `country_id`        INT,
     `profile_image_id`  INT         NOT NULL,
