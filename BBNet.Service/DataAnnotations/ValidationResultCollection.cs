@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace BBNet.Service.Models
+namespace BBNet.Service.DataAnnotations
 {
     public sealed class ValidationResultCollection : ICollection<ValidationResult>
     {

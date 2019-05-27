@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace BBNet.Service.Models
+namespace BBNet.Service.DataAnnotations
 {
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public sealed class NoWhitespaceAttribute : ValidationAttribute

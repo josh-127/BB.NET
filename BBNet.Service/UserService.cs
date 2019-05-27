@@ -1,4 +1,5 @@
-﻿using BBNet.Service.Models;
+﻿using BBNet.Service.DataAnnotations;
+using BBNet.Service.Models;
 using Tortuga.Chain;
 
 namespace BBNet.Service

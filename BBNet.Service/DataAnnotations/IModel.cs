@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BBNet.Service.Models
+namespace BBNet.Service.DataAnnotations
 {
     public interface IModel { }
 

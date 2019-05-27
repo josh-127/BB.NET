@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using BBNet.Service.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace BBNet.Service.Models
 {
