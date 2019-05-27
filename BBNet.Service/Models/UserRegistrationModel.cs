@@ -8,6 +8,7 @@ namespace BBNet.Service.Models
         [Required]
         public string Email { get; set; }
 
+        [NoWhitespace]
         [Required]
         public string UserName { get; set; }
 
