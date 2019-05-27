@@ -11,12 +11,17 @@ namespace BBNet.Service
             => this.dataSource = dataSource;
 
         public int? RegisterUser(UserRegistrationModel model)
-            => dataSource.Insert("User", new
+        {
+            if (!model.IsValid())
+                return null;
+
+            return dataSource.Insert("User", new
             {
                 GroupId = 2,
                 model.Email,
                 model.UserName,
                 model.Password
             }).Execute();
+        }
     }
 }

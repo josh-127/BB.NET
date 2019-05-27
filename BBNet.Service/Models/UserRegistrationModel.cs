@@ -2,7 +2,7 @@
 
 namespace BBNet.Service.Models
 {
-    public sealed class UserRegistrationModel
+    public sealed class UserRegistrationModel : IModel
     {
         [EmailAddress]
         [Required]
