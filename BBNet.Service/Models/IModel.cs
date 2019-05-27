@@ -11,7 +11,7 @@ namespace BBNet.Service.Models
             var context = new ValidationContext(model);
             var results = new ValidationResultCollection();
 
-            Validator.TryValidateObject(model, context, results);
+            Validator.TryValidateObject(model, context, results, true);
             return results;
         }
 
