@@ -84,8 +84,8 @@ CREATE TABLE IF NOT EXISTS `user` (
     `group_id`          INT         NOT NULL,
     `email`             VARCHAR(45) NOT NULL,
     `username`          VARCHAR(45) NOT NULL,
-    `gender_id`         INT         NOT NULL,
-    `country_id`        INT         NOT NULL,
+    `gender_id`         INT,
+    `country_id`        INT,
     `profile_image_id`  INT         NOT NULL,
     `birthday`          DATE,
     `interests`         MEDIUMTEXT,
@@ -318,8 +318,7 @@ INSERT INTO `gender`
     VALUES
     ("Male", NULL),
     ("Female", NULL),
-    ("Other", NULL),
-    ("Prefer not to say", NULL);
+    ("Other", NULL);
 
 INSERT INTO `country`
     (`name`, `image_url`)
