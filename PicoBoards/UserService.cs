@@ -18,7 +18,7 @@ namespace PicoBoards
                 WHERE   `UserName` = @UserName
                 LIMIT   2",
                 new { UserName = userName })
-                .ToCollection<Wtf>()
+                .ToCollection<Login>()
                 .ExecuteAsync();
 
             if (user.Count == 0)
@@ -27,7 +27,7 @@ namespace PicoBoards
             return password == user[0].Password;
         }
 
-        private sealed class Wtf
+        private sealed class Login
         {
             public string UserName { get; set; }
             public string Password { get; set; }
