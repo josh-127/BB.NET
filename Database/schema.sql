@@ -144,13 +144,16 @@ CREATE TABLE IF NOT EXISTS `GlobalConfiguration` (
 );
 
 INSERT INTO `Group`
-    (`Name`, `Description`)
+    (`GroupId`, `Name`, `Description`)
     VALUES
-    ("Administrator", NULL),
-    ("Global Moderator", NULL),
-    ("Member", NULL);
+    (1, "Administrator", NULL),
+    (2, "Global Moderator", NULL),
+    (3, "Member", NULL);
+
+INSERT INTO `User`
+    (`UserId`, `GroupId`, `Email`, `UserName`, `Password`)
+    VALUES
+    (1, 1, "admin@example.com", "admin", "password");
 
 INSERT INTO `GlobalConfiguration`
-    (`DefaultGroupId`)
-    VALUES
-    ((SELECT `GroupId` FROM `Group` WHERE `Name` = "Member"));
+    (`DefaultGroupId`) VALUES (3);
