@@ -2,6 +2,8 @@
 
 <h1>Log In</h1>
 
+@Html.ValidationSummary()
+
 <form asp-action="Login" method="post">
     <label asp-for="UserName"></label>
     <input asp-for="UserName" />

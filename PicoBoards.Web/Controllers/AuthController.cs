@@ -48,6 +48,7 @@ namespace PicoBoards.Web.Controllers
                 return LocalRedirect(model.ReturnUrl);
             }
 
+            ModelState.AddModelError("", "Invalid credentials.");
             return View(model);
         }
 
