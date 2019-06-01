@@ -9,6 +9,11 @@ namespace PicoBoards.Web.Controllers
 {
     public class AuthController : Controller
     {
+        private readonly UserService userService;
+
+        public AuthController(UserService userService)
+            => this.userService = userService;
+
         [HttpGet]
         public IActionResult Login(string returnUrl)
         {
@@ -24,10 +29,10 @@ namespace PicoBoards.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            if (model.UserName == "admin" && model.Password == "password")
+            if (await userService.ValidateUserAsync(model.UserName, model.Password))
             {
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
-                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, "admin"));
+                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, model.UserName));
 
                 var principal = new ClaimsPrincipal(identity);
                 var properties = new AuthenticationProperties

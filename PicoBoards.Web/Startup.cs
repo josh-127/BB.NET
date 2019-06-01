@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Tortuga.Chain;
 
 namespace PicoBoards.Web
 {
@@ -17,6 +18,11 @@ namespace PicoBoards.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            services.AddSingleton<IClass2DataSource>(new MySqlDataSource(connectionString));
+            services.AddScoped<UserService>();
+
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
                 {
