@@ -58,5 +58,24 @@ namespace PicoBoards.Web.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Register()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            await userService.RegisterUser(model.Email, model.UserName, model.Password);
+
+            return RedirectToAction("Login");
+        }
     }
 }

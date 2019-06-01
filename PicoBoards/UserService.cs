@@ -27,6 +27,23 @@ namespace PicoBoards
             return password == user[0].Password;
         }
 
+        public async Task RegisterUser(string email, string userName, string password)
+        {
+            var config = await dataSource
+                .GetByKey("GlobalConfiguration", "0")
+                .ToDataRow()
+                .ReadOrCache("GlobalConfiguration")
+                .ExecuteAsync();
+
+            await dataSource.Insert("User", new
+            {
+                GroupId = config["DefaultGroupId"],
+                Email = email,
+                UserName = userName,
+                Password = password
+            }).ExecuteAsync();
+        }
+
         private sealed class Login
         {
             public string UserName { get; set; }
