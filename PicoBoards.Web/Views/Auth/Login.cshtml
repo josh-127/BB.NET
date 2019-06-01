@@ -1,0 +1,16 @@
+﻿@model LoginModel
+
+<h1>Log In</h1>
+
+<form asp-action="Login" method="post">
+    <label asp-for="UserName"></label>
+    <input asp-for="UserName" />
+    <br />
+    <label asp-for="Password"></label>
+    <input asp-for="Password" />
+    <br />
+    <input asp-for="RememberMe" />
+    <label asp-for="RememberMe"></label>
+    <br />
+    <button type="submit">Log In</button>
+</form>
