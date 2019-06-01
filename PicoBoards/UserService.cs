@@ -12,19 +12,21 @@ namespace PicoBoards
 
         public async Task<bool> ValidateUserAsync(string userName, string password)
         {
-            var user = await dataSource.Sql(@"
+            var results = await dataSource.Sql(@"
                 SELECT  `UserName`, `Password`
                 FROM    `User`
                 WHERE   `UserName` = @UserName
-                LIMIT   2",
+                LIMIT   1",
                 new { UserName = userName })
-                .ToCollection<Login>()
+                .ToDataTable()
                 .ExecuteAsync();
 
-            if (user.Count == 0)
+            if (results.Rows.Count == 0)
                 return false;
 
-            return password == user[0].Password;
+            var user = results.Rows[0];
+
+            return password == (string) user["Password"];
         }
 
         public async Task RegisterUser(string email, string userName, string password)
@@ -42,12 +44,6 @@ namespace PicoBoards
                 UserName = userName,
                 Password = password
             }).ExecuteAsync();
-        }
-
-        private sealed class Login
-        {
-            public string UserName { get; set; }
-            public string Password { get; set; }
         }
     }
 }
