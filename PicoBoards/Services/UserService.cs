@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Tortuga.Chain;
 
-namespace PicoBoards
+namespace PicoBoards.Services
 {
     public sealed class UserService
     {
