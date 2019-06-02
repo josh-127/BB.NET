@@ -19,7 +19,7 @@ namespace PicoBoards.Services
             .ToString("EmailAddress")
             .ExecuteAsync();
 
-        public async Task<ValidationResultCollection> GetValidationResultsAsync(
+        public async Task<ValidationResultCollection> SetUserEmailAddressAsync(
             int userId,
             [DataType(DataType.EmailAddress)] string emailAddress)
         {
