@@ -1,0 +1,15 @@
+﻿@model GroupListingTable
+
+<h1>Groups</h1>
+
+<table>
+    <tbody>
+        @foreach (var listing in Model)
+        {
+            <tr>
+                <td>@listing.Name</td>
+                <td>@listing.Description</td>
+            </tr>
+        }
+    </tbody>
+</table>

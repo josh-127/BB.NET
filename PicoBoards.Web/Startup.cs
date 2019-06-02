@@ -22,6 +22,7 @@ namespace PicoBoards.Web
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
 
             services.AddSingleton(new MySqlDataSource(connectionString));
+            services.AddScoped<GroupService>();
             services.AddScoped<UserService>();
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
