@@ -9,8 +9,4 @@
         <PackageReference Include="Tortuga.Chain.MySql" Version="2.1.7009.31590" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Models\" />
-    </ItemGroup>
-
 </Project>

@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
+using PicoBoards.Models;
 using Tortuga.Chain;
 
 namespace PicoBoards.Services
@@ -10,40 +12,53 @@ namespace PicoBoards.Services
         public UserService(IClass2DataSource dataSource)
             => this.dataSource = dataSource;
 
-        public async Task<bool> ValidateUserAsync(string userName, string password)
+        public async Task<ValidationResultCollection> ValidateUserAsync(Login login)
         {
-            var results = await dataSource.Sql(@"
-                SELECT  `UserName`, `Password`
-                FROM    `User`
-                WHERE   `UserName` = @UserName
-                LIMIT   1",
-                new { UserName = userName })
-                .ToDataTable()
+            var result = login.GetValidationResult();
+
+            if (!result.IsValid)
+                return result;
+
+            var query = await dataSource
+                .From("User", new { login.UserName })
+                .WithLimits(1)
+                .ToTable()
                 .ExecuteAsync();
 
-            if (results.Rows.Count == 0)
-                return false;
+            if (query.Rows.Count == 0)
+            {
+                result.Add(new ValidationResult("Invalid credentials."));
+                return result;
+            }
 
-            var user = results.Rows[0];
+            if (login.Password != (string) query.Rows[0]["Password"])
+                result.Add(new ValidationResult("Invalid credentials."));
 
-            return password == (string) user["Password"];
+            return result;
         }
 
-        public async Task RegisterUser(string email, string userName, string password)
+        public async Task<ValidationResultCollection> RegisterUser(Registration registration)
         {
+            var result = registration.GetValidationResult();
+
+            if (!result.IsValid)
+                return result;
+
             var config = await dataSource
                 .GetByKey("GlobalConfiguration", "0")
-                .ToDataRow()
+                .ToRow()
                 .ReadOrCache("GlobalConfiguration")
                 .ExecuteAsync();
 
             await dataSource.Insert("User", new
             {
                 GroupId = config["DefaultGroupId"],
-                Email = email,
-                UserName = userName,
-                Password = password
+                registration.EmailAddress,
+                registration.UserName,
+                registration.Password
             }).ExecuteAsync();
+
+            return result;
         }
     }
 }
