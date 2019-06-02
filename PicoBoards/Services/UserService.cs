@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using PicoBoards.Models;
@@ -14,7 +13,7 @@ namespace PicoBoards.Services
         public UserService(IClass2DataSource dataSource)
             => this.dataSource = dataSource;
 
-        public async Task<UserProfileDetails> GetUserProfile(string userName)
+        public async Task<UserProfileDetails> GetUserProfileAsync(string userName)
         {
             var query = await dataSource
                 .Sql(@"
@@ -38,7 +37,7 @@ namespace PicoBoards.Services
             return query.FirstOrDefault();
         }
 
-        public async Task<UserListingTable> GetUserListings()
+        public async Task<UserListingTable> GetUserListingsAsync()
         {
             var query = await dataSource
                 .Sql(@"
@@ -85,7 +84,7 @@ namespace PicoBoards.Services
             return result;
         }
 
-        public async Task<ValidationResultCollection> RegisterUser(Registration registration)
+        public async Task<ValidationResultCollection> RegisterUserAsync(Registration registration)
         {
             var result = registration.GetValidationResult();
 

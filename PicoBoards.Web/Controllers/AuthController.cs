@@ -64,7 +64,7 @@ namespace PicoBoards.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegistrationForm form)
         {
-            var result = await userService.RegisterUser(form);
+            var result = await userService.RegisterUserAsync(form);
 
             if (result.IsValid)
                 return RedirectToAction("Login");

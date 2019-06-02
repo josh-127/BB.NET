@@ -13,7 +13,7 @@ namespace PicoBoards.Web.Controllers
 
         public async Task<IActionResult> Index(string id)
         {
-            var model = await userService.GetUserProfile(id);
+            var model = await userService.GetUserProfileAsync(id);
             return View(model);
         }
     }

@@ -14,7 +14,7 @@ namespace PicoBoards.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var model = await userService.GetUserListings();
+            var model = await userService.GetUserListingsAsync();
             return View(model);
         }
     }
