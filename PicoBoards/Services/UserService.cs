@@ -32,26 +32,26 @@ namespace PicoBoards.Services
             return new UserListingTable(query);
         }
 
-        public async Task<ValidationResultCollection> ValidateUserAsync(Login login)
+        public async Task<LoginResult> ValidateUserAsync(Login login)
         {
             var result = login.GetValidationResult();
 
             if (!result.IsValid)
-                return result;
+                return new LoginResult(result);
 
             var query = await dataSource
-                .From("User", new { login.UserName })
+                .From("User", new { login.UserName, login.Password })
                 .WithLimits(1)
-                .ToCollection<Login>()
+                .ToCollection<LoginToken>()
                 .ExecuteAsync();
 
-            if (query.Count == 0 || query[0].Password != login.Password)
+            if (query.Count == 0)
             {
                 result.Add(new ValidationResult("Invalid credentials."));
-                return result;
+                return new LoginResult(result);
             }
 
-            return result;
+            return new LoginResult(query[0]);
         }
 
         public async Task<ValidationResultCollection> RegisterUserAsync(Registration registration)

@@ -15,7 +15,7 @@ namespace PicoBoards.Web.Controllers
             if (!User.Identity.IsAuthenticated)
                 return RedirectToLogin();
 
-            var model = new Dashboard(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var model = new Dashboard(User.FindFirst(ClaimTypes.Name).Value);
             return View(model);
         }
 

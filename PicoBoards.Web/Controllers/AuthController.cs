@@ -24,16 +24,15 @@ namespace PicoBoards.Web.Controllers
         {
             var result = await userService.ValidateUserAsync(form);
 
-            if (result.IsValid)
+            if (result.IsSuccessful)
             {
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
-                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, form.UserName));
+                identity.AddClaim(new Claim(
+                    ClaimTypes.NameIdentifier, result.Value.UserId.ToString(), ClaimValueTypes.Integer));
+                identity.AddClaim(new Claim(ClaimTypes.Name, result.Value.UserName));
 
                 var principal = new ClaimsPrincipal(identity);
-                var properties = new AuthenticationProperties
-                {
-                    IsPersistent = form.RememberMe
-                };
+                var properties = new AuthenticationProperties { IsPersistent = form.RememberMe };
 
                 await HttpContext.SignInAsync(
                     CookieAuthenticationDefaults.AuthenticationScheme,
@@ -43,7 +42,7 @@ namespace PicoBoards.Web.Controllers
                 return LocalRedirect(form.ReturnUrl);
             }
 
-            ModelState.SetErrors(result);
+            ModelState.SetErrors(result.Error);
             return View(form);
         }
 
