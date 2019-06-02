@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `Group` (
 CREATE TABLE IF NOT EXISTS `User` (
     `UserId`            INT             NOT NULL    AUTO_INCREMENT,
     `GroupId`           INT             NOT NULL,
-    `Email`             VARCHAR(45)     NOT NULL,
+    `EmailAddress`      VARCHAR(45)     NOT NULL,
     `UserName`          VARCHAR(45)     NOT NULL,
     `Password`          VARCHAR(45)     NOT NULL,
     `Birthday`          DATE,
@@ -151,7 +151,7 @@ INSERT INTO `Group`
     (3, "Member", NULL);
 
 INSERT INTO `User`
-    (`UserId`, `GroupId`, `Email`, `UserName`, `Password`)
+    (`UserId`, `GroupId`, `EmailAddress`, `UserName`, `Password`)
     VALUES
     (1, 1, "admin@example.com", "admin", "password");
 
