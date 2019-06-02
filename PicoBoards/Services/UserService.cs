@@ -65,13 +65,33 @@ namespace PicoBoards.Services
                 .ReadOrCache("GlobalConfiguration")
                 .ExecuteAsync();
 
-            await dataSource.Insert("User", new
+            using (var transaction = await dataSource.BeginTransactionAsync())
             {
-                GroupId = config["DefaultGroupId"],
-                registration.EmailAddress,
-                registration.UserName,
-                registration.Password
-            }).ExecuteAsync();
+                var count = await transaction
+                    .From("User", new { registration.UserName })
+                    .WithLimits(1)
+                    .AsCount()
+                    .ExecuteAsync();
+
+                if (count == 0)
+                {
+                    await transaction
+                        .Insert("User", new
+                        {
+                            GroupId = config["DefaultGroupId"],
+                            registration.EmailAddress,
+                            registration.UserName,
+                            registration.Password
+                        })
+                        .ExecuteAsync();
+                }
+                else
+                {
+                    result.Add(new ValidationResult("User already exists."));
+                }
+
+                transaction.Commit();
+            }
 
             return result;
         }
