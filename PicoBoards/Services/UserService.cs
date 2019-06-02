@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using PicoBoards.Models;
 using Tortuga.Chain;
@@ -16,7 +17,7 @@ namespace PicoBoards.Services
         {
             var query = await dataSource
                 .Sql(@"
-                    SELECT `UserName`
+                    SELECT `UserName`, `Created`, `LastActive`
                     FROM `User`
                     ORDER BY `UserName` ASC", new { })
                 .ToTable()
@@ -27,7 +28,9 @@ namespace PicoBoards.Services
             foreach (var row in query.Rows)
                 table.Add(new UserListing
                 {
-                    UserName = row["UserName"] as string
+                    UserName = (string) row["UserName"],
+                    Joined = (DateTime) row["Created"],
+                    LastActive = (DateTime) row["LastActive"]
                 });
 
             return table;
