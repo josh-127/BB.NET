@@ -17,8 +17,21 @@ namespace PicoBoards.Services
         public async Task<UserProfileDetails> GetUserProfile(string userName)
         {
             var query = await dataSource
-                .From("User", new { UserName = userName })
-                .WithLimits(1)
+                .Sql(@"
+                    SELECT  `UserName`,
+                            (SELECT `Name`
+                                FROM `Group`
+                                WHERE `Group`.`GroupId` = `User`.`GroupId`
+                                LIMIT 1)
+                                AS `GroupName`,
+                            `Created`,
+                            `LastActive`,
+                            `Birthday`,
+                            `Location`,
+                            `Signature`
+                    FROM `User`
+                    WHERE `UserName` = @userName
+                    LIMIT 1", new { userName })
                 .ToCollection<UserProfileDetails>()
                 .ExecuteAsync();
 
