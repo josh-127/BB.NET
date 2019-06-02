@@ -73,17 +73,14 @@ namespace PicoBoards.Services
             var query = await dataSource
                 .From("User", new { login.UserName })
                 .WithLimits(1)
-                .ToTable()
+                .ToCollection<Login>()
                 .ExecuteAsync();
 
-            if (query.Rows.Count == 0)
+            if (query.Count == 0 || query[0].Password != login.Password)
             {
                 result.Add(new ValidationResult("Invalid credentials."));
                 return result;
             }
-
-            if (login.Password != (string) query.Rows[0]["Password"])
-                result.Add(new ValidationResult("Invalid credentials."));
 
             return result;
         }
