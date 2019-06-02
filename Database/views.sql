@@ -12,6 +12,7 @@ CREATE OR REPLACE VIEW `vw_UserListing` AS
 
 CREATE OR REPLACE VIEW `vw_UserProfileDetails` AS
     SELECT      `UserId`,
+                `EmailAddress`,
                 `UserName`,
                 g.`Name` AS `GroupName`,
                 `Created`,

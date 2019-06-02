@@ -7,6 +7,10 @@ namespace PicoBoards.Models
     {
         public int Id { get; set; }
 
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Email Address")]
+        public string EmailAddress { get; set; }
+
         [Display(Name = "Username")]
         public string UserName { get; set; }
 
