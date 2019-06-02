@@ -4,12 +4,14 @@ namespace PicoBoards.Models
 {
     public class Dashboard
     {
+        public int UserId { get; set; }
+
         [Display(Name = "Username")]
         public string UserName { get; set; }
 
         public Dashboard() { }
 
-        public Dashboard(string userName)
-            => UserName = userName;
+        public Dashboard(int userId, string userName)
+            => (UserId, UserName) = (userId, userName);
     }
 }

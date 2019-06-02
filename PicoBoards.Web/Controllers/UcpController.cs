@@ -20,6 +20,7 @@ namespace PicoBoards.Web.Controllers
         private bool IsAuthenticated => User.Identity.IsAuthenticated;
 
         private int UserId => int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+        private string UserName => User.FindFirstValue(ClaimTypes.Name);
 
         [HttpGet]
         public IActionResult Index()
@@ -27,7 +28,7 @@ namespace PicoBoards.Web.Controllers
             if (!User.Identity.IsAuthenticated)
                 return RedirectToLogin();
 
-            var model = new Dashboard(User.FindFirst(ClaimTypes.Name).Value);
+            var model = new Dashboard(UserId, UserName);
             return View(model);
         }
 

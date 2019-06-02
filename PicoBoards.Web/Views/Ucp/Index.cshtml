@@ -4,6 +4,7 @@
 
 <h2>@Model.UserName</h2>
 
+<a asp-action="Profile" asp-controller="User" asp-route-id="@Model.UserId">View Profile</a>
 <a asp-action="ChangeEmailAddress">Change Email Address</a>
 <a asp-action="ProfileSettings">Edit Profile</a>
 <a asp-action="AccountSettings">Account Settings</a>
