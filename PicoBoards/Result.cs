@@ -9,10 +9,10 @@ namespace PicoBoards
         public TError Error { get; }
         public bool IsSuccessful { get; }
 
-        public Result(TValue value)
+        protected Result(TValue value)
             => (Value, IsSuccessful) = (value, true);
 
-        public Result(TError value)
+        protected Result(TError value)
             => Error = value;
 
         public TDerived Select(Func<TValue, TDerived> mapper)
