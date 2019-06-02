@@ -1,0 +1,9 @@
+﻿@model ChangeEmailAddressForm
+
+<h1>User Control Panel</h1>
+
+<form asp-action="ChangeEmailAddress" method="post">
+    <label asp-for="EmailAddress"></label>
+    <input asp-for="EmailAddress" />
+    <button type="submit">Save Changes</button>
+</form>
