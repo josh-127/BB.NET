@@ -5,7 +5,13 @@ namespace PicoBoards.Models
 {
     public sealed class UserListingTable : ICollection<UserListing>
     {
-        private readonly List<UserListing> list = new List<UserListing>();
+        private readonly List<UserListing> list;
+
+        public UserListingTable()
+            => list = new List<UserListing>();
+
+        public UserListingTable(IEnumerable<UserListing> collection)
+            => list = new List<UserListing>(collection);
 
         public int Count => list.Count;
 

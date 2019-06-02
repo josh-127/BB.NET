@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Threading.Tasks;
 using PicoBoards.Models;
 using Tortuga.Chain;
@@ -14,15 +13,11 @@ namespace PicoBoards.Services
             => this.dataSource = dataSource;
 
         public async Task<UserProfileDetails> GetUserProfileAsync(string userName)
-        {
-            var query = await dataSource
+            => await dataSource
                 .From("vw_UserProfileDetails", new { userName })
                 .WithLimits(1)
-                .ToCollection<UserProfileDetails>()
+                .ToObject<UserProfileDetails>(RowOptions.AllowEmptyResults)
                 .ExecuteAsync();
-
-            return query.FirstOrDefault();
-        }
 
         public async Task<UserListingTable> GetUserListingsAsync()
         {
@@ -32,12 +27,7 @@ namespace PicoBoards.Services
                 .ToCollection<UserListing>()
                 .ExecuteAsync();
 
-            var table = new UserListingTable();
-
-            foreach (var row in query)
-                table.Add(row);
-
-            return table;
+            return new UserListingTable(query);
         }
 
         public async Task<ValidationResultCollection> ValidateUserAsync(Login login)
