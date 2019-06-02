@@ -11,7 +11,8 @@ namespace PicoBoards.Models
         [Display(Name = "Group")]
         public string GroupName { get; set; }
 
-        public DateTime Joined { get; set; }
+        [Display(Name = "Joined")]
+        public DateTime Created { get; set; }
 
         [Display(Name = "Last Active")]
         public DateTime LastActive { get; set; }

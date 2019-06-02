@@ -14,7 +14,7 @@ namespace PicoBoards.Models
         public string ProfileImageUrl { get; set; }
 
         [Display(Name = "Joined")]
-        public DateTime Joined { get; set; }
+        public DateTime Created { get; set; }
 
         [Display(Name = "Last Active")]
         public DateTime LastActive { get; set; }
