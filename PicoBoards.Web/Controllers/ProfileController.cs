@@ -11,9 +11,9 @@ namespace PicoBoards.Web.Controllers
         public ProfileController(UserService userService)
             => this.userService = userService;
 
-        public async Task<IActionResult> Index(string userName)
+        public async Task<IActionResult> Index(string id)
         {
-            var model = await userService.GetUserProfile(userName);
+            var model = await userService.GetUserProfile(id);
             return View(model);
         }
     }
