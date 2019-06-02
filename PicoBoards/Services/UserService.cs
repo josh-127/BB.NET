@@ -13,13 +13,13 @@ namespace PicoBoards.Services
         public UserService(MySqlDataSource dataSource)
             => this.dataSource = dataSource;
 
-        public async Task<string> GetUserEmailAddress(int userId)
+        public async Task<string> GetUserEmailAddressAsync(int userId)
             => await dataSource
             .GetByKey("User", userId)
             .ToString("EmailAddress")
             .ExecuteAsync();
 
-        public async Task<ValidationResultCollection> SetUserEmailAddress(
+        public async Task<ValidationResultCollection> GetValidationResultsAsync(
             int userId,
             [DataType(DataType.EmailAddress)] string emailAddress)
         {

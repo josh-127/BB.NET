@@ -38,14 +38,14 @@ namespace PicoBoards.Web.Controllers
             if (!IsAuthenticated)
                 return RedirectToLogin();
 
-            var emailAddress = await userService.GetUserEmailAddress(UserId);
+            var emailAddress = await userService.GetUserEmailAddressAsync(UserId);
             return View(new ChangeEmailAddressForm(emailAddress));
         }
 
         [HttpPost]
         public async Task<IActionResult> ChangeEmailAddress(ChangeEmailAddressForm form)
         {
-            await userService.SetUserEmailAddress(UserId, form.EmailAddress);
+            await userService.GetValidationResultsAsync(UserId, form.EmailAddress);
             return RedirectToAction("Index");
         }
     }
