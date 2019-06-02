@@ -47,23 +47,5 @@ namespace PicoBoards.Web.Controllers
             await userService.SetUserEmailAddress(UserId, form.EmailAddress);
             return RedirectToAction("Index");
         }
-
-        [HttpGet]
-        public IActionResult AccountSettings()
-        {
-            if (!IsAuthenticated)
-                return RedirectToLogin();
-
-            return View();
-        }
-
-        [HttpGet]
-        public IActionResult ProfileSettings()
-        {
-            if (!User.Identity.IsAuthenticated)
-                return RedirectToLogin();
-
-            return View();
-        }
     }
 }
