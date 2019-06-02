@@ -17,5 +17,12 @@ namespace PicoBoards.Web.Controllers
             var model = await userService.GetUserListingsAsync();
             return View(model);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Profile(int id)
+        {
+            var model = await userService.GetUserProfileAsync(id);
+            return View(model);
+        }
     }
 }
