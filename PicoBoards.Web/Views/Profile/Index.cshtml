@@ -12,6 +12,7 @@ else
     <p>Joined: @Model.Created</p>
     <p>Last Active: @Model.LastActive</p>
 
+    <p>Birthday: @(Model.Birthday.HasValue ? Model.Birthday.Value.Date.ToString() : "not specified")</p>
     <p>Location: @(Model.Location ?? "not specified")</p>
 
     <p>Signature:</p>
