@@ -5,6 +5,8 @@ namespace PicoBoards.Models
 {
     public class UserProfileDetails : IModel, IValidatable
     {
+        public int Id { get; set; }
+
         [Display(Name = "Username")]
         public string UserName { get; set; }
 

@@ -5,6 +5,8 @@ namespace PicoBoards.Models
 {
     public sealed class UserListing : IModel
     {
+        public int UserId { get; set; }
+
         [Display(Name = "Username")]
         public string UserName { get; set; }
 

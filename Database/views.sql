@@ -1,7 +1,8 @@
 USE `PicoBoards`;
 
 CREATE OR REPLACE VIEW `vw_UserListing` AS
-    SELECT      `UserName`,
+    SELECT      `UserId`,
+                `UserName`,
                 g.`Name` AS `GroupName`,
                 `Created`,
                 `LastActive`
@@ -10,7 +11,8 @@ CREATE OR REPLACE VIEW `vw_UserListing` AS
     ON          u.`GroupId` = g.`GroupId`;
 
 CREATE OR REPLACE VIEW `vw_UserProfileDetails` AS
-    SELECT      `UserName`,
+    SELECT      `UserId`,
+                `UserName`,
                 g.`Name` AS `GroupName`,
                 `Created`,
                 `LastActive`,
