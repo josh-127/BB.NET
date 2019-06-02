@@ -1,0 +1,14 @@
+﻿@model PicoBoards.Models.UserListingTable
+
+<h1>Users</h1>
+
+<table>
+    <tbody>
+        @foreach (var listing in Model)
+        {
+            <tr>
+                <td>@listing.UserName</td>
+            </tr>
+        }
+    </tbody>
+</table>
