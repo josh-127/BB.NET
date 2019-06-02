@@ -7,7 +7,11 @@
         @foreach (var listing in Model)
         {
             <tr>
-                <td>@listing.UserName</td>
+                <td>
+                    <a asp-action="Index" asp-controller="Profile" asp-route-id="@listing.UserName">
+                        @listing.UserName
+                    </a>
+                </td>
                 <td>@listing.GroupName</td>
                 <td>@listing.Created</td>
                 <td>@listing.LastActive</td>
