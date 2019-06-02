@@ -1,2 +1,8 @@
-﻿
+﻿@model Dashboard
+
 <h1>Dashboard | User Control Panel</h1>
+
+<h2>@Model.UserName</h2>
+
+<a asp-action="ProfileSettings">Edit Profile</a>
+<a asp-action="AccountSettings">Account Settings</a>
