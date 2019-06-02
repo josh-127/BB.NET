@@ -2,7 +2,7 @@
 
 namespace PicoBoards.Models
 {
-    public class Login : IValidatable
+    public class Login : IModel, IValidatable
     {
         [Display(Name = "Username")]
         [Required]

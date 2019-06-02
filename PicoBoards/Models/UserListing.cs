@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PicoBoards.Models
 {
-    public sealed class UserListing
+    public sealed class UserListing : IModel
     {
         [Display(Name = "Username")]
         public string UserName { get; set; }

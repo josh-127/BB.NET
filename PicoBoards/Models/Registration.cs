@@ -2,7 +2,7 @@
 
 namespace PicoBoards.Models
 {
-    public class Registration : IValidatable
+    public class Registration : IModel, IValidatable
     {
         [DataType(DataType.EmailAddress)]
         [Display(Name = "Email Address")]
