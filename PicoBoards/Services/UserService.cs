@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading.Tasks;
 using PicoBoards.Models;
 using Tortuga.Chain;
@@ -12,6 +13,17 @@ namespace PicoBoards.Services
 
         public UserService(IClass2DataSource dataSource)
             => this.dataSource = dataSource;
+
+        public async Task<UserProfileDetails> GetUserProfile(string userName)
+        {
+            var query = await dataSource
+                .From("User", new { UserName = userName })
+                .WithLimits(1)
+                .ToCollection<UserProfileDetails>()
+                .ExecuteAsync();
+
+            return query.FirstOrDefault();
+        }
 
         public async Task<UserListingTable> GetUserListings()
         {
