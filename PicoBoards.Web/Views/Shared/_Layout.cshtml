@@ -6,6 +6,7 @@
 </head>
 <body>
     <div>
+        <a asp-action="Index" asp-controller="Home">Home</a>
         <a asp-action="Index" asp-controller="User">Users</a>
 
         @if (User.Identity.IsAuthenticated)
