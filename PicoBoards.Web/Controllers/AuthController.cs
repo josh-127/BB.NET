@@ -17,28 +17,22 @@ namespace PicoBoards.Web.Controllers
 
         [HttpGet]
         public IActionResult Login(string returnUrl)
-        {
-            return View(new LoginModel
-            {
-                ReturnUrl = returnUrl
-            });
-        }
+            => View(new LoginForm(returnUrl ?? "/Home/Index"));
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginModel model)
+        public async Task<IActionResult> Login(LoginForm form)
         {
-            if (!ModelState.IsValid)
-                return View(model);
+            var result = await userService.ValidateUserAsync(form);
 
-            if (await userService.ValidateUserAsync(model.UserName, model.Password))
+            if (result.IsValid)
             {
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
-                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, model.UserName));
+                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, form.UserName));
 
                 var principal = new ClaimsPrincipal(identity);
                 var properties = new AuthenticationProperties
                 {
-                    IsPersistent = model.RememberMe
+                    IsPersistent = form.RememberMe
                 };
 
                 await HttpContext.SignInAsync(
@@ -46,18 +40,17 @@ namespace PicoBoards.Web.Controllers
                     principal,
                     properties);
 
-                return LocalRedirect(model.ReturnUrl);
+                return LocalRedirect(form.ReturnUrl);
             }
 
-            ModelState.AddModelError("", "Invalid credentials.");
-            return View(model);
+            ModelState.SetErrors(result);
+            return View(form);
         }
 
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-
             return RedirectToAction("Index", "Home");
         }
 
@@ -65,19 +58,19 @@ namespace PicoBoards.Web.Controllers
         public async Task<IActionResult> Register()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterModel model)
+        public async Task<IActionResult> Register(RegistrationForm form)
         {
-            if (!ModelState.IsValid)
-                return View(model);
+            var result = await userService.RegisterUser(form);
 
-            await userService.RegisterUser(model.Email, model.UserName, model.Password);
+            if (result.IsValid)
+                return RedirectToAction("Login");
 
-            return RedirectToAction("Login");
+            ModelState.SetErrors(result);
+            return View(form);
         }
     }
 }

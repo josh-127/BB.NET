@@ -1,12 +1,12 @@
-﻿@model RegisterModel
+﻿@model RegistrationForm
 
 <h1>Register</h1>
 
 @Html.ValidationSummary()
 
 <form asp-action="Register" method="post">
-    <label asp-for="Email"></label>
-    <input asp-for="Email" />
+    <label asp-for="EmailAddress"></label>
+    <input asp-for="EmailAddress" />
     <br />
     <label asp-for="UserName"></label>
     <input asp-for="UserName" />
