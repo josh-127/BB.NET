@@ -7,9 +7,9 @@ namespace PicoBoards.Services
 {
     public sealed class UserService
     {
-        private readonly IClass2DataSource dataSource;
+        private readonly MySqlDataSource dataSource;
 
-        public UserService(IClass2DataSource dataSource)
+        public UserService(MySqlDataSource dataSource)
             => this.dataSource = dataSource;
 
         public async Task<UserProfileDetails> GetUserProfileAsync(string userName)
