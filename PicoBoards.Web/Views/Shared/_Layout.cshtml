@@ -12,6 +12,7 @@
 
         @if (User.Identity.IsAuthenticated)
         {
+            <a asp-action="Index" asp-controller="Ucp">UCP</a>
             <form asp-action="Logout" asp-controller="Auth" method="post">
                 <button type="submit">Log Out</button>
             </form>
