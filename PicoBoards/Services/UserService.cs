@@ -16,21 +16,8 @@ namespace PicoBoards.Services
         public async Task<UserProfileDetails> GetUserProfileAsync(string userName)
         {
             var query = await dataSource
-                .Sql(@"
-                    SELECT  `UserName`,
-                            (SELECT `Name`
-                                FROM `Group`
-                                WHERE `Group`.`GroupId` = `User`.`GroupId`
-                                LIMIT 1)
-                                AS `GroupName`,
-                            `Created`,
-                            `LastActive`,
-                            `Birthday`,
-                            `Location`,
-                            `Signature`
-                    FROM `User`
-                    WHERE `UserName` = @userName
-                    LIMIT 1", new { userName })
+                .From("vw_UserProfileDetails", new { userName })
+                .WithLimits(1)
                 .ToCollection<UserProfileDetails>()
                 .ExecuteAsync();
 
@@ -40,17 +27,8 @@ namespace PicoBoards.Services
         public async Task<UserListingTable> GetUserListingsAsync()
         {
             var query = await dataSource
-                .Sql(@"
-                    SELECT  `UserName`,
-                            (SELECT `Name`
-                                FROM `Group`
-                                WHERE `Group`.`GroupId` = `User`.`GroupId`
-                                LIMIT 1)
-                                AS `GroupName`,
-                            `Created`,
-                            `LastActive`
-                    FROM `User`
-                    ORDER BY `UserName` ASC", new { })
+                .From("User")
+                .WithSorting(new SortExpression("UserName"))
                 .ToCollection<UserListing>()
                 .ExecuteAsync();
 
