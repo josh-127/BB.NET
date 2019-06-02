@@ -29,21 +29,23 @@ namespace PicoBoards.Services
         {
             var query = await dataSource
                 .Sql(@"
-                    SELECT `UserName`, `Created`, `LastActive`
+                    SELECT  `UserName`,
+                            (SELECT `Name`
+                                FROM `Group`
+                                WHERE `Group`.`GroupId` = `User`.`GroupId`
+                                LIMIT 1)
+                                AS `GroupName`,
+                            `Created`,
+                            `LastActive`
                     FROM `User`
                     ORDER BY `UserName` ASC", new { })
-                .ToTable()
+                .ToCollection<UserListing>()
                 .ExecuteAsync();
 
             var table = new UserListingTable();
 
-            foreach (var row in query.Rows)
-                table.Add(new UserListing
-                {
-                    UserName = (string) row["UserName"],
-                    Joined = (DateTime) row["Created"],
-                    LastActive = (DateTime) row["LastActive"]
-                });
+            foreach (var row in query)
+                table.Add(row);
 
             return table;
         }
