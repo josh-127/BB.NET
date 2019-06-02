@@ -1,2 +1,18 @@
-﻿
-<h1>Profile</h1>
+﻿@model UserProfileDetails
+
+@if (Model is null)
+{
+    <h2>This user does not exist.</h2>
+}
+else
+{
+    <h1>@Model.UserName</h1>
+
+    <p>Joined: @Model.Joined.ToString()</p>
+    <p>Last Active: @Model.LastActive</p>
+
+    <p>Location: @(Model.Location ?? "<i>not specified</i>")</p>
+
+    <p>Signature:</p>
+    <p>@Model?.Signature</p>
+}
