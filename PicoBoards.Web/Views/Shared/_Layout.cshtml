@@ -8,7 +8,7 @@
     <div>
         <a asp-action="Index" asp-controller="Home">Home</a>
         <a asp-action="Index" asp-controller="User">Users</a>
-        <a asp-action="Index" asp-controller="Group">Groups</a>
+        <a asp-action="Group" asp-controller="User">Groups</a>
 
         @if (User.Identity.IsAuthenticated)
         {
