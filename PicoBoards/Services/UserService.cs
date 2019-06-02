@@ -12,6 +12,27 @@ namespace PicoBoards.Services
         public UserService(IClass2DataSource dataSource)
             => this.dataSource = dataSource;
 
+        public async Task<UserListingTable> GetUserListings()
+        {
+            var query = await dataSource
+                .Sql(@"
+                    SELECT `UserName`
+                    FROM `User`
+                    ORDER BY `UserName` ASC", new { })
+                .ToTable()
+                .ExecuteAsync();
+
+            var table = new UserListingTable();
+
+            foreach (var row in query.Rows)
+                table.Add(new UserListing
+                {
+                    UserName = row["UserName"] as string
+                });
+
+            return table;
+        }
+
         public async Task<ValidationResultCollection> ValidateUserAsync(Login login)
         {
             var result = login.GetValidationResult();
