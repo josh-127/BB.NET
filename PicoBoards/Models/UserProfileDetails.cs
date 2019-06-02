@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PicoBoards.Models
 {
-    public class UserProfileDetails
+    public class UserProfileDetails : IValidatable
     {
         [Display(Name = "Username")]
         public string UserName { get; set; }
@@ -17,10 +17,12 @@ namespace PicoBoards.Models
         [Display(Name = "Last Active")]
         public DateTime LastActive { get; set; }
 
+        [DataType(DataType.Date)]
         public DateTime? Birthday { get; set; }
 
         public string Location { get; set; }
 
+        [DataType(DataType.Text)]
         public string Signature { get; set; }
     }
 }
