@@ -53,6 +53,8 @@ CREATE TABLE IF NOT EXISTS `User` (
     `EmailAddress`      VARCHAR(45)     NOT NULL,
     `UserName`          VARCHAR(45)     NOT NULL,
     `Password`          VARCHAR(45)     NOT NULL,
+    `Created`           TIMESTAMP       NOT NULL    DEFAULT CURRENT_TIMESTAMP,
+    `LastActive`        TIMESTAMP       NOT NULL    DEFAULT CURRENT_TIMESTAMP   ON UPDATE CURRENT_TIMESTAMP,
     `Birthday`          DATE,
     `Location`          VARCHAR(45),
     `Signature`         TEXT,
