@@ -44,7 +44,9 @@ CREATE TABLE IF NOT EXISTS `Group` (
     `GroupId`       INT             NOT NULL    AUTO_INCREMENT,
     `Name`          VARCHAR(45)     NOT NULL,
     `Description`   VARCHAR(255),
-    PRIMARY KEY (`GroupId`)
+    PRIMARY KEY (`GroupId`),
+    CONSTRAINT `uk_Group_Name`
+        UNIQUE KEY (`Name`)
 );
 
 CREATE TABLE IF NOT EXISTS `User` (
@@ -60,6 +62,8 @@ CREATE TABLE IF NOT EXISTS `User` (
     `Signature`         TEXT,
     PRIMARY KEY (`UserId`),
     INDEX `idx_User_GroupId` (`GroupId`),
+    CONSTRAINT `uk_User_UserName`
+        UNIQUE KEY (`UserName`),
     CONSTRAINT `fk_User_GroupId`
         FOREIGN KEY (`GroupId`)
         REFERENCES `Group` (`GroupId`)
