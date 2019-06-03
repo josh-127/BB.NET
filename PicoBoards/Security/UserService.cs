@@ -97,38 +97,6 @@ namespace PicoBoards.Security
             }
         }
 
-        public async Task<string> QueryAsync(UserEmailAddressQuery query)
-            => await dataSource
-                .GetByKey("User", query.UserId)
-                .ToString("EmailAddress")
-                .ExecuteAsync();
-
-        public async Task ExecuteAsync(SetUserEmailAddressCommand command)
-        {
-            if (!command.IsValid())
-                throw new CommandException("Invalid value.");
-
-            await dataSource
-                .Update("User", command)
-                .ExecuteAsync();
-        }
-
-        public async Task<string> QueryAsync(UserNameQuery query)
-            => await dataSource
-                .GetByKey("User", query.UserId)
-                .ToString("UserName")
-                .ExecuteAsync();
-
-        public async Task ExecuteAsync(SetUserNameCommand command)
-        {
-            if (!command.IsValid())
-                throw new CommandException("Invalid value.");
-
-            await dataSource
-                .Update("User", command)
-                .ExecuteAsync();
-        }
-
         public async Task<PublicUserProfileDetails> QueryAsync(PublicUserProfileQuery query)
             => (await dataSource
                 .From("vw_UserProfileDetails", query)

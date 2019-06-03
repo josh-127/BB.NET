@@ -106,55 +106,5 @@ namespace PicoBoards.Web.Controllers
                 return View(form);
             }
         }
-
-        [HttpGet]
-        public async Task<IActionResult> ChangeEmailAddress()
-        {
-            if (!IsAuthenticated)
-                return RedirectToLogin();
-
-            var emailAddress = await userService.QueryAsync(new UserEmailAddressQuery(UserId));
-            return View(new ChangeEmailAddressForm(emailAddress));
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> ChangeEmailAddress(ChangeEmailAddressForm form)
-        {
-            try
-            {
-                await userService.ExecuteAsync(new SetUserEmailAddressCommand(UserId, form.EmailAddress));
-                return RedirectToAction("Index");
-            }
-            catch (CommandException e)
-            {
-                ModelState.AddModelError("", e.Message);
-                return View(form);
-            }
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> ChangeUserName()
-        {
-            if (!IsAuthenticated)
-                return RedirectToLogin();
-
-            var userName = await userService.QueryAsync(new UserNameQuery(UserId));
-            return View(new ChangeUserNameForm(userName));
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> ChangeUserName(ChangeUserNameForm form)
-        {
-            try
-            {
-                await userService.ExecuteAsync(new SetUserNameCommand(UserId, form.UserName));
-                return RedirectToAction("Index");
-            }
-            catch (CommandException e)
-            {
-                ModelState.AddModelError("", e.Message);
-                return View(form);
-            }
-        }
     }
 }
