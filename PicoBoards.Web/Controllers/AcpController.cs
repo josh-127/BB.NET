@@ -35,7 +35,7 @@ namespace PicoBoards.Web.Controllers
                 if (ModelState.IsValid)
                 {
                     await forumService.ExecuteAsync(new AddCategoryCommand(form.Name));
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Forums");
                 }
             }
             catch (CommandException e)
@@ -44,6 +44,21 @@ namespace PicoBoards.Web.Controllers
             }
 
             return View("Forums");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveCategory(int id)
+        {
+            try
+            {
+                await forumService.ExecuteAsync(new RemoveCategoryCommand(id));
+                return RedirectToAction("Forums");
+            }
+            catch (CommandException e)
+            {
+                ModelState.AddModelError("", e.Message);
+                return View("Forums");
+            }
         }
     }
 }

@@ -10,5 +10,8 @@
 {
     <div>
         <h2>@listing.Name</h2>
+        <form asp-action="RemoveCategory" asp-route-id="@listing.CategoryId" method="post">
+            <button type="submit">(remove)</button>
+        </form>
     </div>
 }
