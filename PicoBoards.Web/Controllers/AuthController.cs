@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using PicoBoards.Security.Authentication;
-using PicoBoards.Web.Models;
+using PicoBoards.Web.ViewModels;
 
 namespace PicoBoards.Web.Controllers
 {

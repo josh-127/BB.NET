@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace PicoBoards.Web.Models
+namespace PicoBoards.Web.ViewModels
 {
     public sealed class UserProfileForm
     {

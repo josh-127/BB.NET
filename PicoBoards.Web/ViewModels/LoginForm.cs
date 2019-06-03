@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PicoBoards.Security.Authentication.Queries;
 
-namespace PicoBoards.Web.Models
+namespace PicoBoards.Web.ViewModels
 {
     public sealed class LoginForm
     {

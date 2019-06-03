@@ -7,7 +7,7 @@ using PicoBoards.Security;
 using PicoBoards.Security.Authentication.Models;
 using PicoBoards.Security.Commands;
 using PicoBoards.Security.Queries;
-using PicoBoards.Web.Models;
+using PicoBoards.Web.ViewModels;
 
 namespace PicoBoards.Web.Controllers
 {
