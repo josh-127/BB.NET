@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using PicoBoards.Security.Authentication;
 using PicoBoards.Security.Models;
@@ -15,20 +14,37 @@ namespace PicoBoards.Security
         public UserService(MySqlDataSource dataSource)
             => this.dataSource = dataSource;
 
-        public UserEditorService BeginEdit(UserAccessToken token)
-            => new UserEditorService(dataSource, token);
-
         public async Task<string> GetUserEmailAddressAsync(int userId)
             => await dataSource
                 .GetByKey("User", userId)
                 .ToString("EmailAddress")
                 .ExecuteAsync();
 
+        public async Task SetEmailAddressAsync(int userId, string emailAddress)
+        {
+            if (!emailAddress.IsValidEmailAddress())
+                throw new EditorException("Invalid value.");
+
+            await dataSource
+                .Update("User", new { userId, emailAddress })
+                .ExecuteAsync();
+        }
+
         public async Task<string> GetUserNameAsync(int userId)
             => await dataSource
                 .GetByKey("User", userId)
                 .ToString("UserName")
                 .ExecuteAsync();
+
+        public async Task SetUserNameAsync(int userId, string userName)
+        {
+            if (!userName.IsValidUserName())
+                throw new EditorException("Invalid value.");
+
+            await dataSource
+                .Update("User", new { userId, userName })
+                .ExecuteAsync();
+        }
 
         public async Task<UserProfileDetails> GetUserProfileAsync(UserProfileQuery query)
             => (await dataSource

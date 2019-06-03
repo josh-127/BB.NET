@@ -45,18 +45,15 @@ namespace PicoBoards.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> ChangeEmailAddress(ChangeEmailAddressForm form)
         {
-            using (var editor = userService.BeginEdit(UserAccessToken))
+            try
             {
-                try
-                {
-                    await editor.SetEmailAddressAsync(form.EmailAddress);
-                    return RedirectToAction("Index");
-                }
-                catch (EditorException e)
-                {
-                    ModelState.AddModelError("", e.Message);
-                    return View(form);
-                }
+                await userService.SetEmailAddressAsync(UserId, form.EmailAddress);
+                return RedirectToAction("Index");
+            }
+            catch (EditorException e)
+            {
+                ModelState.AddModelError("", e.Message);
+                return View(form);
             }
         }
 
@@ -73,18 +70,15 @@ namespace PicoBoards.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> ChangeUserName(ChangeUserNameForm form)
         {
-            using (var editor = userService.BeginEdit(UserAccessToken))
+            try
             {
-                try
-                {
-                    await editor.SetUserNameAsync(form.UserName);
-                    return RedirectToAction("Index");
-                }
-                catch (EditorException e)
-                {
-                    ModelState.AddModelError("", e.Message);
-                    return View(form);
-                }
+                await userService.SetUserNameAsync(UserId, form.UserName);
+                return RedirectToAction("Index");
+            }
+            catch (EditorException e)
+            {
+                ModelState.AddModelError("", e.Message);
+                return View(form);
             }
         }
     }
