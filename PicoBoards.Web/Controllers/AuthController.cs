@@ -65,7 +65,7 @@ namespace PicoBoards.Web.Controllers
         {
             try
             {
-                await authService.RegisterUserAsync(form.ToRegistration());
+                await authService.ExecuteAsync(form.ToRegistration());
                 return RedirectToAction("Login");
             }
             catch (AuthenticationException e)

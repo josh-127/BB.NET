@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using PicoBoards.DataAnnotations;
 
-namespace PicoBoards.Security.Authentication
+namespace PicoBoards.Security.Authentication.Commands
 {
-    public sealed class Registration : IValidatable
+    public sealed class RegisterUserCommand : IValidatable
     {
         [EmailAddress]
         [Required]
@@ -16,9 +16,9 @@ namespace PicoBoards.Security.Authentication
         [Required]
         public string Password { get; private set; }
 
-        internal Registration() { }
+        internal RegisterUserCommand() { }
 
-        public Registration(string emailAddress, string userName, string password)
+        public RegisterUserCommand(string emailAddress, string userName, string password)
         {
             EmailAddress = emailAddress;
             UserName = userName;

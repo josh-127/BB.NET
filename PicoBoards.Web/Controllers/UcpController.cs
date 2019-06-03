@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PicoBoards.Security;
-using PicoBoards.Security.Authentication;
+using PicoBoards.Security.Authentication.Models;
 using PicoBoards.Security.Commands;
 using PicoBoards.Security.Queries;
 using PicoBoards.Web.Models;

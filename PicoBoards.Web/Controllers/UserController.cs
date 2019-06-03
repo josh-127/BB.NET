@@ -30,7 +30,7 @@ namespace PicoBoards.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Group()
         {
-            var model = await groupService.GetGroupListingsAsync();
+            var model = await groupService.QueryAsync(new GroupListingsQuery());
             return View(model);
         }
     }

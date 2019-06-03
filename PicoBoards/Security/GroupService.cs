@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using PicoBoards.Security.Models;
+using PicoBoards.Security.Queries;
 using Tortuga.Chain;
 
 namespace PicoBoards.Security
@@ -11,15 +12,12 @@ namespace PicoBoards.Security
         public GroupService(MySqlDataSource dataSource)
             => this.dataSource = dataSource;
 
-        public async Task<GroupListingTable> GetGroupListingsAsync()
-        {
-            var query = await dataSource
+        public async Task<GroupListingTable> QueryAsync(GroupListingsQuery query)
+            => new GroupListingTable(
+                await dataSource
                 .From("Group")
                 .WithSorting(new SortExpression("Name"))
                 .ToCollection<GroupListing>()
-                .ExecuteAsync();
-
-            return new GroupListingTable(query);
-        }
+                .ExecuteAsync());
     }
 }

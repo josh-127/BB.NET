@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using PicoBoards.DataAnnotations;
-using PicoBoards.Security.Authentication;
+using PicoBoards.Security.Authentication.Commands;
 
 namespace PicoBoards.Web.Models
 {
@@ -25,7 +25,7 @@ namespace PicoBoards.Web.Models
         [Display(Name = "Confirm Password")]
         public string ConfirmPassword { get; set; }
 
-        public Registration ToRegistration()
-            => new Registration(EmailAddress, UserName, Password);
+        public RegisterUserCommand ToRegistration()
+            => new RegisterUserCommand(EmailAddress, UserName, Password);
     }
 }

@@ -1,5 +1,5 @@
 ﻿
-namespace PicoBoards.Security.Authentication
+namespace PicoBoards.Security.Authentication.Queries
 {
     public sealed class LoginCredentials
     {

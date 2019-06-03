@@ -1,4 +1,7 @@
 ﻿using System.Threading.Tasks;
+using PicoBoards.Security.Authentication.Commands;
+using PicoBoards.Security.Authentication.Models;
+using PicoBoards.Security.Authentication.Queries;
 using Tortuga.Chain;
 
 namespace PicoBoards.Security.Authentication
@@ -23,9 +26,9 @@ namespace PicoBoards.Security.Authentication
                 : throw new AuthenticationException("Invalid credentials.");
         }
 
-        public async Task<UserAccessToken> RegisterUserAsync(Registration registration)
+        public async Task<UserAccessToken> ExecuteAsync(RegisterUserCommand command)
         {
-            if (!registration.IsValid())
+            if (!command.IsValid())
                 throw new AuthenticationException("Invalid fields.");
 
             var defaultGroupId = await dataSource
@@ -38,14 +41,14 @@ namespace PicoBoards.Security.Authentication
                 .Insert("User", new
                 {
                     GroupId = defaultGroupId,
-                    registration.EmailAddress,
-                    registration.UserName,
-                    registration.Password
+                    command.EmailAddress,
+                    command.UserName,
+                    command.Password
                 })
                 .ExecuteAsync();
 
             return userId.HasValue
-                ? new UserAccessToken(userId.Value, registration.UserName)
+                ? new UserAccessToken(userId.Value, command.UserName)
                 : throw new AuthenticationException("User already exists.");
         }
     }
