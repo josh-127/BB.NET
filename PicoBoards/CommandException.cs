@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PicoBoards.Security
+namespace PicoBoards
 {
     public sealed class CommandException : Exception
     {
