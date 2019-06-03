@@ -14,13 +14,13 @@ namespace PicoBoards.Security
         public UserService(MySqlDataSource dataSource)
             => this.dataSource = dataSource;
 
-        public async Task<string> GetUserEmailAddressAsync(UserEmailAddressQuery query)
+        public async Task<string> QueryAsync(UserEmailAddressQuery query)
             => await dataSource
                 .GetByKey("User", query.UserId)
                 .ToString("EmailAddress")
                 .ExecuteAsync();
 
-        public async Task SetEmailAddressAsync(SetUserEmailAddressCommand command)
+        public async Task ExecuteAsync(SetUserEmailAddressCommand command)
         {
             if (!command.IsValid())
                 throw new CommandException("Invalid value.");
@@ -30,13 +30,13 @@ namespace PicoBoards.Security
                 .ExecuteAsync();
         }
 
-        public async Task<string> GetUserNameAsync(UserNameQuery query)
+        public async Task<string> QueryAsync(UserNameQuery query)
             => await dataSource
                 .GetByKey("User", query.UserId)
                 .ToString("UserName")
                 .ExecuteAsync();
 
-        public async Task SetUserNameAsync(SetUserNameCommand command)
+        public async Task ExecuteAsync(SetUserNameCommand command)
         {
             if (!command.IsValid())
                 throw new CommandException("Invalid value.");
@@ -46,7 +46,7 @@ namespace PicoBoards.Security
                 .ExecuteAsync();
         }
 
-        public async Task<UserProfileDetails> GetUserProfileAsync(UserProfileQuery query)
+        public async Task<UserProfileDetails> QueryAsync(UserProfileQuery query)
             => (await dataSource
                 .From("vw_UserProfileDetails", query)
                 .WithLimits(1)
@@ -54,7 +54,7 @@ namespace PicoBoards.Security
                 .ExecuteAsync())
                 .FirstOrDefault();
 
-        public async Task<UserListingTable> GetUserListingsAsync(UserListingsQuery query)
+        public async Task<UserListingTable> QueryAsync(UserListingsQuery query)
             => new UserListingTable(
                 await dataSource
                 .From("User")

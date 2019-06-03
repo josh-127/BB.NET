@@ -40,7 +40,7 @@ namespace PicoBoards.Web.Controllers
             if (!IsAuthenticated)
                 return RedirectToLogin();
 
-            var emailAddress = await userService.GetUserEmailAddressAsync(new UserEmailAddressQuery(UserId));
+            var emailAddress = await userService.QueryAsync(new UserEmailAddressQuery(UserId));
             return View(new ChangeEmailAddressForm(emailAddress));
         }
 
@@ -49,7 +49,7 @@ namespace PicoBoards.Web.Controllers
         {
             try
             {
-                await userService.SetEmailAddressAsync(new SetUserEmailAddressCommand(UserId, form.EmailAddress));
+                await userService.ExecuteAsync(new SetUserEmailAddressCommand(UserId, form.EmailAddress));
                 return RedirectToAction("Index");
             }
             catch (CommandException e)
@@ -65,7 +65,7 @@ namespace PicoBoards.Web.Controllers
             if (!IsAuthenticated)
                 return RedirectToLogin();
 
-            var userName = await userService.GetUserNameAsync(new UserNameQuery(UserId));
+            var userName = await userService.QueryAsync(new UserNameQuery(UserId));
             return View(new ChangeUserNameForm(userName));
         }
 
@@ -74,7 +74,7 @@ namespace PicoBoards.Web.Controllers
         {
             try
             {
-                await userService.SetUserNameAsync(new SetUserNameCommand(UserId, form.UserName));
+                await userService.ExecuteAsync(new SetUserNameCommand(UserId, form.UserName));
                 return RedirectToAction("Index");
             }
             catch (CommandException e)

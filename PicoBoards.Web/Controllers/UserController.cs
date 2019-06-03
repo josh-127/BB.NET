@@ -16,14 +16,14 @@ namespace PicoBoards.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var model = await userService.GetUserListingsAsync(new UserListingsQuery());
+            var model = await userService.QueryAsync(new UserListingsQuery());
             return View(model);
         }
 
         [HttpGet]
         public async Task<IActionResult> Profile(int id)
         {
-            var model = await userService.GetUserProfileAsync(new UserProfileQuery(id));
+            var model = await userService.QueryAsync(new UserProfileQuery(id));
             return View(model);
         }
 
