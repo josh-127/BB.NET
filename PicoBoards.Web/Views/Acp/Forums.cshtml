@@ -1,0 +1,14 @@
+﻿@model CategoryListingCollection
+
+<h1>Forums | Admin Control Panel</h1>
+
+@Html.ValidationSummary()
+
+@await Html.PartialAsync("_AddCategory", new AddCategoryForm())
+
+@foreach (var listing in Model)
+{
+    <div>
+        <h2>@listing.Name</h2>
+    </div>
+}
