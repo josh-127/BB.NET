@@ -2,6 +2,8 @@
 
 <h1>User Control Panel</h1>
 
+@Html.ValidationSummary()
+
 <form asp-action="ChangeEmailAddress" method="post">
     <label asp-for="EmailAddress"></label>
     <input asp-for="EmailAddress" />

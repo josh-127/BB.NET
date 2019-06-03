@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using PicoBoards.Models;
@@ -20,12 +21,15 @@ namespace PicoBoards.Services
             .ExecuteAsync();
 
         public async Task<ValidationResultCollection> SetUserEmailAddressAsync(
-            int userId,
-            [DataType(DataType.EmailAddress)] string emailAddress)
+            int userId, string emailAddress)
         {
-            var context = new ValidationContext(emailAddress);
+            var context = new ValidationContext(emailAddress) { MemberName = nameof(emailAddress) };
             var result = new ValidationResultCollection();
-            Validator.TryValidateObject(emailAddress, context, result, true);
+            Validator.TryValidateValue(emailAddress, context, result, new List<ValidationAttribute>
+            {
+                new EmailAddressAttribute(),
+                new RequiredAttribute()
+            });
 
             if (!result.IsValid)
                 return result;

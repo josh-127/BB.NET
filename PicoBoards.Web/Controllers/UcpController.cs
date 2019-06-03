@@ -45,8 +45,13 @@ namespace PicoBoards.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> ChangeEmailAddress(ChangeEmailAddressForm form)
         {
-            await userService.SetUserEmailAddressAsync(UserId, form.EmailAddress);
-            return RedirectToAction("Index");
+            var result = await userService.SetUserEmailAddressAsync(UserId, form.EmailAddress);
+
+            if (result.IsValid)
+                return RedirectToAction("Index");
+
+            ModelState.SetErrors(result);
+            return View(form);
         }
     }
 }
