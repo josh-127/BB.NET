@@ -2,10 +2,9 @@
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using PicoBoards.Models;
 using Tortuga.Chain;
 
-namespace PicoBoards.Services
+namespace PicoBoards.Security
 {
     public sealed class UserService
     {

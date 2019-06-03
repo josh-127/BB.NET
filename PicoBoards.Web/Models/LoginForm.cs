@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
-using PicoBoards.Models;
+using PicoBoards.Security.Authentication;
 
 namespace PicoBoards.Web.Models
 {

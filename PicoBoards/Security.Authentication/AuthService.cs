@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
-using PicoBoards.Models;
 using Tortuga.Chain;
 
-namespace PicoBoards.Services
+namespace PicoBoards.Security.Authentication
 {
     public sealed class AuthService
     {

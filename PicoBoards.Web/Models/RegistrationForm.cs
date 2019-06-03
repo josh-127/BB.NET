@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using PicoBoards.Models;
+using PicoBoards.Security.Authentication;
 
 namespace PicoBoards.Web.Models
 {

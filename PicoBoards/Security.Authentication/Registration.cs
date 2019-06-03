@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using PicoBoards.DataAnnotations;
 
-namespace PicoBoards.Models
+namespace PicoBoards.Security.Authentication
 {
     public class Registration : IModel, IValidatable
     {

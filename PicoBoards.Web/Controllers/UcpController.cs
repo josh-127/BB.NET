@@ -1,8 +1,7 @@
 ﻿using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using PicoBoards.Models;
-using PicoBoards.Services;
+using PicoBoards.Security;
 using PicoBoards.Web.Models;
 
 namespace PicoBoards.Web.Controllers

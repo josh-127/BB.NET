@@ -1,5 +1,5 @@
 ﻿
-namespace PicoBoards.Models
+namespace PicoBoards.Security.Authentication
 {
     public sealed class LoginResult : Result<LoginResult, LoginToken, ValidationResultCollection>
     {

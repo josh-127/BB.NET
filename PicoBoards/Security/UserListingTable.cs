@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace PicoBoards.Models
+namespace PicoBoards.Security
 {
     public sealed class UserListingTable : ICollection<UserListing>
     {

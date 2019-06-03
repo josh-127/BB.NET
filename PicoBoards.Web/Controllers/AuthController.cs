@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using PicoBoards.Services;
+using PicoBoards.Security.Authentication;
 using PicoBoards.Web.Models;
 
 namespace PicoBoards.Web.Controllers

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PicoBoards.Models
+namespace PicoBoards.Security.Authentication
 {
     public class Login : IModel, IValidatable
     {

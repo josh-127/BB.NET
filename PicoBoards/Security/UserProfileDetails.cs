@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace PicoBoards.Models
+namespace PicoBoards.Security
 {
     public class UserProfileDetails : IModel, IValidatable
     {

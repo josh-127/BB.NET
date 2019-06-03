@@ -1,5 +1,5 @@
 ﻿
-namespace PicoBoards.Models
+namespace PicoBoards.Security
 {
     public class GroupListing
     {
