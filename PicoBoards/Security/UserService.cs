@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using PicoBoards.Security.Authentication;
 using PicoBoards.Security.Models;
+using PicoBoards.Security.Queries;
 using Tortuga.Chain;
 
 namespace PicoBoards.Security
@@ -29,41 +30,20 @@ namespace PicoBoards.Security
                 .ToString("UserName")
                 .ExecuteAsync();
 
-        public async Task<DateTime?> GetUserBirthdayAsync(int userId)
-            => await dataSource
-                .GetByKey("User", userId)
-                .ToDateTimeOrNull("Birthday")
-                .ExecuteAsync();
-
-        public async Task<string> GetUserLocationAsync(int userId)
-            => await dataSource
-                .GetByKey("User", userId)
-                .ToString("Location")
-                .ExecuteAsync();
-
-        public async Task<string> GetUserSignatureAsync(int userId)
-            => await dataSource
-                .GetByKey("User", userId)
-                .ToString("Signature")
-                .ExecuteAsync();
-
-        public async Task<UserProfileDetails> GetUserProfileAsync(int userId)
+        public async Task<UserProfileDetails> GetUserProfileAsync(UserProfileQuery query)
             => (await dataSource
-                .From("vw_UserProfileDetails", new { userId })
+                .From("vw_UserProfileDetails", query)
                 .WithLimits(1)
                 .ToCollection<UserProfileDetails>()
                 .ExecuteAsync())
                 .FirstOrDefault();
 
-        public async Task<UserListingTable> GetUserListingsAsync()
-        {
-            var query = await dataSource
+        public async Task<UserListingTable> GetUserListingsAsync(UserListingsQuery query)
+            => new UserListingTable(
+                await dataSource
                 .From("User")
                 .WithSorting(new SortExpression("UserName"))
                 .ToCollection<UserListing>()
-                .ExecuteAsync();
-
-            return new UserListingTable(query);
-        }
+                .ExecuteAsync());
     }
 }

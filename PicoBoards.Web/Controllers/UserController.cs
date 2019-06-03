@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PicoBoards.Security;
+using PicoBoards.Security.Queries;
 
 namespace PicoBoards.Web.Controllers
 {
@@ -15,14 +16,14 @@ namespace PicoBoards.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var model = await userService.GetUserListingsAsync();
+            var model = await userService.GetUserListingsAsync(new UserListingsQuery());
             return View(model);
         }
 
         [HttpGet]
         public async Task<IActionResult> Profile(int id)
         {
-            var model = await userService.GetUserProfileAsync(id);
+            var model = await userService.GetUserProfileAsync(new UserProfileQuery(id));
             return View(model);
         }
 
