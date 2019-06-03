@@ -57,7 +57,7 @@ namespace PicoBoards.Security
 
                     if (isUserNameTaken)
                     {
-                        transaction.Commit();
+                        transaction.Rollback();
                         throw new CommandException("User already exists.");
                     }
                 }
@@ -69,7 +69,7 @@ namespace PicoBoards.Security
 
                 if (command.CurrentPassword != password)
                 {
-                    transaction.Commit();
+                    transaction.Rollback();
                     throw new CommandException("Incorrect password.");
                 }
 
@@ -111,7 +111,7 @@ namespace PicoBoards.Security
 
                 if (command.Password != password)
                 {
-                    transaction.Commit();
+                    transaction.Rollback();
                     throw new CommandException("Incorrect password.");
                 }
 
