@@ -10,10 +10,10 @@ namespace PicoBoards.Web.Controllers
 {
     public class AuthController : Controller
     {
-        private readonly UserService userService;
+        private readonly AuthService authService;
 
-        public AuthController(UserService userService)
-            => this.userService = userService;
+        public AuthController(AuthService authService)
+            => this.authService = authService;
 
         [HttpGet]
         public IActionResult Login(string returnUrl)
@@ -22,7 +22,7 @@ namespace PicoBoards.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginForm form)
         {
-            var result = await userService.ValidateUserAsync(form);
+            var result = await authService.ValidateUserAsync(form);
 
             if (result.IsSuccessful)
             {
@@ -63,7 +63,7 @@ namespace PicoBoards.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegistrationForm form)
         {
-            var result = await userService.RegisterUserAsync(form);
+            var result = await authService.RegisterUserAsync(form);
 
             if (result.IsValid)
                 return RedirectToAction("Login");
