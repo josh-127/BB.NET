@@ -2,6 +2,8 @@
 
 <h1>Edit Profile | User Control Panel</h1>
 
+@Html.ValidationSummary()
+
 <form asp-action="EditProfile" method="post">
     <label asp-for="Birthday"></label>
     <input asp-for="Birthday" />
