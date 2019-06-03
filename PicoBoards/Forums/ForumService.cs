@@ -17,7 +17,7 @@ namespace PicoBoards.Forums
             => new CategoryListingCollection(
                 await dataSource
                 .From("Category")
-                .ToCollection<CategoryListing>()
+                .ToCollection<CategoryListing>(CollectionOptions.InferConstructor)
                 .ExecuteAsync());
 
         public async Task ExecuteAsync(AddCategoryCommand command)

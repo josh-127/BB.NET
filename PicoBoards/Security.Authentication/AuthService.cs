@@ -18,7 +18,7 @@ namespace PicoBoards.Security.Authentication
             var query = await dataSource
                 .From("User", new { login.UserName, login.Password })
                 .WithLimits(1)
-                .ToCollection<UserAccessToken>()
+                .ToCollection<UserAccessToken>(CollectionOptions.InferConstructor)
                 .ExecuteAsync();
 
             return query.Count > 0

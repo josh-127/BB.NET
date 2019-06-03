@@ -5,9 +5,12 @@ namespace PicoBoards.Forums.Models
 {
     public sealed class CategoryListing
     {
-        public int CategoryId { get; set; }
+        public int CategoryId { get; }
 
-        public string Name { get; set; }
+        public string Name { get; }
+
+        public CategoryListing(int categoryId, string name)
+            => (CategoryId, Name) = (categoryId, name);
     }
 
     public sealed class CategoryListingCollection : ICollection<CategoryListing>

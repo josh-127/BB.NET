@@ -5,11 +5,14 @@ namespace PicoBoards.Security.Models
 {
     public class GroupListing
     {
-        public int GroupId { get; set; }
+        public int GroupId { get; }
 
-        public string Name { get; set; }
+        public string Name { get; }
 
-        public string Description { get; set; }
+        public string Description { get;  }
+
+        public GroupListing(int groupId, string name, string description)
+            => (GroupId, Name, Description) = (groupId, name, description);
     }
 
     public sealed class GroupListingTable : ICollection<GroupListing>

@@ -17,7 +17,7 @@ namespace PicoBoards.Security
                 await dataSource
                 .From("Group")
                 .WithSorting(new SortExpression("Name"))
-                .ToCollection<GroupListing>()
+                .ToCollection<GroupListing>(CollectionOptions.InferConstructor)
                 .ExecuteAsync());
     }
 }

@@ -17,7 +17,7 @@ namespace PicoBoards.Security
         public async Task<UserProfileSettings> QueryAsync(UserProfileSettingsQuery query)
             => await dataSource
                 .GetByKey("User", query.UserId)
-                .ToObject<UserProfileSettings>()
+                .ToObject<UserProfileSettings>(RowOptions.InferConstructor)
                 .ExecuteAsync();
 
         public async Task ExecuteAsync(EditUserProfileCommand command)
@@ -33,7 +33,7 @@ namespace PicoBoards.Security
         public async Task<UserAccountSettings> QueryAsync(UserAccountSettingsQuery query)
             => await dataSource
                 .GetByKey("User", query.UserId)
-                .ToObject<UserAccountSettings>()
+                .ToObject<UserAccountSettings>(RowOptions.InferConstructor)
                 .ExecuteAsync();
 
         public async Task ExecuteAsync(EditUserAccountCommand command)
@@ -127,7 +127,7 @@ namespace PicoBoards.Security
             => (await dataSource
                 .From("vw_UserProfileDetails", query)
                 .WithLimits(1)
-                .ToCollection<PublicUserProfileDetails>()
+                .ToCollection<PublicUserProfileDetails>(CollectionOptions.InferConstructor)
                 .ExecuteAsync())
                 .FirstOrDefault();
 
@@ -136,7 +136,7 @@ namespace PicoBoards.Security
                 await dataSource
                 .From("User")
                 .WithSorting(new SortExpression("UserName"))
-                .ToCollection<UserListing>()
+                .ToCollection<UserListing>(CollectionOptions.InferConstructor)
                 .ExecuteAsync());
     }
 }

@@ -1,34 +1,47 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace PicoBoards.Security.Models
 {
     public class PublicUserProfileDetails : IModel, IValidatable
     {
-        public int Id { get; set; }
+        public int UserId { get; set; }
 
-        [DataType(DataType.EmailAddress)]
-        [Display(Name = "Email Address")]
-        public string EmailAddress { get; set; }
+        public string EmailAddress { get; }
 
-        [Display(Name = "Username")]
-        public string UserName { get; set; }
+        public string UserName { get; }
 
-        [Display(Name = "Group")]
-        public string GroupName { get; set; }
+        public string GroupName { get; }
 
-        [Display(Name = "Joined")]
-        public DateTime Created { get; set; }
+        public DateTime Created { get; }
 
-        [Display(Name = "Last Active")]
-        public DateTime LastActive { get; set; }
+        public DateTime LastActive { get; }
 
-        [DataType(DataType.Date)]
-        public DateTime? Birthday { get; set; }
+        public DateTime? Birthday { get; }
 
-        public string Location { get; set; }
+        public string Location { get; }
 
-        [DataType(DataType.Text)]
-        public string Signature { get; set; }
+        public string Signature { get; }
+
+        public PublicUserProfileDetails(
+            int userId,
+            string emailAddress,
+            string userName,
+            string groupName,
+            DateTime created,
+            DateTime lastActive,
+            DateTime? birthday,
+            string location,
+            string signature)
+        {
+            UserId = userId;
+            EmailAddress = emailAddress;
+            UserName = userName;
+            GroupName = groupName;
+            Created = created;
+            LastActive = lastActive;
+            Birthday = birthday;
+            Location = location;
+            Signature = signature;
+        }
     }
 }

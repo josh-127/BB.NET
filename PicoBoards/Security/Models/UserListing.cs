@@ -1,33 +1,46 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace PicoBoards.Security.Models
 {
     public sealed class UserListing : IModel
     {
-        public int UserId { get; set; }
+        public int UserId { get; }
 
-        [Display(Name = "Username")]
-        public string UserName { get; set; }
+        public string UserName { get; }
 
-        [Display(Name = "Group")]
-        public string GroupName { get; set; }
+        public string GroupName { get; }
 
-        public string ProfileImageUrl { get; set; }
+        public string ProfileImageUrl { get; }
 
-        [Display(Name = "Joined")]
-        public DateTime Created { get; set; }
+        public DateTime Created { get; }
 
-        [Display(Name = "Last Active")]
-        public DateTime LastActive { get; set; }
+        public DateTime LastActive { get; }
 
-        [Display(Name = "Post Count")]
-        public int PostCount { get; set; }
+        public int PostCount { get; }
 
-        [Display(Name = "Topic Count")]
-        public int TopicCount { get; set; }
+        public int TopicCount { get; }
+
+        public UserListing(
+            int userId,
+            string userName,
+            string groupName,
+            string profileImageUrl,
+            DateTime created,
+            DateTime lastActive,
+            int postCount,
+            int topicCount)
+        {
+            UserId = userId;
+            UserName = userName;
+            GroupName = groupName;
+            ProfileImageUrl = profileImageUrl;
+            Created = created;
+            LastActive = lastActive;
+            PostCount = postCount;
+            TopicCount = topicCount;
+        }
     }
 
     public sealed class UserListingTable : ICollection<UserListing>
