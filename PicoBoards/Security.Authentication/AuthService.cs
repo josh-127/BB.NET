@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Tortuga.Chain;
 
 namespace PicoBoards.Security.Authentication
@@ -11,70 +10,43 @@ namespace PicoBoards.Security.Authentication
         public AuthService(MySqlDataSource dataSource)
             => this.dataSource = dataSource;
 
-        public async Task<LoginResult> ValidateUserAsync(Login login)
+        public async Task<LoginToken> ValidateUserAsync(Login login)
         {
-            var result = login.GetValidationResult();
-
-            if (!result.IsValid)
-                return new LoginResult(result);
-
             var query = await dataSource
                 .From("User", new { login.UserName, login.Password })
                 .WithLimits(1)
                 .ToCollection<LoginToken>()
                 .ExecuteAsync();
 
-            if (query.Count == 0)
-            {
-                result.Add(new ValidationResult("Invalid credentials."));
-                return new LoginResult(result);
-            }
-
-            return new LoginResult(query[0]);
+            return query.Count > 0
+                ? query[0]
+                : throw new AuthenticationException("Invalid credentials.");
         }
 
-        public async Task<ValidationResultCollection> RegisterUserAsync(Registration registration)
+        public async Task<LoginToken> RegisterUserAsync(Registration registration)
         {
-            var result = registration.GetValidationResult();
+            if (!registration.IsValid())
+                throw new AuthenticationException("Invalid fields.");
 
-            if (!result.IsValid)
-                return result;
-
-            var config = await dataSource
+            var defaultGroupId = await dataSource
                 .GetByKey("GlobalConfiguration", "0")
-                .ToRow()
+                .ToInt32("DefaultGroupId")
                 .ReadOrCache("GlobalConfiguration")
                 .ExecuteAsync();
 
-            using (var transaction = await dataSource.BeginTransactionAsync())
-            {
-                var count = await transaction
-                    .From("User", new { registration.UserName })
-                    .WithLimits(1)
-                    .AsCount()
-                    .ExecuteAsync();
-
-                if (count == 0)
+            var userId = await dataSource
+                .Insert("User", new
                 {
-                    await transaction
-                        .Insert("User", new
-                        {
-                            GroupId = config["DefaultGroupId"],
-                            registration.EmailAddress,
-                            registration.UserName,
-                            registration.Password
-                        })
-                        .ExecuteAsync();
-                }
-                else
-                {
-                    result.Add(new ValidationResult("User already exists."));
-                }
+                    GroupId = defaultGroupId,
+                    registration.EmailAddress,
+                    registration.UserName,
+                    registration.Password
+                })
+                .ExecuteAsync();
 
-                transaction.Commit();
-            }
-
-            return result;
+            return userId.HasValue
+                ? new LoginToken(userId.Value, registration.UserName)
+                : throw new AuthenticationException("User already exists.");
         }
     }
 }

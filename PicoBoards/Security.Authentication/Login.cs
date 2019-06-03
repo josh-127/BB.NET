@@ -1,15 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
-
+﻿
 namespace PicoBoards.Security.Authentication
 {
-    public class Login : IModel, IValidatable
+    public sealed class Login
     {
-        [Display(Name = "Username")]
-        [Required]
         public string UserName { get; set; }
 
-        [DataType(DataType.Password)]
-        [Required]
         public string Password { get; set; }
 
         public Login() { }

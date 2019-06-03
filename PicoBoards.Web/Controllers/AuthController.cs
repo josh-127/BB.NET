@@ -17,19 +17,17 @@ namespace PicoBoards.Web.Controllers
 
         [HttpGet]
         public IActionResult Login(string returnUrl)
-            => View(new LoginForm(returnUrl ?? "/Home/Index"));
+            => View(new LoginForm { ReturnUrl = returnUrl ?? "/Home/Index" });
 
         [HttpPost]
         public async Task<IActionResult> Login(LoginForm form)
         {
-            var result = await authService.ValidateUserAsync(form);
-
-            if (result.IsSuccessful)
+            try
             {
+                var result = await authService.ValidateUserAsync(form.ToLogin());
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
-                identity.AddClaim(new Claim(
-                    ClaimTypes.NameIdentifier, result.Value.UserId.ToString(), ClaimValueTypes.Integer));
-                identity.AddClaim(new Claim(ClaimTypes.Name, result.Value.UserName));
+                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, result.UserId.ToString(), ClaimValueTypes.Integer));
+                identity.AddClaim(new Claim(ClaimTypes.Name, result.UserName));
 
                 var principal = new ClaimsPrincipal(identity);
                 var properties = new AuthenticationProperties { IsPersistent = form.RememberMe };
@@ -41,9 +39,11 @@ namespace PicoBoards.Web.Controllers
 
                 return LocalRedirect(form.ReturnUrl);
             }
-
-            ModelState.SetErrors(result.Error);
-            return View(form);
+            catch (AuthenticationException e)
+            {
+                ModelState.AddModelError("", e.Message);
+                return View(form);
+            }
         }
 
         [HttpPost]
@@ -63,13 +63,16 @@ namespace PicoBoards.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegistrationForm form)
         {
-            var result = await authService.RegisterUserAsync(form);
-
-            if (result.IsValid)
+            try
+            {
+                await authService.RegisterUserAsync(form.ToRegistration());
                 return RedirectToAction("Login");
-
-            ModelState.SetErrors(result);
-            return View(form);
+            }
+            catch (AuthenticationException e)
+            {
+                ModelState.AddModelError("", e.Message);
+                return View(form);
+            }
         }
     }
 }

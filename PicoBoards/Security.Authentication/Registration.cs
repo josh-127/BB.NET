@@ -3,23 +3,20 @@ using PicoBoards.DataAnnotations;
 
 namespace PicoBoards.Security.Authentication
 {
-    public class Registration : IModel, IValidatable
+    public sealed class Registration : IValidatable
     {
-        [DataType(DataType.EmailAddress)]
-        [Display(Name = "Email Address")]
+        [EmailAddress]
         [Required]
-        public string EmailAddress { get; set; }
+        public string EmailAddress { get; private set; }
 
-        [Display(Name = "Username")]
         [Identifier]
         [Required]
-        public string UserName { get; set; }
+        public string UserName { get; private set; }
 
-        [DataType(DataType.Password)]
         [Required]
-        public string Password { get; set; }
+        public string Password { get; private set; }
 
-        public Registration() { }
+        internal Registration() { }
 
         public Registration(string emailAddress, string userName, string password)
         {
