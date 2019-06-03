@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace PicoBoards.Security
+namespace PicoBoards.Security.Models
 {
     public class GroupListing
     {

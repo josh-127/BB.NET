@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace PicoBoards.Security
+namespace PicoBoards.Security.Models
 {
     public sealed class UserListing : IModel
     {

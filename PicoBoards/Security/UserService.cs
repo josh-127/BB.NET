@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using PicoBoards.Security.Authentication;
+using PicoBoards.Security.Models;
 using Tortuga.Chain;
 
 namespace PicoBoards.Security

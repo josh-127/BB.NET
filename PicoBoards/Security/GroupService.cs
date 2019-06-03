@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using PicoBoards.Security.Models;
 using Tortuga.Chain;
 
 namespace PicoBoards.Security
