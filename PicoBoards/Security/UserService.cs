@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using PicoBoards.Security.Authentication;
+using PicoBoards.Security.Commands;
 using PicoBoards.Security.Models;
 using PicoBoards.Security.Queries;
 using Tortuga.Chain;
@@ -20,13 +20,13 @@ namespace PicoBoards.Security
                 .ToString("EmailAddress")
                 .ExecuteAsync();
 
-        public async Task SetEmailAddressAsync(int userId, string emailAddress)
+        public async Task SetEmailAddressAsync(SetUserEmailAddressCommand command)
         {
-            if (!emailAddress.IsValidEmailAddress())
+            if (!command.IsValid())
                 throw new EditorException("Invalid value.");
 
             await dataSource
-                .Update("User", new { userId, emailAddress })
+                .Update("User", command)
                 .ExecuteAsync();
         }
 
@@ -36,13 +36,13 @@ namespace PicoBoards.Security
                 .ToString("UserName")
                 .ExecuteAsync();
 
-        public async Task SetUserNameAsync(int userId, string userName)
+        public async Task SetUserNameAsync(SetUserNameCommand command)
         {
-            if (!userName.IsValidUserName())
+            if (!command.IsValid())
                 throw new EditorException("Invalid value.");
 
             await dataSource
-                .Update("User", new { userId, userName })
+                .Update("User", command)
                 .ExecuteAsync();
         }
 

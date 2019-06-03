@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PicoBoards.Security;
 using PicoBoards.Security.Authentication;
+using PicoBoards.Security.Commands;
 using PicoBoards.Security.Queries;
 using PicoBoards.Web.Models;
 
@@ -48,7 +49,7 @@ namespace PicoBoards.Web.Controllers
         {
             try
             {
-                await userService.SetEmailAddressAsync(UserId, form.EmailAddress);
+                await userService.SetEmailAddressAsync(new SetUserEmailAddressCommand(UserId, form.EmailAddress));
                 return RedirectToAction("Index");
             }
             catch (EditorException e)
@@ -73,7 +74,7 @@ namespace PicoBoards.Web.Controllers
         {
             try
             {
-                await userService.SetUserNameAsync(UserId, form.UserName);
+                await userService.SetUserNameAsync(new SetUserNameCommand(UserId, form.UserName));
                 return RedirectToAction("Index");
             }
             catch (EditorException e)
