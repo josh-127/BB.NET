@@ -12,7 +12,7 @@
     <input asp-for="Location" />
     <br />
     <label asp-for="Signature"></label>
-    <input asp-for="Signature" />
+    <textarea asp-for="Signature">@Model.Signature</textarea>
     <br />
     <button type="submit">Save Changes</button>
 </form>
