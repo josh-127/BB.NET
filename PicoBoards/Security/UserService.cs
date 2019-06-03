@@ -46,11 +46,11 @@ namespace PicoBoards.Security
                 .ExecuteAsync();
         }
 
-        public async Task<UserProfileDetails> QueryAsync(UserProfileQuery query)
+        public async Task<PublicUserProfileDetails> QueryAsync(PublicUserProfileQuery query)
             => (await dataSource
                 .From("vw_UserProfileDetails", query)
                 .WithLimits(1)
-                .ToCollection<UserProfileDetails>()
+                .ToCollection<PublicUserProfileDetails>()
                 .ExecuteAsync())
                 .FirstOrDefault();
 
