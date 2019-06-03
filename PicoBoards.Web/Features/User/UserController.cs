@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PicoBoards.Security;
 using PicoBoards.Security.Queries;
 
-namespace PicoBoards.Web.Controllers
+namespace PicoBoards.Web.Features.User
 {
     public class UserController : Controller
     {

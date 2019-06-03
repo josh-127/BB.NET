@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using PicoBoards.Forums;
 using PicoBoards.Forums.Commands;
 using PicoBoards.Forums.Queries;
-using PicoBoards.Web.ViewModels;
+using PicoBoards.Web.Features.Acp.Forms;
 
-namespace PicoBoards.Web.Controllers
+namespace PicoBoards.Web.Features.Acp
 {
     public class AcpController : Controller
     {

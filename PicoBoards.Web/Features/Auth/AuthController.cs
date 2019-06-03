@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using PicoBoards.Security.Authentication;
-using PicoBoards.Web.ViewModels;
+using PicoBoards.Web.Features.Auth.Forms;
 
-namespace PicoBoards.Web.Controllers
+namespace PicoBoards.Web.Features.Auth
 {
     public class AuthController : Controller
     {

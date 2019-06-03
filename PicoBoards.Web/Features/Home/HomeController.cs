@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace PicoBoards.Web.Controllers
+namespace PicoBoards.Web.Features.Home
 {
     public class HomeController : Controller
     {

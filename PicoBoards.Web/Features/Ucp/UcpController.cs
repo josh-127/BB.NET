@@ -7,9 +7,9 @@ using PicoBoards.Security;
 using PicoBoards.Security.Authentication.Models;
 using PicoBoards.Security.Commands;
 using PicoBoards.Security.Queries;
-using PicoBoards.Web.ViewModels;
+using PicoBoards.Web.Features.Ucp.Forms;
 
-namespace PicoBoards.Web.Controllers
+namespace PicoBoards.Web.Features.Ucp
 {
     public class UcpController : Controller
     {

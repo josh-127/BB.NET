@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PicoBoards.Web.ViewModels
+namespace PicoBoards.Web.Features.Ucp.Forms
 {
     public sealed class DeleteAccountForm
     {

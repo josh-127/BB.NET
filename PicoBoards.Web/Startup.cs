@@ -38,6 +38,7 @@ namespace PicoBoards.Web
                 });
 
             services.AddMvc()
+                .AddFeatureFolders()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
