@@ -23,7 +23,7 @@ namespace PicoBoards.Security
         public async Task SetEmailAddressAsync(SetUserEmailAddressCommand command)
         {
             if (!command.IsValid())
-                throw new EditorException("Invalid value.");
+                throw new CommandException("Invalid value.");
 
             await dataSource
                 .Update("User", command)
@@ -39,7 +39,7 @@ namespace PicoBoards.Security
         public async Task SetUserNameAsync(SetUserNameCommand command)
         {
             if (!command.IsValid())
-                throw new EditorException("Invalid value.");
+                throw new CommandException("Invalid value.");
 
             await dataSource
                 .Update("User", command)

@@ -52,7 +52,7 @@ namespace PicoBoards.Web.Controllers
                 await userService.SetEmailAddressAsync(new SetUserEmailAddressCommand(UserId, form.EmailAddress));
                 return RedirectToAction("Index");
             }
-            catch (EditorException e)
+            catch (CommandException e)
             {
                 ModelState.AddModelError("", e.Message);
                 return View(form);
@@ -77,7 +77,7 @@ namespace PicoBoards.Web.Controllers
                 await userService.SetUserNameAsync(new SetUserNameCommand(UserId, form.UserName));
                 return RedirectToAction("Index");
             }
-            catch (EditorException e)
+            catch (CommandException e)
             {
                 ModelState.AddModelError("", e.Message);
                 return View(form);
