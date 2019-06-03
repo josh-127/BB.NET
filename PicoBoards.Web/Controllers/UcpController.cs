@@ -22,8 +22,9 @@ namespace PicoBoards.Web.Controllers
         private bool IsAuthenticated => User.Identity.IsAuthenticated;
 
         private int UserId => int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+        private string EmailAddress => User.FindFirstValue(ClaimTypes.Email);
         private string UserName => User.FindFirstValue(ClaimTypes.Name);
-        public UserAccessToken UserAccessToken => new UserAccessToken(UserId, UserName);
+        public UserAccessToken UserAccessToken => new UserAccessToken(UserId, EmailAddress, UserName);
 
         [HttpGet]
         public IActionResult Index()

@@ -28,6 +28,7 @@ namespace PicoBoards.Web.Controllers
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
                 identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, result.UserId.ToString(), ClaimValueTypes.Integer));
                 identity.AddClaim(new Claim(ClaimTypes.Name, result.UserName));
+                identity.AddClaim(new Claim(ClaimTypes.Email, result.EmailAddress));
 
                 var principal = new ClaimsPrincipal(identity);
                 var properties = new AuthenticationProperties { IsPersistent = form.RememberMe };

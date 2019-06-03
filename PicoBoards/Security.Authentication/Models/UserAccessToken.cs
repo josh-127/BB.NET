@@ -5,11 +5,13 @@ namespace PicoBoards.Security.Authentication.Models
     {
         public int UserId { get; set; }
 
+        public string EmailAddress { get; set; }
+
         public string UserName { get; set; }
 
         public UserAccessToken() { }
 
-        public UserAccessToken(int userId, string userName)
-            => (UserId, UserName) = (userId, userName);
+        public UserAccessToken(int userId, string emailAddress, string userName)
+            => (UserId, EmailAddress, UserName) = (userId, emailAddress, userName);
     }
 }

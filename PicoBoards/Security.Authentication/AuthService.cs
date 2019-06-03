@@ -48,7 +48,7 @@ namespace PicoBoards.Security.Authentication
                 .ExecuteAsync();
 
             return userId.HasValue
-                ? new UserAccessToken(userId.Value, command.UserName)
+                ? new UserAccessToken(userId.Value, command.EmailAddress, command.UserName)
                 : throw new AuthenticationException("User already exists.");
         }
     }
