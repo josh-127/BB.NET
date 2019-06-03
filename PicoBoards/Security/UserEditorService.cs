@@ -34,36 +34,5 @@ namespace PicoBoards.Security
                 .Update("User", new { accessToken.UserId, UserName = value })
                 .ExecuteAsync();
         }
-
-        public async Task SetPasswordAsync(string value)
-        {
-            if (value.Length == 0)
-                throw new EditorException("Invalid value.");
-
-            await dataSource
-                .Update("User", new { accessToken.UserId, Password = value })
-                .ExecuteAsync();
-        }
-
-        public async Task SetBirthdayAsync(DateTime? value)
-        {
-            await dataSource
-                .Update("User", new { accessToken.UserId, Birthday = value })
-                .ExecuteAsync();
-        }
-
-        public async Task SetLocationAsync(string value)
-        {
-            await dataSource
-                .Update("User", new { accessToken.UserId, Location = value })
-                .ExecuteAsync();
-        }
-
-        public async Task SetSignatureAsync(string value)
-        {
-            await dataSource
-                .Update("User", new { accessToken.UserId, Signature = value })
-                .ExecuteAsync();
-        }
     }
 }
