@@ -29,5 +29,32 @@ namespace PicoBoards.Forums
                 .Insert("Category", command)
                 .ExecuteAsync();
         }
+
+        public async Task ExecuteAsync(RemoveCategoryCommand command)
+        {
+            if (!command.IsValid())
+                throw new CommandException("Invalid fields.");
+
+            using (var transaction = await dataSource.BeginTransactionAsync())
+            {
+                var hasForums = await transaction
+                    .From("Forum", new { command.CategoryId })
+                    .WithLimits(1)
+                    .AsCount()
+                    .ExecuteAsync() > 0;
+
+                if (hasForums)
+                {
+                    transaction.Rollback();
+                    throw new CommandException("This category is not empty.");
+                }
+
+                await transaction
+                    .Delete("Category", new { command.CategoryId })
+                    .ExecuteAsync();
+
+                transaction.Commit();
+            }
+        }
     }
 }
