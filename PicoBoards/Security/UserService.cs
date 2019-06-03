@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using PicoBoards.Security.Authentication;
 using Tortuga.Chain;
 
 namespace PicoBoards.Security
@@ -13,32 +12,14 @@ namespace PicoBoards.Security
         public UserService(MySqlDataSource dataSource)
             => this.dataSource = dataSource;
 
+        public UserEditorService BeginEdit(LoginToken token)
+            => new UserEditorService(dataSource, token);
+
         public async Task<string> GetUserEmailAddressAsync(int userId)
             => await dataSource
-            .GetByKey("User", userId)
-            .ToString("EmailAddress")
-            .ExecuteAsync();
-
-        public async Task<ValidationResultCollection> SetUserEmailAddressAsync(
-            int userId, string emailAddress)
-        {
-            var context = new ValidationContext(emailAddress) { MemberName = nameof(emailAddress) };
-            var result = new ValidationResultCollection();
-            Validator.TryValidateValue(emailAddress, context, result, new List<ValidationAttribute>
-            {
-                new EmailAddressAttribute(),
-                new RequiredAttribute()
-            });
-
-            if (!result.IsValid)
-                return result;
-
-            await dataSource
-                .Update("User", new { userId, emailAddress })
+                .GetByKey("User", userId)
+                .ToString("EmailAddress")
                 .ExecuteAsync();
-
-            return result;
-        }
 
         public async Task<UserProfileDetails> GetUserProfileAsync(int userId)
             => (await dataSource

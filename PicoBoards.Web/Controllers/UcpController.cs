@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PicoBoards.Security;
+using PicoBoards.Security.Authentication;
 using PicoBoards.Web.Models;
 
 namespace PicoBoards.Web.Controllers
@@ -44,13 +45,19 @@ namespace PicoBoards.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> ChangeEmailAddress(ChangeEmailAddressForm form)
         {
-            var result = await userService.SetUserEmailAddressAsync(UserId, form.EmailAddress);
-
-            if (result.IsValid)
-                return RedirectToAction("Index");
-
-            ModelState.SetErrors(result);
-            return View(form);
+            using (var editor = userService.BeginEdit(new LoginToken(UserId, UserName)))
+            {
+                try
+                {
+                    await editor.SetEmailAddressAsync(form.EmailAddress);
+                    return RedirectToAction("Index");
+                }
+                catch (EditorException e)
+                {
+                    ModelState.AddModelError("", e.Message);
+                    return View(form);
+                }
+            }
         }
     }
 }
