@@ -10,7 +10,7 @@ namespace PicoBoards.Security.Authentication
         public AuthService(MySqlDataSource dataSource)
             => this.dataSource = dataSource;
 
-        public async Task<LoginToken> ValidateUserAsync(Login login)
+        public async Task<LoginToken> ValidateUserAsync(LoginCredentials login)
         {
             var query = await dataSource
                 .From("User", new { login.UserName, login.Password })

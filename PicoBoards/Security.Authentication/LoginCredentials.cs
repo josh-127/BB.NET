@@ -1,15 +1,15 @@
 ﻿
 namespace PicoBoards.Security.Authentication
 {
-    public sealed class Login
+    public sealed class LoginCredentials
     {
         public string UserName { get; set; }
 
         public string Password { get; set; }
 
-        public Login() { }
+        public LoginCredentials() { }
 
-        public Login(string userName, string password)
+        public LoginCredentials(string userName, string password)
         {
             UserName = userName;
             Password = password;

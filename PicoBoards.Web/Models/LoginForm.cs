@@ -20,6 +20,6 @@ namespace PicoBoards.Web.Models
         [HiddenInput]
         public string ReturnUrl { get; set; }
 
-        public Login ToLogin() => new Login(UserName, Password);
+        public LoginCredentials ToLogin() => new LoginCredentials(UserName, Password);
     }
 }
