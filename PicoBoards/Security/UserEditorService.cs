@@ -10,10 +10,10 @@ namespace PicoBoards.Security
     public sealed class UserEditorService : IDisposable
     {
         private readonly MySqlDataSource dataSource;
-        private readonly UserAccessToken loginToken;
+        private readonly UserAccessToken accessToken;
 
-        public UserEditorService(MySqlDataSource dataSource, UserAccessToken loginToken)
-            => (this.dataSource, this.loginToken) = (dataSource, loginToken);
+        public UserEditorService(MySqlDataSource dataSource, UserAccessToken accessToken)
+            => (this.dataSource, this.accessToken) = (dataSource, accessToken);
 
         public void Dispose() { }
 
@@ -31,7 +31,7 @@ namespace PicoBoards.Security
                 throw new EditorException("Invalid value.");
 
             await dataSource
-                .Update("User", new { loginToken.UserId, emailAddress })
+                .Update("User", new { accessToken.UserId, emailAddress })
                 .ExecuteAsync();
         }
     }
