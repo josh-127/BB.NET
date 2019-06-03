@@ -9,7 +9,7 @@ namespace PicoBoards.DataAnnotations
     {
         protected override ValidationResult IsValid(object value, ValidationContext context)
         {
-            if (value is string str && Regex.IsMatch(str, "^[A-Za-z0-9_]$"))
+            if (value is string str && Regex.IsMatch(str, "^[A-Za-z0-9_]+$"))
                 return null;
 
             return new ValidationResult(
