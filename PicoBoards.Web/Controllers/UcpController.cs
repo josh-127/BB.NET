@@ -26,11 +26,10 @@ namespace PicoBoards.Web.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            if (!User.Identity.IsAuthenticated)
+            if (!IsAuthenticated)
                 return RedirectToLogin();
 
-            var model = new Dashboard(UserId, UserName);
-            return View(model);
+            return View();
         }
 
         [HttpGet]

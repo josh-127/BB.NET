@@ -1,9 +1,12 @@
-﻿@model Dashboard
+﻿@{ 
+    var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+    var userName = User.FindFirstValue(ClaimTypes.Name);
+}
 
 <h1>Dashboard | User Control Panel</h1>
 
-<h2>@Model.UserName</h2>
+<h2>@userName</h2>
 
-<a asp-action="Profile" asp-controller="User" asp-route-id="@Model.UserId">View Profile</a>
+<a asp-action="Profile" asp-controller="User" asp-route-id="@userId">View Profile</a>
 <a asp-action="ChangeEmailAddress">Change Email Address</a>
 <a asp-action="ChangeUserName">Change Username</a>
