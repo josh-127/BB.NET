@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PicoBoards.Security;
 using PicoBoards.Security.Authentication;
+using PicoBoards.Security.Queries;
 using PicoBoards.Web.Models;
 
 namespace PicoBoards.Web.Controllers
@@ -38,7 +39,7 @@ namespace PicoBoards.Web.Controllers
             if (!IsAuthenticated)
                 return RedirectToLogin();
 
-            var emailAddress = await userService.GetUserEmailAddressAsync(UserId);
+            var emailAddress = await userService.GetUserEmailAddressAsync(new UserEmailAddressQuery(UserId));
             return View(new ChangeEmailAddressForm(emailAddress));
         }
 
@@ -63,7 +64,7 @@ namespace PicoBoards.Web.Controllers
             if (!IsAuthenticated)
                 return RedirectToLogin();
 
-            var userName = await userService.GetUserNameAsync(UserId);
+            var userName = await userService.GetUserNameAsync(new UserNameQuery(UserId));
             return View(new ChangeUserNameForm(userName));
         }
 

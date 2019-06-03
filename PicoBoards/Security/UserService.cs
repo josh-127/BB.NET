@@ -14,9 +14,9 @@ namespace PicoBoards.Security
         public UserService(MySqlDataSource dataSource)
             => this.dataSource = dataSource;
 
-        public async Task<string> GetUserEmailAddressAsync(int userId)
+        public async Task<string> GetUserEmailAddressAsync(UserEmailAddressQuery query)
             => await dataSource
-                .GetByKey("User", userId)
+                .GetByKey("User", query.UserId)
                 .ToString("EmailAddress")
                 .ExecuteAsync();
 
@@ -30,9 +30,9 @@ namespace PicoBoards.Security
                 .ExecuteAsync();
         }
 
-        public async Task<string> GetUserNameAsync(int userId)
+        public async Task<string> GetUserNameAsync(UserNameQuery query)
             => await dataSource
-                .GetByKey("User", userId)
+                .GetByKey("User", query.UserId)
                 .ToString("UserName")
                 .ExecuteAsync();
 
