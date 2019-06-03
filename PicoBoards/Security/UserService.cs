@@ -134,7 +134,7 @@ namespace PicoBoards.Security
         public async Task<UserListingTable> QueryAsync(UserListingsQuery query)
             => new UserListingTable(
                 await dataSource
-                .From("User")
+                .From("vw_UserListing")
                 .WithSorting(new SortExpression("UserName"))
                 .ToCollection<UserListing>(CollectionOptions.InferConstructor)
                 .ExecuteAsync());

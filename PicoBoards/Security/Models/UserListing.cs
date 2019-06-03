@@ -12,34 +12,22 @@ namespace PicoBoards.Security.Models
 
         public string GroupName { get; }
 
-        public string ProfileImageUrl { get; }
-
         public DateTime Created { get; }
 
         public DateTime LastActive { get; }
-
-        public int PostCount { get; }
-
-        public int TopicCount { get; }
 
         public UserListing(
             int userId,
             string userName,
             string groupName,
-            string profileImageUrl,
             DateTime created,
-            DateTime lastActive,
-            int postCount,
-            int topicCount)
+            DateTime lastActive)
         {
             UserId = userId;
             UserName = userName;
             GroupName = groupName;
-            ProfileImageUrl = profileImageUrl;
             Created = created;
             LastActive = lastActive;
-            PostCount = postCount;
-            TopicCount = topicCount;
         }
     }
 
