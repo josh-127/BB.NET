@@ -1,0 +1,16 @@
+﻿@model EditUserProfileForm
+
+<h1>Edit Profile | User Control Panel</h1>
+
+<form asp-action="EditProfile" method="post">
+    <label asp-for="Birthday"></label>
+    <input asp-for="Birthday" />
+    <br />
+    <label asp-for="Location"></label>
+    <input asp-for="Location" />
+    <br />
+    <label asp-for="Signature"></label>
+    <input asp-for="Signature" />
+    <br />
+    <button type="submit">Save Changes</button>
+</form>

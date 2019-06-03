@@ -14,6 +14,22 @@ namespace PicoBoards.Security
         public UserService(MySqlDataSource dataSource)
             => this.dataSource = dataSource;
 
+        public async Task<UserProfileSettings> QueryAsync(UserProfileSettingsQuery query)
+            => await dataSource
+                .GetByKey("User", query.UserId)
+                .ToObject<UserProfileSettings>()
+                .ExecuteAsync();
+
+        public async Task ExecuteAsync(EditUserProfileCommand command)
+        {
+            if (!command.IsValid())
+                throw new CommandException("Invalid fields.");
+
+            await dataSource
+                .Update("User", command)
+                .ExecuteAsync();
+        }
+
         public async Task<string> QueryAsync(UserEmailAddressQuery query)
             => await dataSource
                 .GetByKey("User", query.UserId)

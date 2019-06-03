@@ -35,6 +35,37 @@ namespace PicoBoards.Web.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> EditProfile()
+        {
+            if (!IsAuthenticated)
+                return RedirectToLogin();
+
+            var model = await userService.QueryAsync(new UserProfileSettingsQuery(UserId));
+            var viewModel = new EditUserProfileForm
+            {
+                Birthday = model.Birthday,
+                Location = model.Location,
+                Signature = model.Signature
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditProfile(EditUserProfileForm form)
+        {
+            if (ModelState.IsValid)
+            {
+                await userService.ExecuteAsync(new EditUserProfileCommand(
+                    UserId, form.Birthday, form.Location, form.Signature));
+
+                return RedirectToAction("EditProfile");
+            }
+
+            return View(form);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> ChangeEmailAddress()
         {
             if (!IsAuthenticated)
