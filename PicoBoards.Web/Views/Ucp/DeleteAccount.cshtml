@@ -1,0 +1,17 @@
+﻿@model DeleteAccountForm
+
+<h1>Delete Account | User Control Panel</h1>
+
+<p>@Html.ValidationSummary()</p>
+
+<p>Enter your password twice:</p>
+
+<form asp-action="DeleteAccount" method="post">
+    <label asp-for="Password"></label>
+    <input asp-for="Password" />
+    <br />
+    <label asp-for="ConfirmPassword"></label>
+    <input asp-for="ConfirmPassword" />
+    <br />
+    <button type="submit">Delete Account</button>
+</form>

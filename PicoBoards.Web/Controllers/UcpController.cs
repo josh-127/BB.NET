@@ -124,5 +124,36 @@ namespace PicoBoards.Web.Controllers
                 return View(form);
             }
         }
+
+        [HttpGet]
+        public IActionResult DeleteAccount()
+        {
+            if (!IsAuthenticated)
+                return RedirectToLogin();
+
+            return View(new DeleteAccountForm());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteAccount(DeleteAccountForm form)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    await userService.ExecuteAsync(new DeleteUserCommand(UserId, form.Password));
+                    await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+                    return RedirectToAction("Index", "Home");
+                }
+
+                return View(form);
+            }
+            catch (CommandException e)
+            {
+                ModelState.AddModelError("", e.Message);
+                return View(form);
+            }
+        }
     }
 }

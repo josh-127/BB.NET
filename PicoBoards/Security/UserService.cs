@@ -70,7 +70,7 @@ namespace PicoBoards.Security
                 if (command.CurrentPassword != password)
                 {
                     transaction.Commit();
-                    throw new CommandException("Invalid password.");
+                    throw new CommandException("Incorrect password.");
                 }
 
                 await transaction
@@ -92,6 +92,32 @@ namespace PicoBoards.Security
                         })
                         .ExecuteAsync();
                 }
+
+                transaction.Commit();
+            }
+        }
+
+        public async Task ExecuteAsync(DeleteUserCommand command)
+        {
+            if (!command.IsValid())
+                throw new CommandException("Invalid fields.");
+
+            using (var transaction = await dataSource.BeginTransactionAsync())
+            {
+                var password = await dataSource
+                    .GetByKey("User", command.UserId)
+                    .ToString("Password")
+                    .ExecuteAsync();
+
+                if (command.Password != password)
+                {
+                    transaction.Commit();
+                    throw new CommandException("Incorrect password.");
+                }
+
+                await transaction
+                    .DeleteByKey("User", command.UserId)
+                    .ExecuteAsync();
 
                 transaction.Commit();
             }
