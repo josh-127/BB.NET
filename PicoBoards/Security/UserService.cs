@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using PicoBoards.Security.Authentication;
 using Tortuga.Chain;
@@ -19,6 +20,30 @@ namespace PicoBoards.Security
             => await dataSource
                 .GetByKey("User", userId)
                 .ToString("EmailAddress")
+                .ExecuteAsync();
+
+        public async Task<string> GetUserNameAsync(int userId)
+            => await dataSource
+                .GetByKey("User", userId)
+                .ToString("UserName")
+                .ExecuteAsync();
+
+        public async Task<DateTime?> GetUserBirthdayAsync(int userId)
+            => await dataSource
+                .GetByKey("User", userId)
+                .ToDateTimeOrNull("Birthday")
+                .ExecuteAsync();
+
+        public async Task<string> GetUserLocationAsync(int userId)
+            => await dataSource
+                .GetByKey("User", userId)
+                .ToString("Location")
+                .ExecuteAsync();
+
+        public async Task<string> GetUserSignatureAsync(int userId)
+            => await dataSource
+                .GetByKey("User", userId)
+                .ToString("Signature")
                 .ExecuteAsync();
 
         public async Task<UserProfileDetails> GetUserProfileAsync(int userId)

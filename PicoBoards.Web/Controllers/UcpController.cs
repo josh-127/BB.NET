@@ -21,6 +21,7 @@ namespace PicoBoards.Web.Controllers
 
         private int UserId => int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
         private string UserName => User.FindFirstValue(ClaimTypes.Name);
+        public UserAccessToken UserAccessToken => new UserAccessToken(UserId, UserName);
 
         [HttpGet]
         public IActionResult Index()
@@ -45,11 +46,39 @@ namespace PicoBoards.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> ChangeEmailAddress(ChangeEmailAddressForm form)
         {
-            using (var editor = userService.BeginEdit(new UserAccessToken(UserId, UserName)))
+            using (var editor = userService.BeginEdit(UserAccessToken))
             {
                 try
                 {
                     await editor.SetEmailAddressAsync(form.EmailAddress);
+                    return RedirectToAction("Index");
+                }
+                catch (EditorException e)
+                {
+                    ModelState.AddModelError("", e.Message);
+                    return View(form);
+                }
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ChangeUserName()
+        {
+            if (!IsAuthenticated)
+                return RedirectToLogin();
+
+            var userName = await userService.GetUserNameAsync(UserId);
+            return View(new ChangeUserNameForm(userName));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangeUserName(ChangeUserNameForm form)
+        {
+            using (var editor = userService.BeginEdit(UserAccessToken))
+            {
+                try
+                {
+                    await editor.SetUserNameAsync(form.UserName);
                     return RedirectToAction("Index");
                 }
                 catch (EditorException e)

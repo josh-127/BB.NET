@@ -8,12 +8,12 @@ namespace PicoBoards.DataAnnotations
     public sealed class IdentifierAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext context)
-        {
-            if (value is string str && Regex.IsMatch(str, "^[A-Za-z0-9_]+$"))
-                return null;
+            => IsValid(value)
+                ? null
+                : new ValidationResult(
+                    $"{context.DisplayName} can only contain alphanumeric characters and '_'.");
 
-            return new ValidationResult(
-                $"{context.DisplayName} can only contain alphanumeric characters and '_'.");
-        }
+        public bool IsValid(object value)
+            => value is string str && Regex.IsMatch(str, "^[A-Za-z0-9_]+$");
     }
 }
