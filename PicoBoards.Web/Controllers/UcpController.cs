@@ -1,5 +1,7 @@
 ﻿using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using PicoBoards.Security;
 using PicoBoards.Security.Authentication.Models;
@@ -95,6 +97,21 @@ namespace PicoBoards.Web.Controllers
                         form.UserName,
                         form.CurrentPassword,
                         form.NewPassword));
+
+                    var currentUserId = UserId;
+                    var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+                    identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, currentUserId.ToString(), ClaimValueTypes.Integer));
+                    identity.AddClaim(new Claim(ClaimTypes.Name, form.UserName));
+                    identity.AddClaim(new Claim(ClaimTypes.Email, form.EmailAddress));
+
+                    var principal = new ClaimsPrincipal(identity);
+                    var properties = new AuthenticationProperties();
+
+                    await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                    await HttpContext.SignInAsync(
+                        CookieAuthenticationDefaults.AuthenticationScheme,
+                        principal,
+                        properties);
 
                     return RedirectToAction("EditAccount");
                 }
