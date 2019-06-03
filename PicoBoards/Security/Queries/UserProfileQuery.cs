@@ -1,11 +1,11 @@
 ﻿
 namespace PicoBoards.Security.Queries
 {
-    public sealed class PublicUserProfileQuery
+    public sealed class UserProfileQuery
     {
         public int UserId { get; }
 
-        public PublicUserProfileQuery(int userId)
+        public UserProfileQuery(int userId)
             => UserId = userId;
     }
 }

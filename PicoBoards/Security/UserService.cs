@@ -123,11 +123,11 @@ namespace PicoBoards.Security
             }
         }
 
-        public async Task<PublicUserProfileDetails> QueryAsync(PublicUserProfileQuery query)
+        public async Task<UserProfileDetails> QueryAsync(UserProfileQuery query)
             => (await dataSource
                 .From("vw_UserProfileDetails", query)
                 .WithLimits(1)
-                .ToCollection<PublicUserProfileDetails>(CollectionOptions.InferConstructor)
+                .ToCollection<UserProfileDetails>(CollectionOptions.InferConstructor)
                 .ExecuteAsync())
                 .FirstOrDefault();
 

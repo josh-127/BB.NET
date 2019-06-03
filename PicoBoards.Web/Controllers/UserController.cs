@@ -23,7 +23,7 @@ namespace PicoBoards.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Profile(int id)
         {
-            var model = await userService.QueryAsync(new PublicUserProfileQuery(id));
+            var model = await userService.QueryAsync(new UserProfileQuery(id));
             return View(model);
         }
 
