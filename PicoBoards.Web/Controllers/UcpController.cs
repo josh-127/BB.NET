@@ -66,6 +66,48 @@ namespace PicoBoards.Web.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> EditAccount()
+        {
+            if (!IsAuthenticated)
+                return RedirectToLogin();
+
+            var model = await userService.QueryAsync(new UserAccountSettingsQuery(UserId));
+            var viewModel = new EditUserAccountForm
+            {
+                EmailAddress = model.EmailAddress,
+                UserName = model.UserName,
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditAccount(EditUserAccountForm form)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    await userService.ExecuteAsync(new EditUserAccountCommand(
+                        UserId,
+                        form.EmailAddress,
+                        form.UserName,
+                        form.CurrentPassword,
+                        form.NewPassword));
+
+                    return RedirectToAction("EditAccount");
+                }
+
+                return View(form);
+            }
+            catch (CommandException e)
+            {
+                ModelState.AddModelError("", e.Message);
+                return View(form);
+            }
+        }
+
+        [HttpGet]
         public async Task<IActionResult> ChangeEmailAddress()
         {
             if (!IsAuthenticated)
