@@ -17,21 +17,13 @@ namespace PicoBoards.Security
 
         public void Dispose() { }
 
-        public async Task SetEmailAddressAsync(string emailAddress)
+        public async Task SetEmailAddressAsync(string value)
         {
-            var context = new ValidationContext(emailAddress) { MemberName = nameof(emailAddress) };
-            var result = new ValidationResultCollection();
-            Validator.TryValidateValue(emailAddress, context, result, new List<ValidationAttribute>
-            {
-                new EmailAddressAttribute(),
-                new RequiredAttribute()
-            });
-
-            if (!result.IsValid)
+            if (!value.IsValidEmailAddress())
                 throw new EditorException("Invalid value.");
 
             await dataSource
-                .Update("User", new { accessToken.UserId, emailAddress })
+                .Update("User", new { accessToken.UserId, EmailAddress = value })
                 .ExecuteAsync();
         }
     }
