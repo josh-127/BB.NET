@@ -1,15 +1,15 @@
 ﻿
 namespace PicoBoards.Security.Authentication
 {
-    public class LoginToken
+    public class UserAccessToken
     {
         public int UserId { get; set; }
 
         public string UserName { get; set; }
 
-        public LoginToken() { }
+        public UserAccessToken() { }
 
-        public LoginToken(int userId, string userName)
+        public UserAccessToken(int userId, string userName)
             => (UserId, UserName) = (userId, userName);
     }
 }

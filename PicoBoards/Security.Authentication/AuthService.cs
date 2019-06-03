@@ -10,12 +10,12 @@ namespace PicoBoards.Security.Authentication
         public AuthService(MySqlDataSource dataSource)
             => this.dataSource = dataSource;
 
-        public async Task<LoginToken> ValidateUserAsync(LoginCredentials login)
+        public async Task<UserAccessToken> ValidateUserAsync(LoginCredentials login)
         {
             var query = await dataSource
                 .From("User", new { login.UserName, login.Password })
                 .WithLimits(1)
-                .ToCollection<LoginToken>()
+                .ToCollection<UserAccessToken>()
                 .ExecuteAsync();
 
             return query.Count > 0
@@ -23,7 +23,7 @@ namespace PicoBoards.Security.Authentication
                 : throw new AuthenticationException("Invalid credentials.");
         }
 
-        public async Task<LoginToken> RegisterUserAsync(Registration registration)
+        public async Task<UserAccessToken> RegisterUserAsync(Registration registration)
         {
             if (!registration.IsValid())
                 throw new AuthenticationException("Invalid fields.");
@@ -45,7 +45,7 @@ namespace PicoBoards.Security.Authentication
                 .ExecuteAsync();
 
             return userId.HasValue
-                ? new LoginToken(userId.Value, registration.UserName)
+                ? new UserAccessToken(userId.Value, registration.UserName)
                 : throw new AuthenticationException("User already exists.");
         }
     }

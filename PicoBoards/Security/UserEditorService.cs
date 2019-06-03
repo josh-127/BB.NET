@@ -10,9 +10,9 @@ namespace PicoBoards.Security
     public sealed class UserEditorService : IDisposable
     {
         private readonly MySqlDataSource dataSource;
-        private readonly LoginToken loginToken;
+        private readonly UserAccessToken loginToken;
 
-        public UserEditorService(MySqlDataSource dataSource, LoginToken loginToken)
+        public UserEditorService(MySqlDataSource dataSource, UserAccessToken loginToken)
             => (this.dataSource, this.loginToken) = (dataSource, loginToken);
 
         public void Dispose() { }

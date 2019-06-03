@@ -12,7 +12,7 @@ namespace PicoBoards.Security
         public UserService(MySqlDataSource dataSource)
             => this.dataSource = dataSource;
 
-        public UserEditorService BeginEdit(LoginToken token)
+        public UserEditorService BeginEdit(UserAccessToken token)
             => new UserEditorService(dataSource, token);
 
         public async Task<string> GetUserEmailAddressAsync(int userId)

@@ -45,7 +45,7 @@ namespace PicoBoards.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> ChangeEmailAddress(ChangeEmailAddressForm form)
         {
-            using (var editor = userService.BeginEdit(new LoginToken(UserId, UserName)))
+            using (var editor = userService.BeginEdit(new UserAccessToken(UserId, UserName)))
             {
                 try
                 {
