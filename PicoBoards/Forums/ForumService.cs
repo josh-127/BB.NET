@@ -50,7 +50,7 @@ namespace PicoBoards.Forums
                 }
 
                 await transaction
-                    .Delete("Category", new { command.CategoryId })
+                    .DeleteByKey("Category", command.CategoryId)
                     .ExecuteAsync();
 
                 transaction.Commit();
