@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using PicoBoards.Security.Authentication;
 using PicoBoards.Security.Authentication.Commands;
 using PicoBoards.Security.Authentication.Queries;
@@ -11,8 +9,6 @@ namespace PicoBoards.Tests
 {
     public class AuthServiceTest
     {
-        
-
         [Fact]
         public async Task ValidateUser_SuccessfulCase()
         {
