@@ -1,0 +1,13 @@
+﻿@model EditCategoryForm
+
+<h1>Edit Category | Forums | Admin Control Panel</h1>
+
+@Html.ValidationSummary()
+
+<form asp-action="EditCategory" method="post">
+    <input asp-for="CategoryId" />
+
+    <label asp-for="Name"></label>
+    <input asp-for="Name" />
+    <button type="submit">Save Changes</button>
+</form>

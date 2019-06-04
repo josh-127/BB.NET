@@ -60,5 +60,30 @@ namespace PicoBoards.Web.Features.Acp
                 return View("Forums");
             }
         }
+
+        [HttpGet]
+        public IActionResult EditCategory(int id)
+            => View(new EditCategoryForm(id));
+
+        [HttpPost]
+        public async Task<IActionResult> EditCategory(EditCategoryForm form)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    await forumService.ExecuteAsync(new EditCategoryCommand(
+                        form.CategoryId, form.Name));
+
+                    return RedirectToAction("Forums");
+                }
+            }
+            catch (CommandException e)
+            {
+                ModelState.AddModelError("", e.Message);
+            }
+
+            return View(new EditCategoryForm(form.CategoryId));
+        }
     }
 }
