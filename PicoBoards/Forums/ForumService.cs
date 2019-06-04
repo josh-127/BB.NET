@@ -193,13 +193,42 @@ namespace PicoBoards.Forums
             if (!command.IsValid())
                 throw new CommandException("Invalid fields.");
 
-            var key =
-                await dataSource
-                .Insert("Topic", command)
-                .ExecuteAsync();
+            using (var transaction = await dataSource.BeginTransactionAsync())
+            {
+                var topicId =
+                    await transaction
+                    .Insert("Topic", command)
+                    .ExecuteAsync();
 
-            if (key is null)
-                throw new CommandException("Invalid fields.");
+                if (topicId is null)
+                {
+                    transaction.Rollback();
+                    throw new CommandException("Can't add topic.");
+                }
+
+                var postId =
+                    await transaction
+                    .Insert("Post", new
+                    {
+                        TopicId = topicId.Value,
+                        UserId = command.AuthorUserId,
+                        command.Name,
+                        Body = command.OpeningPostBody,
+                        command.FormattingEnabled,
+                        command.SmiliesEnabled,
+                        command.ParseUrls,
+                        command.AttachSignature
+                    })
+                    .ExecuteAsync();
+
+                if (postId is null)
+                {
+                    transaction.Rollback();
+                    throw new CommandException("Can't add post.");
+                }
+
+                transaction.Commit();
+            }
         }
 
         public async Task ExecuteAsync(RemoveTopicCommand command)
