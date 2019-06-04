@@ -29,7 +29,51 @@ namespace PicoBoards.Tests
         }
 
         [Fact]
-        public async Task SuccessfulCase()
+        public async Task ValidateUser_SuccessfulCase()
+        {
+            var dataSource = await CreateDatabase();
+            var userId = await RegisterUser_ExpectSuccess(
+                dataSource, "John_Smith@example.com", "John_Smith", "password");
+
+            var authService = new AuthService(dataSource);
+            var token = await authService.ValidateUserAsync(
+                new LoginCredentials("John_Smith", "password"));
+
+            Assert.Equal(userId, token.UserId);
+            Assert.Equal("John_Smith@example.com", token.EmailAddress);
+            Assert.Equal("John_Smith", token.UserName);
+        }
+
+        [Fact]
+        public async Task ValidateUser_UserDoesNotExist()
+        {
+            var dataSource = await CreateDatabase();
+            await RegisterUser_ExpectSuccess(
+                dataSource, "John_Smith@example.com", "John_Smith", "password");
+
+            var authService = new AuthService(dataSource);
+
+            await Assert.ThrowsAsync<AuthenticationException>(
+                async () => await authService.ValidateUserAsync(
+                    new LoginCredentials("Joyce_Robinson", "password")));
+        }
+
+        [Fact]
+        public async Task ValidateUser_IncorrectPassword()
+        {
+            var dataSource = await CreateDatabase();
+            await RegisterUser_ExpectSuccess(
+                dataSource, "John_Smith@example.com", "John_Smith", "password");
+
+            var authService = new AuthService(dataSource);
+
+            await Assert.ThrowsAsync<AuthenticationException>(
+                async () => await authService.ValidateUserAsync(
+                    new LoginCredentials("John_Smith", "1234567890")));
+        }
+
+        [Fact]
+        public async Task RegisterUser_SuccessfulCase()
         {
             var dataSource = await CreateDatabase();
             await RegisterUser_ExpectSuccess(dataSource, "John_Smith@example1.com",         "John_Smith");
@@ -45,7 +89,7 @@ namespace PicoBoards.Tests
         }
 
         [Fact]
-        public async Task SameUserName_UserAlreadyExists()
+        public async Task RegisterUser_SameUserName_UserAlreadyExists()
         {
             var dataSource = await CreateDatabase();
             await RegisterUser_ExpectSuccess(dataSource, "John_Smith@example1.com", "John_Smith");
@@ -53,7 +97,7 @@ namespace PicoBoards.Tests
         }
 
         [Fact]
-        public async Task InvalidEmailAddress()
+        public async Task RegisterUser_InvalidEmailAddress()
         {
             var dataSource = await CreateDatabase();
             var authService = new AuthService(dataSource);
@@ -64,7 +108,7 @@ namespace PicoBoards.Tests
         }
 
         [Fact]
-        public async Task InvalidUserName()
+        public async Task RegisterUser_InvalidUserName()
         {
             var dataSource = await CreateDatabase();
             var authService = new AuthService(dataSource);
@@ -74,13 +118,16 @@ namespace PicoBoards.Tests
                     new RegisterUserCommand("John_Smith@example.com", "John Smith", "password")));
         }
 
-        private async Task RegisterUser_ExpectSuccess(
-            MySqlDataSource dataSource, string emailAddress, string userName)
+        private async Task<int> RegisterUser_ExpectSuccess(
+            MySqlDataSource dataSource,
+            string emailAddress,
+            string userName,
+            string password = "password")
         {
             var authService = new AuthService(dataSource);
 
             var token = await authService
-                .ExecuteAsync(new RegisterUserCommand(emailAddress, userName, "password"));
+                .ExecuteAsync(new RegisterUserCommand(emailAddress, userName, password));
 
             Assert.Equal(emailAddress, token.EmailAddress);
             Assert.Equal(userName, token.UserName);
@@ -94,11 +141,13 @@ namespace PicoBoards.Tests
             Assert.Equal(userName, row["UserName"]);
 
             token = await authService
-                .ValidateUserAsync(new LoginCredentials(userName, "password"));
+                .ValidateUserAsync(new LoginCredentials(userName, password));
 
             Assert.Equal(token.UserId, row["UserId"]);
             Assert.Equal(emailAddress, token.EmailAddress);
             Assert.Equal(userName, token.UserName);
+
+            return token.UserId;
         }
 
         private async Task RegisterUser_ExpectUserAlreadyExists(
