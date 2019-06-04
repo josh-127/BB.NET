@@ -27,25 +27,12 @@ namespace PicoBoards.Forums.Models
 
         public bool IsReadOnly => false;
 
-        public void Add(CategoryListing item)
-            => list.Add(item);
-
-        public void Clear()
-            => list.Clear();
-
-        public bool Contains(CategoryListing item)
-            => list.Contains(item);
-
-        public void CopyTo(CategoryListing[] array, int arrayIndex)
-            => list.CopyTo(array, arrayIndex);
-
-        public IEnumerator<CategoryListing> GetEnumerator()
-            => list.GetEnumerator();
-
-        public bool Remove(CategoryListing item)
-            => list.Remove(item);
-
-        IEnumerator IEnumerable.GetEnumerator()
-            => list.GetEnumerator();
+        public void Add(CategoryListing item) => list.Add(item);
+        public void Clear() => list.Clear();
+        public bool Contains(CategoryListing item) => list.Contains(item);
+        public void CopyTo(CategoryListing[] array, int arrayIndex) => list.CopyTo(array, arrayIndex);
+        public IEnumerator<CategoryListing> GetEnumerator() => list.GetEnumerator();
+        public bool Remove(CategoryListing item) => list.Remove(item);
+        IEnumerator IEnumerable.GetEnumerator() => list.GetEnumerator();
     }
 }
