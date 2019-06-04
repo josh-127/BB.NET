@@ -14,6 +14,13 @@ namespace PicoBoards.Forums
         public ForumService(MySqlDataSource dataSource)
             => this.dataSource = dataSource;
 
+        public async Task<CategoryRefCollection> QueryAsync(CategoryRefsQuery query)
+            => new CategoryRefCollection(
+                await dataSource
+                .From("Category")
+                .ToCollection<CategoryRef>(CollectionOptions.InferConstructor)
+                .ExecuteAsync());
+
         public async Task<CategoryListingCollection> QueryAsync(CategoryListingsQuery query)
             => new CategoryListingCollection(
                 await dataSource
