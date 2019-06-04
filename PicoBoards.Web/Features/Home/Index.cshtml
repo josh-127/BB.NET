@@ -1,2 +1,32 @@
-﻿
+﻿@model CategoryDetailsCollection
+
 <h1>Home</h1>
+
+@foreach (var category in Model)
+{
+    <h2>@category.Name</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forum in category.Forums)
+            {
+                <tr>
+                    <td><img src="@forum.ImageUrl" /></td>
+                    <td>
+                        <a asp-action="Forum" asp-route-id="@forum.ForumId">
+                            @forum.Name
+                        </a>
+                    </td>
+                    <td>@forum.Description</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
