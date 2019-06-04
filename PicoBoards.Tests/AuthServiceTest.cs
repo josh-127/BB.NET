@@ -11,27 +11,12 @@ namespace PicoBoards.Tests
 {
     public class AuthServiceTest
     {
-        private async Task<MySqlDataSource> CreateDatabase()
-        {
-            var directory = Path.Combine(Environment.CurrentDirectory, "../../../../Database");
-            var schemaPath = Path.Combine(directory, "schema.sql");
-            var viewsPath = Path.Combine(directory, "views.sql");
-
-            var schemaText = await File.ReadAllTextAsync(schemaPath);
-            var viewsText = await File.ReadAllTextAsync(viewsPath);
-
-            var dataSource = new MySqlDataSource(Configuration.ConnectionStringWithoutDatabase);
-            await dataSource.Sql("DROP DATABASE IF EXISTS `PicoBoards`").ExecuteAsync();
-            await dataSource.Sql(schemaText).ExecuteAsync();
-            await dataSource.Sql(viewsText).ExecuteAsync();
-
-            return new MySqlDataSource(Configuration.ConnectionString);
-        }
+        
 
         [Fact]
         public async Task ValidateUser_SuccessfulCase()
         {
-            var dataSource = await CreateDatabase();
+            var dataSource = await Database.Create();
             var userId = await RegisterUser_ExpectSuccess(
                 dataSource, "John_Smith@example.com", "John_Smith", "password");
 
@@ -47,7 +32,7 @@ namespace PicoBoards.Tests
         [Fact]
         public async Task ValidateUser_UserDoesNotExist()
         {
-            var dataSource = await CreateDatabase();
+            var dataSource = await Database.Create();
             await RegisterUser_ExpectSuccess(
                 dataSource, "John_Smith@example.com", "John_Smith", "password");
 
@@ -61,7 +46,7 @@ namespace PicoBoards.Tests
         [Fact]
         public async Task ValidateUser_IncorrectPassword()
         {
-            var dataSource = await CreateDatabase();
+            var dataSource = await Database.Create();
             await RegisterUser_ExpectSuccess(
                 dataSource, "John_Smith@example.com", "John_Smith", "password");
 
@@ -75,7 +60,7 @@ namespace PicoBoards.Tests
         [Fact]
         public async Task RegisterUser_SuccessfulCase()
         {
-            var dataSource = await CreateDatabase();
+            var dataSource = await Database.Create();
             await RegisterUser_ExpectSuccess(dataSource, "John_Smith@example1.com",         "John_Smith");
             await RegisterUser_ExpectSuccess(dataSource, "Michelle_Cooper@example2.com",    "Michelle_Cooper");
             await RegisterUser_ExpectSuccess(dataSource, "Theresa_Brown@example3.com",      "Theresa_Brown");
@@ -91,7 +76,7 @@ namespace PicoBoards.Tests
         [Fact]
         public async Task RegisterUser_SameUserName_UserAlreadyExists()
         {
-            var dataSource = await CreateDatabase();
+            var dataSource = await Database.Create();
             await RegisterUser_ExpectSuccess(dataSource, "John_Smith@example1.com", "John_Smith");
             await RegisterUser_ExpectUserAlreadyExists(dataSource, "John_Smith@example1000.com", "John_Smith");
         }
@@ -99,7 +84,7 @@ namespace PicoBoards.Tests
         [Fact]
         public async Task RegisterUser_InvalidEmailAddress()
         {
-            var dataSource = await CreateDatabase();
+            var dataSource = await Database.Create();
             var authService = new AuthService(dataSource);
 
             await Assert.ThrowsAsync<CommandException>(
@@ -110,7 +95,7 @@ namespace PicoBoards.Tests
         [Fact]
         public async Task RegisterUser_InvalidUserName()
         {
-            var dataSource = await CreateDatabase();
+            var dataSource = await Database.Create();
             var authService = new AuthService(dataSource);
 
             await Assert.ThrowsAsync<CommandException>(
