@@ -57,7 +57,6 @@ CREATE TABLE IF NOT EXISTS `User` (
 CREATE TABLE IF NOT EXISTS `Topic` (
     `TopicId`       INT             NOT NULL    AUTO_INCREMENT,
     `ForumId`       INT             NOT NULL,
-    `AuthorUserId`  INT             NOT NULL,
     `Name`          VARCHAR(45)     NOT NULL,
     `Description`   VARCHAR(255),
     `Created`       TIMESTAMP       NOT NULL    DEFAULT CURRENT_TIMESTAMP,
@@ -65,13 +64,9 @@ CREATE TABLE IF NOT EXISTS `Topic` (
     `IsSticky`      TINYINT         NOT NULL,
     PRIMARY KEY (`TopicId`),
     INDEX `idx_Topic_ForumId` (`ForumId`),
-    INDEX `idx_Topic_AuthorUserId` (`AuthorUserId`),
     CONSTRAINT `fk_Topic_ForumId`
         FOREIGN KEY (`ForumId`)
-        REFERENCES `Forum` (`ForumId`),
-    CONSTRAINT `fk_Topic_AuthorUserId`
-        FOREIGN KEY (`AuthorUserId`)
-        REFERENCES `User` (`UserId`)
+        REFERENCES `Forum` (`ForumId`)
 );
 
 CREATE TABLE IF NOT EXISTS `Post` (
