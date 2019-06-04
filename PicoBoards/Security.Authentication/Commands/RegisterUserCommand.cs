@@ -7,14 +7,14 @@ namespace PicoBoards.Security.Authentication.Commands
     {
         [EmailAddress]
         [Required]
-        public string EmailAddress { get; private set; }
+        public string EmailAddress { get; }
 
         [Identifier]
         [Required]
-        public string UserName { get; private set; }
+        public string UserName { get; }
 
         [Required]
-        public string Password { get; private set; }
+        public string Password { get; }
 
         internal RegisterUserCommand() { }
 
