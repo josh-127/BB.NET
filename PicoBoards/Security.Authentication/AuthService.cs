@@ -31,26 +31,43 @@ namespace PicoBoards.Security.Authentication
             if (!command.IsValid())
                 throw new AuthenticationException("Invalid fields.");
 
-            var defaultGroupId = await dataSource
-                .GetByKey("GlobalConfiguration", "0")
-                .ToInt32("DefaultGroupId")
-                .ReadOrCache("GlobalConfiguration")
-                .ExecuteAsync();
+            using (var transaction = await dataSource.BeginTransactionAsync())
+            {
+                var defaultGroupId =
+                    await transaction
+                    .GetByKey("GlobalConfiguration", "0")
+                    .ToInt32("DefaultGroupId")
+                    .ReadOrCache("GlobalConfiguration")
+                    .ExecuteAsync();
 
-            var userId = await dataSource
-                .Insert("User", new
+                var userAlreadyExists =
+                    await transaction
+                    .From("User", new { command.UserName })
+                    .WithLimits(1)
+                    .AsCount()
+                    .ExecuteAsync() > 0;
+
+                if (userAlreadyExists)
                 {
-                    GroupId = defaultGroupId,
-                    command.EmailAddress,
-                    command.UserName,
-                    command.Password
-                })
-                .ToInt32OrNull()
-                .ExecuteAsync();
+                    transaction.Rollback();
+                    throw new CommandException("User already exists.");
+                }
 
-            return userId.HasValue
-                ? new UserAccessToken(userId.Value, command.EmailAddress, command.UserName)
-                : throw new AuthenticationException("User already exists.");
+                var userId =
+                    await transaction
+                    .Insert("User", new
+                    {
+                        GroupId = defaultGroupId,
+                        command.EmailAddress,
+                        command.UserName,
+                        command.Password
+                    })
+                    .ToInt32()
+                    .ExecuteAsync();
+
+                transaction.Commit();
+                return new UserAccessToken(userId, command.EmailAddress, command.UserName);
+            }
         }
     }
 }
