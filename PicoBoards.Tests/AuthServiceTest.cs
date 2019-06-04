@@ -32,25 +32,25 @@ namespace PicoBoards.Tests
         public async Task SuccessfulCase()
         {
             var dataSource = await CreateDatabase();
-            await SuccessfulCase_Impl(dataSource, "John_Smith@example1.com",         "John_Smith",         "password");
-            await SuccessfulCase_Impl(dataSource, "Michelle_Cooper@example2.com",    "Michelle_Cooper",    "password");
-            await SuccessfulCase_Impl(dataSource, "Theresa_Brown@example3.com",      "Theresa_Brown",      "password");
-            await SuccessfulCase_Impl(dataSource, "Joyce_Robinson@example4.com",     "Joyce_Robinson",     "password");
-            await SuccessfulCase_Impl(dataSource, "Lawrence_Jones@example5.com",     "Lawrence_Jones",     "password");
-            await SuccessfulCase_Impl(dataSource, "Frank_Sanchez@example6.com",      "Frank_Sanchez",      "password");
-            await SuccessfulCase_Impl(dataSource, "Phillip_Richardson@example7.com", "Phillip_Richardson", "password");
-            await SuccessfulCase_Impl(dataSource, "David_Bailey@example8.com",       "David_Bailey",       "password");
-            await SuccessfulCase_Impl(dataSource, "Jose_Parker@example9.com",        "Jose_Parker",        "password");
-            await SuccessfulCase_Impl(dataSource, "Ralph_Perez@example10.com",       "Ralph_Perez",        "password");
+            await SuccessfulCase_Impl(dataSource, "John_Smith@example1.com",         "John_Smith");
+            await SuccessfulCase_Impl(dataSource, "Michelle_Cooper@example2.com",    "Michelle_Cooper");
+            await SuccessfulCase_Impl(dataSource, "Theresa_Brown@example3.com",      "Theresa_Brown");
+            await SuccessfulCase_Impl(dataSource, "Joyce_Robinson@example4.com",     "Joyce_Robinson");
+            await SuccessfulCase_Impl(dataSource, "Lawrence_Jones@example5.com",     "Lawrence_Jones");
+            await SuccessfulCase_Impl(dataSource, "Frank_Sanchez@example6.com",      "Frank_Sanchez");
+            await SuccessfulCase_Impl(dataSource, "Phillip_Richardson@example7.com", "Phillip_Richardson");
+            await SuccessfulCase_Impl(dataSource, "David_Bailey@example8.com",       "David_Bailey");
+            await SuccessfulCase_Impl(dataSource, "Jose_Parker@example9.com",        "Jose_Parker");
+            await SuccessfulCase_Impl(dataSource, "Ralph_Perez@example10.com",       "Ralph_Perez");
         }
 
         private async Task SuccessfulCase_Impl(
-            MySqlDataSource dataSource, string emailAddress, string userName, string password)
+            MySqlDataSource dataSource, string emailAddress, string userName)
         {
             var authService = new AuthService(dataSource);
 
             var token = await authService
-                .ExecuteAsync(new RegisterUserCommand(emailAddress, userName, password));
+                .ExecuteAsync(new RegisterUserCommand(emailAddress, userName, "password"));
 
             Assert.Equal(emailAddress, token.EmailAddress);
             Assert.Equal(userName, token.UserName);
@@ -64,7 +64,7 @@ namespace PicoBoards.Tests
             Assert.Equal(userName, row["UserName"]);
 
             token = await authService
-                .ValidateUserAsync(new LoginCredentials(userName, password));
+                .ValidateUserAsync(new LoginCredentials(userName, "password"));
 
             Assert.Equal(token.UserId, row["UserId"]);
             Assert.Equal(emailAddress, token.EmailAddress);
