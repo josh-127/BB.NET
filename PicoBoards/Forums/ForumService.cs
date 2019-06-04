@@ -41,7 +41,7 @@ namespace PicoBoards.Forums
                     .ExecuteAsync();
 
                 forums = await transaction
-                    .From("Forums")
+                    .From("Forum")
                     .ToTable()
                     .ExecuteAsync();
 
