@@ -188,7 +188,7 @@ namespace PicoBoards.Forums
             }
         }
 
-        public async Task ExecuteAsync(AddTopicCommand command)
+        public async Task<int> ExecuteAsync(AddTopicCommand command)
         {
             if (!command.IsValid())
                 throw new CommandException("Invalid fields.");
@@ -228,6 +228,8 @@ namespace PicoBoards.Forums
                 }
 
                 transaction.Commit();
+
+                return topicId.Value;
             }
         }
 
