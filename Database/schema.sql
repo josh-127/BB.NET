@@ -25,21 +25,6 @@ CREATE TABLE IF NOT EXISTS `Forum` (
         REFERENCES `Category` (`CategoryId`)
 );
 
-CREATE TABLE IF NOT EXISTS `Topic` (
-    `TopicId`       INT             NOT NULL    AUTO_INCREMENT,
-    `ForumId`       INT             NOT NULL,
-    `Name`          VARCHAR(45)     NOT NULL,
-    `Description`   VARCHAR(255),
-    `Created`       TIMESTAMP       NOT NULL    DEFAULT CURRENT_TIMESTAMP,
-    `IsLocked`      TINYINT         NOT NULL,
-    `IsSticky`      TINYINT         NOT NULL,
-    PRIMARY KEY (`TopicId`),
-    INDEX `idx_Topic_ForumId` (`ForumId`),
-    CONSTRAINT `fk_Topic_ForumId`
-        FOREIGN KEY (`ForumId`)
-        REFERENCES `Forum` (`ForumId`)
-);
-
 CREATE TABLE IF NOT EXISTS `Group` (
     `GroupId`       INT             NOT NULL    AUTO_INCREMENT,
     `Name`          VARCHAR(45)     NOT NULL,
@@ -67,6 +52,26 @@ CREATE TABLE IF NOT EXISTS `User` (
     CONSTRAINT `fk_User_GroupId`
         FOREIGN KEY (`GroupId`)
         REFERENCES `Group` (`GroupId`)
+);
+
+CREATE TABLE IF NOT EXISTS `Topic` (
+    `TopicId`       INT             NOT NULL    AUTO_INCREMENT,
+    `ForumId`       INT             NOT NULL,
+    `AuthorUserId`  INT             NOT NULL,
+    `Name`          VARCHAR(45)     NOT NULL,
+    `Description`   VARCHAR(255),
+    `Created`       TIMESTAMP       NOT NULL    DEFAULT CURRENT_TIMESTAMP,
+    `IsLocked`      TINYINT         NOT NULL,
+    `IsSticky`      TINYINT         NOT NULL,
+    PRIMARY KEY (`TopicId`),
+    INDEX `idx_Topic_ForumId` (`ForumId`),
+    INDEX `idx_Topic_AuthorUserId` (`AuthorUserId`),
+    CONSTRAINT `fk_Topic_ForumId`
+        FOREIGN KEY (`ForumId`)
+        REFERENCES `Forum` (`ForumId`),
+    CONSTRAINT `fk_Topic_AuthorUserId`
+        FOREIGN KEY (`AuthorUserId`)
+        REFERENCES `User` (`UserId`)
 );
 
 CREATE TABLE IF NOT EXISTS `Post` (
