@@ -1,4 +1,4 @@
-﻿@model CategoryListingCollection
+﻿@model CategoryDetailsCollection
 
 <h1>Forums | Admin Control Panel</h1>
 
@@ -6,15 +6,36 @@
 
 @await Html.PartialAsync("_AddCategory", new AddCategoryForm())
 
-@foreach (var listing in Model)
+<a asp-action="AddForum">New Forum</a>
+
+@foreach (var category in Model)
 {
     <div>
-        <h2>@listing.Name</h2>
-        <a asp-action="EditCategory" asp-route-id="@listing.CategoryId" method="post">
+        <h2>@category.Name</h2>
+        <a asp-action="EditCategory" asp-route-id="@category.CategoryId" method="post">
             (edit)
         </a>
-        <form asp-action="RemoveCategory" asp-route-id="@listing.CategoryId" method="post">
+        <form asp-action="RemoveCategory" asp-route-id="@category.CategoryId" method="post">
             <button type="submit">(remove)</button>
         </form>
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var forum in category.Forums)
+                {
+                    <tr>
+                        <td><img src="@forum.ImageUrl" /></td>
+                        <td>@forum.Name</td>
+                        <td>@forum.Description</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 }

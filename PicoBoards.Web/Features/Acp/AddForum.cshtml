@@ -1,0 +1,19 @@
+﻿@model AddForumForm
+
+@Html.ValidationSummary()
+
+<form asp-action="AddForum" method="post">
+    <label asp-for="Parent"></label>
+    <select asp-for="Parent" asp-items="Model.Categories"></select>
+    <br />
+    <label asp-for="Name"></label>
+    <input asp-for="Name" />
+    <br />
+    <label asp-for="Description"></label>
+    <input asp-for="Description" />
+    <br />
+    <label asp-for="ImageUrl"></label>
+    <input asp-for="ImageUrl" />
+    <br />
+    <button type="submit">Post</button>
+</form>
