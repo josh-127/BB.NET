@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace PicoBoards.Security.Models
 {
-    public sealed class UserListing : IModel
+    public sealed class UserListing
     {
         public int UserId { get; }
 

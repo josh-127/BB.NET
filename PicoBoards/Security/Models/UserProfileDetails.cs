@@ -2,7 +2,7 @@
 
 namespace PicoBoards.Security.Models
 {
-    public class UserProfileDetails : IModel, IValidatable
+    public class UserProfileDetails : IValidatable
     {
         public int UserId { get; set; }
 
