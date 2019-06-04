@@ -18,5 +18,12 @@ namespace PicoBoards.Web.Features.Home
             var model = await forumService.QueryAsync(new AllCategoryDetailsQuery());
             return View(model);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Forum(int id)
+        {
+            var model = await forumService.QueryAsync(new ForumDetailsQuery(id));
+            return View(model);
+        }
     }
 }

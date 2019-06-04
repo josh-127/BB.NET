@@ -1,0 +1,32 @@
+﻿@model ForumDetails
+
+<h1>
+    <a asp-action="Forum" asp-route-id="@Model.ForumId">
+        @Model.Name
+    </a>
+</h1>
+
+<p>@Model.Description</p>
+<p>Created on @Model.Created</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var topic in Model.Topics)
+        {
+            <tr>
+                <td>
+                    <a asp-action="Topic" asp-route-id="@topic.TopicId">
+                        @topic.Name
+                    </a>
+                </td>
+                <td>@topic.Description</td>
+            </tr>
+        }
+    </tbody>
+</table>
