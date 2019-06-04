@@ -32,7 +32,7 @@ namespace PicoBoards.Web.Features.Acp.Forms
                 from c in categories
                 select new SelectListItem
                 {
-                    Value = c.Name.ToString(),
+                    Value = c.CategoryId.ToString(),
                     Text = c.Name
                 });
         }
