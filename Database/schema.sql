@@ -60,8 +60,8 @@ CREATE TABLE IF NOT EXISTS `Topic` (
     `Name`          VARCHAR(45)     NOT NULL,
     `Description`   VARCHAR(255),
     `Created`       TIMESTAMP       NOT NULL    DEFAULT CURRENT_TIMESTAMP,
-    `IsLocked`      TINYINT         NOT NULL,
-    `IsSticky`      TINYINT         NOT NULL,
+    `IsLocked`      TINYINT         NOT NULL    DEFAULT 0,
+    `IsSticky`      TINYINT         NOT NULL    DEFAULT 0,
     PRIMARY KEY (`TopicId`),
     INDEX `idx_Topic_ForumId` (`ForumId`),
     CONSTRAINT `fk_Topic_ForumId`
