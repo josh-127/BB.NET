@@ -153,6 +153,8 @@ namespace PicoBoards.Forums
                 await transaction
                     .DeleteByKey("Forum", command.ForumId)
                     .ExecuteAsync();
+
+                transaction.Commit();
             }
         }
     }
