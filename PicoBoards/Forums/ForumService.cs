@@ -131,7 +131,7 @@ namespace PicoBoards.Forums
 
                 topics = new TopicListingCollection(
                     await transaction
-                    .From("Topic", query.ForumId)
+                    .From("Topic", new { query.ForumId })
                     .ToCollection<TopicListing>(CollectionOptions.InferConstructor)
                     .ExecuteAsync());
 
