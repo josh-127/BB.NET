@@ -9,6 +9,12 @@
 <p>@Model.Description</p>
 <p>Created on @Model.Created</p>
 
+<h2>
+    <a asp-action="NewTopic" asp-route-id="@Model.ForumId">
+        New Topic
+    </a>
+</h2>
+
 <table>
     <thead>
         <tr>

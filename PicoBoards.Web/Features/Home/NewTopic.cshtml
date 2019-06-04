@@ -1,0 +1,35 @@
+﻿@model NewTopicForm
+
+<h1>New Topic</h1>
+
+@Html.ValidationSummary()
+
+<form asp-action="NewTopic" method="post">
+    <input asp-for="ForumId" />
+
+    <label asp-for="Name"></label>
+    <input asp-for="Name" />
+    <br />
+    <label asp-for="Description"></label>
+    <input asp-for="Description" />
+    <br />
+
+    <label asp-for="OpeningPostBody"></label>
+    <textarea asp-for="OpeningPostBody"></textarea>
+    <br />
+
+    <input asp-for="FormattingEnabled" />
+    <label asp-for="FormattingEnabled"></label>
+    <br />
+    <input asp-for="SmiliesEnabled" />
+    <label asp-for="SmiliesEnabled"></label>
+    <br />
+    <input asp-for="ParseUrls" />
+    <label asp-for="ParseUrls"></label>
+    <br />
+    <input asp-for="AttachSignature" />
+    <label asp-for="AttachSignature"></label>
+    <br />
+
+    <button type="submit">Post</button>
+</form>
