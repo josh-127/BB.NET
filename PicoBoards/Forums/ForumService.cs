@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using PicoBoards.Forums.Commands;
 using PicoBoards.Forums.Models;
 using PicoBoards.Forums.Queries;
@@ -19,6 +20,47 @@ namespace PicoBoards.Forums
                 .From("Category")
                 .ToCollection<CategoryListing>(CollectionOptions.InferConstructor)
                 .ExecuteAsync());
+
+        public async Task<CategoryDetailsCollection> QueryAsync(AllCategoryDetailsQuery query)
+        {
+            var categories = (Table) null;
+            var forums = (Table) null;
+
+            using (var transaction = await dataSource.BeginTransactionAsync())
+            {
+                categories = await transaction
+                    .From("Category")
+                    .ToTable()
+                    .ExecuteAsync();
+
+                forums = await transaction
+                    .From("Forums")
+                    .ToTable()
+                    .ExecuteAsync();
+
+                transaction.Commit();
+            }
+
+            var collection =
+                from c in categories.Rows
+                let id = (int) c["CategoryId"]
+                select new CategoryDetails(
+                    id,
+                    (string) c["Name"],
+                    new ForumListingCollection(
+                        from f in forums.Rows
+                        where (int) f["CategoryId"] == id
+                        select new ForumListing(
+                            (int) f["ForumId"],
+                            (string) f["Name"],
+                            (string) f["Description"],
+                            (string) f["ImageUrl"]
+                        )
+                    )
+                );
+
+            return new CategoryDetailsCollection(collection);
+        }
 
         public async Task ExecuteAsync(AddCategoryCommand command)
         {
