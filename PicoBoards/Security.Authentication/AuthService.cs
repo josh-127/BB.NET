@@ -45,6 +45,7 @@ namespace PicoBoards.Security.Authentication
                     command.UserName,
                     command.Password
                 })
+                .ToInt32OrNull()
                 .ExecuteAsync();
 
             return userId.HasValue
