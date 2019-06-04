@@ -24,27 +24,31 @@ namespace PicoBoards.Web.Features.Auth
         {
             try
             {
-                var result = await authService.ValidateUserAsync(form.ToLogin());
-                var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
-                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, result.UserId.ToString(), ClaimValueTypes.Integer));
-                identity.AddClaim(new Claim(ClaimTypes.Name, result.UserName));
-                identity.AddClaim(new Claim(ClaimTypes.Email, result.EmailAddress));
+                if (ModelState.IsValid)
+                {
+                    var result = await authService.ValidateUserAsync(form.ToLogin());
+                    var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+                    identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, result.UserId.ToString(), ClaimValueTypes.Integer));
+                    identity.AddClaim(new Claim(ClaimTypes.Name, result.UserName));
+                    identity.AddClaim(new Claim(ClaimTypes.Email, result.EmailAddress));
 
-                var principal = new ClaimsPrincipal(identity);
-                var properties = new AuthenticationProperties { IsPersistent = form.RememberMe };
+                    var principal = new ClaimsPrincipal(identity);
+                    var properties = new AuthenticationProperties { IsPersistent = form.RememberMe };
 
-                await HttpContext.SignInAsync(
-                    CookieAuthenticationDefaults.AuthenticationScheme,
-                    principal,
-                    properties);
+                    await HttpContext.SignInAsync(
+                        CookieAuthenticationDefaults.AuthenticationScheme,
+                        principal,
+                        properties);
 
-                return LocalRedirect(form.ReturnUrl);
+                    return LocalRedirect(form.ReturnUrl);
+                }
             }
             catch (AuthenticationException e)
             {
                 ModelState.AddModelError("", e.Message);
-                return View(form);
             }
+
+            return View(form);
         }
 
         [HttpPost]
@@ -66,14 +70,18 @@ namespace PicoBoards.Web.Features.Auth
         {
             try
             {
-                await authService.ExecuteAsync(form.ToRegistration());
-                return RedirectToAction("Login");
+                if (ModelState.IsValid)
+                {
+                    await authService.ExecuteAsync(form.ToRegistration());
+                    return RedirectToAction("Login");
+                }
             }
             catch (AuthenticationException e)
             {
                 ModelState.AddModelError("", e.Message);
-                return View(form);
             }
+
+            return View(form);
         }
     }
 }
