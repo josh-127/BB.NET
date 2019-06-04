@@ -120,7 +120,7 @@ namespace PicoBoards.Forums
         public async Task<ForumDetails> QueryAsync(ForumDetailsQuery query)
         {
             var forum = (Row) null;
-            var topics = (TopicListingCollection) null;
+            var topics = (Table) null;
 
             using (var transaction = await dataSource.BeginTransactionAsync())
             {
@@ -129,11 +129,10 @@ namespace PicoBoards.Forums
                     .ToRow()
                     .ExecuteAsync();
 
-                topics = new TopicListingCollection(
-                    await transaction
+                topics = await transaction
                     .From("Topic", new { query.ForumId })
-                    .ToCollection<TopicListing>(CollectionOptions.InferConstructor)
-                    .ExecuteAsync());
+                    .ToTable()
+                    .ExecuteAsync();
 
                 transaction.Commit();
             }
@@ -143,7 +142,17 @@ namespace PicoBoards.Forums
                 (string) forum["Name"],
                 (string) forum["Description"],
                 (DateTime) forum["Created"],
-                new TopicListingCollection(topics));
+                new TopicListingCollection(
+                    from t in topics.Rows
+                    select new TopicListing(
+                        (int) t["TopicId"],
+                        (string) t["Name"],
+                        (string) t["Description"],
+                        (sbyte) t["IsLocked"] != 0,
+                        (sbyte) t["IsSticky"] != 0
+                    )
+                )
+            );
         }
 
         public async Task ExecuteAsync(AddForumCommand command)
