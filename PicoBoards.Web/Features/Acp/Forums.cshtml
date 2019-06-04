@@ -33,6 +33,11 @@
                         <td><img src="@forum.ImageUrl" /></td>
                         <td>@forum.Name</td>
                         <td>@forum.Description</td>
+                        <td>
+                            <form asp-action="RemoveForum" asp-route-id="@forum.ForumId" method="post">
+                                <button type="submit">(remove)</button>
+                            </form>
+                        </td>
                     </tr>
                 }
             </tbody>

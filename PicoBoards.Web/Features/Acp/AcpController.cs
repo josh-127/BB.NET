@@ -119,5 +119,20 @@ namespace PicoBoards.Web.Features.Acp
 
             return View(form);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveForum(int id)
+        {
+            try
+            {
+                await forumService.ExecuteAsync(new RemoveForumCommand(id));
+                return RedirectToAction("Forums");
+            }
+            catch (CommandException e)
+            {
+                ModelState.AddModelError("", e.Message);
+                return View("Forums");
+            }
+        }
     }
 }
