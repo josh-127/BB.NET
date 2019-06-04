@@ -56,5 +56,15 @@ namespace PicoBoards.Forums
                 transaction.Commit();
             }
         }
+
+        public async Task ExecuteAsync(EditCategoryCommand command)
+        {
+            if (!command.IsValid())
+                throw new CommandException("Invalid fields.");
+
+            await dataSource
+                .Update("Category", command)
+                .ExecuteAsync();
+        }
     }
 }
