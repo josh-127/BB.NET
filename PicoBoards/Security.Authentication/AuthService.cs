@@ -29,7 +29,7 @@ namespace PicoBoards.Security.Authentication
         public async Task<UserAccessToken> ExecuteAsync(RegisterUserCommand command)
         {
             if (!command.IsValid())
-                throw new AuthenticationException("Invalid fields.");
+                throw new CommandException("Invalid fields.");
 
             using (var transaction = await dataSource.BeginTransactionAsync())
             {

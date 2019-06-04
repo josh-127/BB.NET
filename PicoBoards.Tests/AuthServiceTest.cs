@@ -52,6 +52,28 @@ namespace PicoBoards.Tests
             await RegisterUser_ExpectUserAlreadyExists(dataSource, "John_Smith@example1000.com", "John_Smith");
         }
 
+        [Fact]
+        public async Task InvalidEmailAddress()
+        {
+            var dataSource = await CreateDatabase();
+            var authService = new AuthService(dataSource);
+
+            await Assert.ThrowsAsync<CommandException>(
+                async () => await authService.ExecuteAsync(
+                    new RegisterUserCommand("John_Smith@", "John_Smith", "password")));
+        }
+
+        [Fact]
+        public async Task InvalidUserName()
+        {
+            var dataSource = await CreateDatabase();
+            var authService = new AuthService(dataSource);
+
+            await Assert.ThrowsAsync<CommandException>(
+                async () => await authService.ExecuteAsync(
+                    new RegisterUserCommand("John_Smith@example.com", "John Smith", "password")));
+        }
+
         private async Task RegisterUser_ExpectSuccess(
             MySqlDataSource dataSource, string emailAddress, string userName)
         {
