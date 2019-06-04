@@ -108,5 +108,45 @@ namespace PicoBoards.Forums
                 .Update("Category", command)
                 .ExecuteAsync();
         }
+
+        public async Task ExecuteAsync(AddForumCommand command)
+        {
+            if (!command.IsValid())
+                throw new CommandException("Invalid fields.");
+
+            var key =
+                await dataSource
+                .Insert("Forum", command)
+                .ExecuteAsync();
+
+            if (key is null)
+                throw new CommandException("Invalid fields.");
+        }
+
+        public async Task ExecuteAsync(RemoveForumCommand command)
+        {
+            if (!command.IsValid())
+                throw new CommandException("Invalid fields.");
+
+            using (var transaction = await dataSource.BeginTransactionAsync())
+            {
+                var hasTopics =
+                    await transaction
+                    .From("Topic", new { command.ForumId })
+                    .WithLimits(1)
+                    .AsCount()
+                    .ExecuteAsync() > 0;
+
+                if (hasTopics)
+                {
+                    transaction.Rollback();
+                    throw new CommandException("This forum is not empty.");
+                }
+
+                await transaction
+                    .DeleteByKey("Forum", command.ForumId)
+                    .ExecuteAsync();
+            }
+        }
     }
 }
