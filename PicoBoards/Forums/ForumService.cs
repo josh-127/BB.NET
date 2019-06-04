@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using PicoBoards.Forums.Commands;
 using PicoBoards.Forums.Models;
@@ -114,6 +115,35 @@ namespace PicoBoards.Forums
             await dataSource
                 .Update("Category", command)
                 .ExecuteAsync();
+        }
+
+        public async Task<ForumDetails> QueryAsync(ForumDetailsQuery query)
+        {
+            var forum = (Row) null;
+            var topics = (TopicListingCollection) null;
+
+            using (var transaction = await dataSource.BeginTransactionAsync())
+            {
+                forum = await transaction
+                    .GetByKey("Forum", query.ForumId)
+                    .ToRow()
+                    .ExecuteAsync();
+
+                topics = new TopicListingCollection(
+                    await transaction
+                    .From("Topic", query.ForumId)
+                    .ToCollection<TopicListing>(CollectionOptions.InferConstructor)
+                    .ExecuteAsync());
+
+                transaction.Commit();
+            }
+
+            return new ForumDetails(
+                (int) forum["ForumId"],
+                (string) forum["Name"],
+                (string) forum["Description"],
+                (DateTime) forum["Created"],
+                new TopicListingCollection(topics));
         }
 
         public async Task ExecuteAsync(AddForumCommand command)
