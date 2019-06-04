@@ -187,5 +187,60 @@ namespace PicoBoards.Forums
                 transaction.Commit();
             }
         }
+
+        public async Task ExecuteAsync(AddTopicCommand command)
+        {
+            if (!command.IsValid())
+                throw new CommandException("Invalid fields.");
+
+            var key =
+                await dataSource
+                .Insert("Topic", command)
+                .ExecuteAsync();
+
+            if (key is null)
+                throw new CommandException("Invalid fields.");
+        }
+
+        public async Task ExecuteAsync(RemoveTopicCommand command)
+        {
+            if (!command.IsValid())
+                throw new CommandException("Invalid fields.");
+
+            using (var transaction = await dataSource.BeginTransactionAsync())
+            {
+                var hasPosts =
+                    await transaction
+                    .From("Post", new { command.TopicId })
+                    .WithLimits(1)
+                    .AsCount()
+                    .ExecuteAsync() > 0;
+
+                if (hasPosts)
+                {
+                    transaction.Rollback();
+                    throw new CommandException("This topic is not empty.");
+                }
+
+                var hasPolls =
+                    await transaction
+                    .From("Poll", new { command.TopicId })
+                    .WithLimits(1)
+                    .AsCount()
+                    .ExecuteAsync() > 0;
+
+                if (hasPolls)
+                {
+                    transaction.Rollback();
+                    throw new CommandException("This topic is not empty.");
+                }
+
+                await transaction
+                    .DeleteByKey("Topic", command.TopicId)
+                    .ExecuteAsync();
+
+                transaction.Commit();
+            }
+        }
     }
 }
