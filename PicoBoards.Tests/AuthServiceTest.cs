@@ -77,10 +77,6 @@ namespace PicoBoards.Tests
             Assert.Equal(token.UserId, row["UserId"]);
             Assert.Equal(emailAddress, token.EmailAddress);
             Assert.Equal(userName, token.UserName);
-
-            await dataSource
-                .DeleteByKey("User", token.UserId)
-                .ExecuteAsync();
         }
 
         private async Task RegisterUser_ExpectUserAlreadyExists(
