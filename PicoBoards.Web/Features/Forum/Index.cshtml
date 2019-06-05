@@ -1,32 +1,35 @@
 ﻿@model CategoryDetailsCollection
 
-<h1>Forum</h1>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">
+            Board Index
+        </li>
+    </ol>
+</nav>
 
 @foreach (var category in Model)
 {
-    <h2>@category.Name</h2>
-
-    <table>
-        <thead>
-            <tr>
-                <th></th>
-                <th>Name</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var forum in category.Forums)
-            {
-                <tr>
-                    <td><img src="@forum.ImageUrl" /></td>
-                    <td>
-                        <a asp-action="Forum" asp-route-id="@forum.ForumId">
-                            @forum.Name
-                        </a>
-                    </td>
-                    <td>@forum.Description</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <br />
+    <div class="row">
+        <div class="col">
+            <div class="card bg-light">
+                <div class="card-header">
+                    <span class="lead">@category.Name</span>
+                </div>
+                <ul class="list-group list-group-flush">
+                    @foreach (var forum in category.Forums)
+                    {
+                        <li class="list-group-item">
+                            <img src="@forum.ImageUrl" />
+                            <a asp-action="Forum" asp-route-id="@forum.ForumId">
+                                @forum.Name
+                            </a>
+                            @forum.Description
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
 }
