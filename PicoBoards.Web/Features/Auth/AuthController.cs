@@ -3,17 +3,17 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using PicoBoards.Security.Authentication;
+using PicoBoards.Security;
 using PicoBoards.Web.Features.Auth.Forms;
 
 namespace PicoBoards.Web.Features.Auth
 {
     public class AuthController : Controller
     {
-        private readonly AuthService authService;
+        private readonly UserService userService;
 
-        public AuthController(AuthService authService)
-            => this.authService = authService;
+        public AuthController(UserService userService)
+            => this.userService = userService;
 
         [HttpGet]
         public IActionResult Login(string returnUrl)
@@ -26,7 +26,7 @@ namespace PicoBoards.Web.Features.Auth
             {
                 if (ModelState.IsValid)
                 {
-                    var result = await authService.ValidateUserAsync(form.ToLogin());
+                    var result = await userService.ValidateUserAsync(form.ToLogin());
                     var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
                     identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, result.UserId.ToString(), ClaimValueTypes.Integer));
                     identity.AddClaim(new Claim(ClaimTypes.Name, result.UserName));
@@ -72,7 +72,7 @@ namespace PicoBoards.Web.Features.Auth
             {
                 if (ModelState.IsValid)
                 {
-                    await authService.ExecuteAsync(form.ToRegistration());
+                    await userService.ExecuteAsync(form.ToRegistration());
                     return RedirectToAction("Login");
                 }
             }

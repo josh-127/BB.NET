@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using PicoBoards.Security;
-using PicoBoards.Security.Authentication.Models;
 using PicoBoards.Security.Commands;
+using PicoBoards.Security.Models;
 using PicoBoards.Security.Queries;
 using PicoBoards.Web.Features.Ucp.Forms;
 

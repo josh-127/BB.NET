@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
-using PicoBoards.Security.Authentication.Queries;
+using PicoBoards.Security.Queries;
 
 namespace PicoBoards.Web.Features.Auth.Forms
 {

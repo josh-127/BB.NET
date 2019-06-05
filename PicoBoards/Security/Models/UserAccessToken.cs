@@ -1,5 +1,5 @@
 ﻿
-namespace PicoBoards.Security.Authentication.Models
+namespace PicoBoards.Security.Models
 {
     public class UserAccessToken
     {

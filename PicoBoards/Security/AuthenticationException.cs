@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PicoBoards.Security.Authentication
+namespace PicoBoards.Security
 {
     public sealed class AuthenticationException : Exception
     {

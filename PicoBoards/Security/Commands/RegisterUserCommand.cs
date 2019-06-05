@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using PicoBoards.DataAnnotations;
 
-namespace PicoBoards.Security.Authentication.Commands
+namespace PicoBoards.Security.Commands
 {
     public sealed class RegisterUserCommand : IValidatable
     {

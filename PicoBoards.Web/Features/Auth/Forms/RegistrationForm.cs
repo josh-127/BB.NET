@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using PicoBoards.DataAnnotations;
-using PicoBoards.Security.Authentication.Commands;
+using PicoBoards.Security.Commands;
 
 namespace PicoBoards.Web.Features.Auth.Forms
 {

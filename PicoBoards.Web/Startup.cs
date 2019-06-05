@@ -7,7 +7,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PicoBoards.Forums;
 using PicoBoards.Security;
-using PicoBoards.Security.Authentication;
 using Tortuga.Chain;
 
 namespace PicoBoards.Web
@@ -24,7 +23,6 @@ namespace PicoBoards.Web
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
 
             services.AddSingleton(new MySqlDataSource(connectionString));
-            services.AddScoped<AuthService>();
             services.AddScoped<ForumService>();
             services.AddScoped<GroupService>();
             services.AddScoped<UserService>();

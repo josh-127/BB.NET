@@ -1,13 +1,11 @@
 ﻿
-namespace PicoBoards.Security.Authentication.Queries
+namespace PicoBoards.Security.Queries
 {
     public sealed class LoginCredentials
     {
-        public string UserName { get; set; }
+        public string UserName { get; }
 
-        public string Password { get; set; }
-
-        public LoginCredentials() { }
+        public string Password { get; }
 
         public LoginCredentials(string userName, string password)
         {
