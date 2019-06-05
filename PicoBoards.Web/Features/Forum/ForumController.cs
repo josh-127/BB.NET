@@ -38,6 +38,13 @@ namespace PicoBoards.Web.Features.Forum
         }
 
         [HttpGet]
+        public async Task<IActionResult> Topic(int id)
+        {
+            var model = await forumService.QueryAsync(new TopicDetailsQuery(id));
+            return View(model);
+        }
+
+        [HttpGet]
         public IActionResult NewTopic(int id)
         {
             if (!IsAuthenticated)
