@@ -8,40 +8,43 @@
 
 <p>@Model.Description</p>
 
-<p>Created on @Model.Created</p>
+<p><i>Created on @Model.Created</i></p>
 
 @foreach (var post in Model.Posts)
 {
-    <hr />
     <div>
-        <h3>
+        <b>
             <a asp-action="Profile" asp-controller="User" asp-route-id="@post.Author.UserId">
                 @post.Author.UserName
             </a>
-        </h3>
-        <p>Posted on @post.Created</p>
-        <p>@post.Body</p>
+        </b>
+        <br />
+        <i>Posted on @post.Created</i>
+        <div style="border: 1px black solid;">
+            <p>@post.Body</p>
 
-        @if (post.Created != post.Modified)
-        {
-            <i>Edited on @post.Modified</i>
-        }
-
-        @if (post.AttachSignature)
-        {
-            <hr />
-            <p>@post.Author.Signature</p>
-        }
-
-        <p>
-            @{ 
-                var replyName = $"Re: {Model.Posts.First().Name}";
+            @if (post.Created != post.Modified)
+            {
+                <i>Edited on @post.Modified</i>
             }
-            <a asp-action="NewReply" asp-route-id="@Model.TopicId" asp-route-name="@replyName">
-                Reply
-            </a>
-        </p>
+
+            @if (post.AttachSignature)
+            {
+                <hr />
+                <p>@post.Author.Signature</p>
+            }
+
+            <p>
+                @{ 
+                    var replyName = $"Re: {Model.Posts.First().Name}";
+                }
+                <a asp-action="NewReply" asp-route-id="@Model.TopicId" asp-route-name="@replyName">
+                    Reply
+                </a>
+            </p>
+        </div>
     </div>
+    <br />
 }
 
 <h2>
