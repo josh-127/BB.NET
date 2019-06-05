@@ -32,11 +32,23 @@
             <hr />
             <p>@post.Author.Signature</p>
         }
+
+        <p>
+            @{ 
+                var replyName = $"Re: {Model.Posts.First().Name}";
+            }
+            <a asp-action="NewReply" asp-route-id="@Model.TopicId" asp-route-name="@replyName">
+                Reply
+            </a>
+        </p>
     </div>
 }
 
 <h2>
-    <a asp-action="NewPost" asp-route-id="@Model.TopicId">
+    @{
+        var defaultReplyName = $"Re: {Model.Posts.First().Name}";
+    }
+    <a asp-action="NewReply" asp-route-id="@Model.TopicId" asp-route-name="@defaultReplyName">
         New Reply
     </a>
 </h2>

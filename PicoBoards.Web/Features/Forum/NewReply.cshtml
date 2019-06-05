@@ -1,0 +1,30 @@
+﻿@model NewReplyForm
+
+<h1>New Reply</h1>
+
+@Html.ValidationSummary()
+
+<form asp-action="NewReply" method="post">
+    <input asp-for="TopicId" />
+
+    <label asp-for="Name"></label>
+    <input asp-for="Name" value="@Model.Name" />
+    <br />
+    <label asp-for="Body"></label>
+    <textarea asp-for="Body"></textarea>
+    <br />
+    <input asp-for="FormattingEnabled" />
+    <label asp-for="FormattingEnabled"></label>
+    <br />
+    <input asp-for="SmiliesEnabled" />
+    <label asp-for="SmiliesEnabled"></label>
+    <br />
+    <input asp-for="ParseUrls" />
+    <label asp-for="ParseUrls"></label>
+    <br />
+    <input asp-for="AttachSignature" />
+    <label asp-for="AttachSignature"></label>
+    <br />
+
+    <button type="submit">Post Reply</button>
+</form>

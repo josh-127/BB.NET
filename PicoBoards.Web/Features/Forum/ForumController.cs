@@ -16,7 +16,7 @@ namespace PicoBoards.Web.Features.Forum
             => this.forumService = forumService;
 
         private IActionResult RedirectToLogin()
-            => RedirectToAction("Login", "Auth", new { returnUrl = Request.Path });
+            => RedirectToAction("Login", "Auth", new { returnUrl = Request.Path + Request.QueryString });
 
         private bool IsAuthenticated => User.Identity.IsAuthenticated;
         private int UserId => int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
@@ -77,6 +77,43 @@ namespace PicoBoards.Web.Features.Forum
                 ModelState.AddModelError("", e.Message);
                 return View(form);
             }
+        }
+
+        [HttpGet]
+        public IActionResult NewReply(int id, string name)
+        {
+            if (!IsAuthenticated)
+                return RedirectToLogin();
+
+            return View(new NewReplyForm(id, name));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> NewReply(NewReplyForm form)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    await forumService.ExecuteAsync(new ReplyCommand(
+                        form.TopicId,
+                        UserId,
+                        form.Name,
+                        form.Body,
+                        form.FormattingEnabled,
+                        form.SmiliesEnabled,
+                        form.ParseUrls,
+                        form.AttachSignature));
+
+                    return RedirectToAction("Topic", new { id = form.TopicId });
+                }
+            }
+            catch (CommandException e)
+            {
+                ModelState.AddModelError("", e.Message);
+            }
+
+            return View(form);
         }
     }
 }
