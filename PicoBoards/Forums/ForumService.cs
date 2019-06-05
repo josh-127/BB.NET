@@ -262,6 +262,7 @@ namespace PicoBoards.Forums
                 var topicId =
                     await transaction
                     .Insert("Topic", command)
+                    .ToInt32OrNull()
                     .ExecuteAsync();
 
                 if (topicId is null)
@@ -283,6 +284,7 @@ namespace PicoBoards.Forums
                         command.ParseUrls,
                         command.AttachSignature
                     })
+                    .ToInt32OrNull()
                     .ExecuteAsync();
 
                 if (postId is null)
