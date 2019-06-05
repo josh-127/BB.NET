@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using PicoBoards.Forums.Commands;
 using PicoBoards.Forums.Models;
 using PicoBoards.Forums.Queries;
+using PicoBoards.Security.Models;
 using Tortuga.Chain;
 
 namespace PicoBoards.Forums
@@ -195,6 +197,59 @@ namespace PicoBoards.Forums
 
                 transaction.Commit();
             }
+        }
+
+        public async Task<TopicDetails> QueryAsync(TopicDetailsQuery query)
+        {
+            var topic = (Row) null;
+            var posts = (IReadOnlyList<Row>) null;
+
+            using (var transaction = await dataSource.BeginTransactionAsync())
+            {
+                topic =
+                    await dataSource
+                    .GetByKey("Topic", query.TopicId)
+                    .ToRow()
+                    .ExecuteAsync();
+
+                posts =
+                    (await dataSource
+                    .From("vw_PostListing", new { query.TopicId })
+                    .WithSorting(new SortExpression("Created"))
+                    .ToTable()
+                    .ExecuteAsync())
+                    .Rows;
+
+                transaction.Commit();
+            }
+
+            return new TopicDetails(
+                (int) topic["TopicId"],
+                (string) topic["Name"],
+                (string) topic["Description"],
+                (DateTime) topic["Created"],
+                (sbyte) topic["IsLocked"] != 0,
+                (sbyte) topic["IsSticky"] != 0,
+                new PostListingCollection(
+                    from p in posts
+                    select new PostListing(
+                        (int) p["PostId"],
+                        (string) p["Name"],
+                        (string) p["Body"],
+                        (DateTime) p["Created"],
+                        (DateTime) p["Modified"],
+                        (sbyte) p["FormattingEnabled"] != 0,
+                        (sbyte) p["SmiliesEnabled"] != 0,
+                        (sbyte) p["ParseUrls"] != 0,
+                        (sbyte) p["AttachSignature"] != 0,
+                        new UserProfileSummary(
+                            (int) p["UserId"],
+                            (string) p["UserName"],
+                            (string) p["Signature"]
+                        )
+                    )
+                )
+            ); ;
         }
 
         public async Task<int> ExecuteAsync(AddTopicCommand command)

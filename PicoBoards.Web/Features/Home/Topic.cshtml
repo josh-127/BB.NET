@@ -1,0 +1,42 @@
+﻿@model TopicDetails
+
+<h1>
+    <a asp-action="Topic" asp-route-id="@Model.TopicId">
+        @Model.Name
+    </a>
+</h1>
+
+<p>@Model.Description</p>
+
+<p>Created on @Model.Created</p>
+
+@foreach (var post in Model.Posts)
+{
+    <hr />
+    <div>
+        <h3>
+            <a asp-action="Profile" asp-controller="User" asp-route-id="@post.Author.UserId">
+                @post.Author.UserName
+            </a>
+        </h3>
+        <p>Posted on @post.Created</p>
+        <p>@post.Body</p>
+
+        @if (post.Created != post.Modified)
+        {
+            <i>Edited on @post.Modified</i>
+        }
+
+        @if (post.AttachSignature)
+        {
+            <hr />
+            <p>@post.Author.Signature</p>
+        }
+    </div>
+}
+
+<h2>
+    <a asp-action="NewPost" asp-route-id="@Model.TopicId">
+        New Reply
+    </a>
+</h2>

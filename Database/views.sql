@@ -23,3 +23,21 @@ CREATE OR REPLACE VIEW `vw_UserProfileDetails` AS
     FROM        `User` u
     INNER JOIN  `Group` g
     ON          u.`GroupId` = g.`GroupId`;
+
+CREATE OR REPLACE VIEW `vw_PostListing` AS
+    SELECT      `Post`.`PostId`,
+                `Post`.`TopicId`,
+                `Post`.`Name`,
+                `Post`.`Body`,
+                `Post`.`Created`,
+                `Post`.`Modified`,
+                `Post`.`FormattingEnabled`,
+                `Post`.`SmiliesEnabled`,
+                `Post`.`ParseUrls`,
+                `Post`.`AttachSignature`,
+                `User`.`UserId`,
+                `User`.`UserName`,
+                `User`.`Signature`
+    FROM        `Post`
+    INNER JOIN  `User`
+    ON          `Post`.`UserId` = `User`.`UserId`;
