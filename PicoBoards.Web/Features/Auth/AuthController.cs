@@ -76,7 +76,7 @@ namespace PicoBoards.Web.Features.Auth
                     return RedirectToAction("Login");
                 }
             }
-            catch (AuthenticationException e)
+            catch (CommandException e)
             {
                 ModelState.AddModelError("", e.Message);
             }
