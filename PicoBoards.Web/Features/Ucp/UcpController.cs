@@ -144,7 +144,7 @@ namespace PicoBoards.Web.Features.Ucp
                     await userService.ExecuteAsync(new DeleteUserCommand(UserId, form.Password));
                     await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Forum");
                 }
 
                 return View(form);

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 
-namespace PicoBoards.Web.Features.Home.Forms
+namespace PicoBoards.Web.Features.Forum.Forms
 {
     public sealed class NewTopicForm
     {

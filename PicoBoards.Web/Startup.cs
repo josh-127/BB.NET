@@ -52,7 +52,7 @@ namespace PicoBoards.Web
             {
                 routes.MapRoute(
                     "Default",
-                    "{controller=Home}/{action=Index}/{id?}");
+                    "{controller=Forum}/{action=Index}/{id?}");
             });
         }
     }

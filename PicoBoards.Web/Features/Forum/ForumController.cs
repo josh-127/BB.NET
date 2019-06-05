@@ -4,15 +4,15 @@ using Microsoft.AspNetCore.Mvc;
 using PicoBoards.Forums;
 using PicoBoards.Forums.Commands;
 using PicoBoards.Forums.Queries;
-using PicoBoards.Web.Features.Home.Forms;
+using PicoBoards.Web.Features.Forum.Forms;
 
-namespace PicoBoards.Web.Features.Home
+namespace PicoBoards.Web.Features.Forum
 {
-    public class HomeController : Controller
+    public class ForumController : Controller
     {
         private readonly ForumService forumService;
 
-        public HomeController(ForumService forumService)
+        public ForumController(ForumService forumService)
             => this.forumService = forumService;
 
         private IActionResult RedirectToLogin()

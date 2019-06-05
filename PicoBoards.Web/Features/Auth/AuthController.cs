@@ -17,7 +17,7 @@ namespace PicoBoards.Web.Features.Auth
 
         [HttpGet]
         public IActionResult Login(string returnUrl)
-            => View(new LoginForm { ReturnUrl = returnUrl ?? "/Home/Index" });
+            => View(new LoginForm { ReturnUrl = returnUrl ?? "/Forum/Index" });
 
         [HttpPost]
         public async Task<IActionResult> Login(LoginForm form)
@@ -55,7 +55,7 @@ namespace PicoBoards.Web.Features.Auth
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Forum");
         }
 
         [HttpGet]
