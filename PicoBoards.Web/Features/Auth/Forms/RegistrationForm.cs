@@ -7,12 +7,12 @@ namespace PicoBoards.Web.Features.Auth.Forms
     public sealed class RegistrationForm
     {
         [DataType(DataType.EmailAddress)]
-        [Display(Name = "Email Address")]
+        [Display(Name = "Email Address", Prompt = "example@example.com")]
         [Required]
         public string EmailAddress { get; set; }
 
         [Identifier]
-        [Display(Name = "Username")]
+        [Display(Name = "Username", Prompt = "johnsmith")]
         [Required]
         public string UserName { get; set; }
 

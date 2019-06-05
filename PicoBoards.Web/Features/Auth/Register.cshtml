@@ -1,21 +1,31 @@
 ﻿@model RegistrationForm
 
-<h1>Register</h1>
-
-@Html.ValidationSummary()
-
-<form asp-action="Register" method="post">
-    <label asp-for="EmailAddress"></label>
-    <input asp-for="EmailAddress" />
-    <br />
-    <label asp-for="UserName"></label>
-    <input asp-for="UserName" />
-    <br />
-    <label asp-for="Password"></label>
-    <input asp-for="Password" />
-    <br />
-    <label asp-for="ConfirmPassword"></label>
-    <input asp-for="ConfirmPassword" />
-    <br />
-    <button type="submit">Register</button>
-</form>
+<div class="row">
+    <div class="col-md-5 mx-auto">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="card-title text-center">Register</h1>
+                @Html.ValidationSummary()
+                <form asp-action="Register" method="post">
+                    <div class="form-group">
+                        <label asp-for="EmailAddress"></label>
+                        <input class="form-control" asp-for="EmailAddress" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UserName"></label>
+                        <input class="form-control" asp-for="UserName" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password"></label>
+                        <input class="form-control" asp-for="Password" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ConfirmPassword"></label>
+                        <input class="form-control" asp-for="ConfirmPassword" />
+                    </div>
+                    <button class="btn btn-primary" type="submit">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
