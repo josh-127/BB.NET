@@ -1,17 +1,55 @@
 ﻿@model DeleteAccountForm
 
-<h1>Delete Account | User Control Panel</h1>
-
-<p>@Html.ValidationSummary()</p>
-
-<p>Enter your password twice:</p>
-
+<div class="row">
+    <div class="col">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a asp-action="Index">User Control Panel</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    Delete Account
+                </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <h1>Delete Account</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <div class="validation-summary text-danger font-weight-bold"
+             asp-validation-summary="ModelOnly">
+        </div>
+    </div>
+</div>
 <form asp-action="DeleteAccount" method="post">
-    <label asp-for="Password"></label>
-    <input asp-for="Password" />
-    <br />
-    <label asp-for="ConfirmPassword"></label>
-    <input asp-for="ConfirmPassword" />
-    <br />
-    <button type="submit">Delete Account</button>
+    <div class="row">
+        <div class="col-4">
+            <div class="form-group">
+                <label asp-for="Password"></label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">&#10033;</span>
+                    </div>
+                    <input class="form-control" asp-for="Password" />
+                </div>
+                <span class="text-danger font-weight-bold" asp-validation-for="Password"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConfirmPassword"></label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">&#10033;</span>
+                    </div>
+                    <input class="form-control" asp-for="ConfirmPassword" />
+                </div>
+                <span class="text-danger font-weight-bold" asp-validation-for="ConfirmPassword"></span>
+            </div>
+            <button class="btn btn-danger" type="submit">Delete Account</button>
+        </div>
+    </div>
 </form>

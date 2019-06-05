@@ -1,24 +1,83 @@
 ﻿@model EditUserAccountForm
 
-<h1>Edit Account | User Control Panel</h1>
-
-@Html.ValidationSummary()
-
-<form asp-action="EditAccount" method="post">
-    <label asp-for="EmailAddress"></label>
-    <input asp-for="EmailAddress" />
-    <br />
-    <label asp-for="UserName"></label>
-    <input asp-for="UserName" />
-    <br />
-    <label asp-for="CurrentPassword"></label>
-    <input asp-for="CurrentPassword" />
-    <br />
-    <label asp-for="NewPassword"></label>
-    <input asp-for="NewPassword" />
-    <br />
-    <label asp-for="ConfirmPassword"></label>
-    <input asp-for="ConfirmPassword" />
-    <br />
-    <button type="submit">Save Changes</button>
-</form>
+<div class="row">
+    <div class="col">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a asp-action="Index">User Control Panel</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    Edit Account
+                </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <h1>Edit Account</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-3">
+        <ul class="nav nav-pills flex-column">
+            <li class="nav-item">
+                <a class="nav-link" asp-action="Index">Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-action="EditProfile">Edit Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" asp-action="EditAccount">Edit Account</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-danger" asp-action="DeleteAccount">Delete Account</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col">
+        <div
+                class="validation-summary text-danger font-weight-bold"
+                asp-validation-summary="ModelOnly">
+        </div>
+        <form asp-action="EditAccount" method="post">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label asp-for="EmailAddress"></label>
+                        <input class="form-control" asp-for="EmailAddress" />
+                        <span class="text-danger font-weight-bold" asp-validation-for="EmailAddress"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UserName"></label>
+                        <input class="form-control" asp-for="UserName" />
+                        <span class="text-danger font-weight-bold" asp-validation-for="UserName"></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label asp-for="NewPassword"></label>
+                        <input class="form-control" asp-for="NewPassword" />
+                        <span class="text-danger font-weight-bold" asp-validation-for="NewPassword"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ConfirmPassword"></label>
+                        <input class="form-control" asp-for="ConfirmPassword" />
+                        <span class="text-danger font-weight-bold" asp-validation-for="ConfirmPassword"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="CurrentPassword"></label>
+                        <input class="form-control" asp-for="CurrentPassword" />
+                        <span class="text-danger font-weight-bold" asp-validation-for="CurrentPassword"></span>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary" type="submit">Save Changes</button>
+        </form>
+    </div>
+</div>
