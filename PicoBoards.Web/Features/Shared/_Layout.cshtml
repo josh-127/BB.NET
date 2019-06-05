@@ -3,28 +3,59 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    </environment>
 </head>
 <body>
-    <div>
-        <a asp-action="Index" asp-controller="Forum">Forum Index</a>
-        <a asp-action="Index" asp-controller="User">Users</a>
-        <a asp-action="Group" asp-controller="User">Groups</a>
-
-        @if (User.Identity.IsAuthenticated)
-        {
-            <a asp-action="Index" asp-controller="Ucp">UCP</a>
-            <form asp-action="Logout" asp-controller="Auth" method="post">
-                <button type="submit">Log Out</button>
-            </form>
-        }
-        else
-        {
-            <a asp-action="Login" asp-controller="Auth">Log In</a>
-            <a asp-action="Register" asp-controller="Auth">Register</a>
-        }
+    <div class="jumbotron" style="padding-top: 0.25em; padding-bottom: 1em;">
+        <div class="container">
+            <ul class="nav nav-pills justify-content-end">
+                <li class="nav-item">
+                    <a class="nav-link" asp-action="Index" asp-controller="User">Users</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-action="Group" asp-controller="User">Groups</a>
+                </li>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-item">
+                        <a asp-action="Index" asp-controller="Ucp">UCP</a>
+                    </li>
+                    <li class="nav-item">
+                        <form asp-action="Logout" asp-controller="Auth" method="post">
+                            <button class="btn btn-link" type="submit">Log Out</button>
+                        </form>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-action="Login" asp-controller="Auth">Log In</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-action="Register" asp-controller="Auth">Register</a>
+                    </li>
+                }
+            </ul>
+            <h1 class="display-4">
+                <a asp-action="Index" asp-controller="Forum">BillBoards</a>
+            </h1>
+        </div>
     </div>
-    <div>
+    <div class="container">
         @RenderBody()
     </div>
+
+    <environment include="Development">
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    </environment>
 </body>
 </html>
