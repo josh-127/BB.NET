@@ -339,5 +339,15 @@ namespace PicoBoards.Forums
                 transaction.Commit();
             }
         }
+
+        public async Task ExecuteAsync(ReplyCommand command)
+        {
+            if (!command.IsValid())
+                throw new CommandException("Invalid fields.");
+
+            await dataSource
+                .Insert("Post", command)
+                .ExecuteAsync();
+        }
     }
 }
