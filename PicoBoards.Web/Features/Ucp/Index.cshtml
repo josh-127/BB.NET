@@ -20,22 +20,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-3">
-        <ul class="nav nav-pills flex-column">
-            <li class="nav-item">
-                <a class="nav-link active" asp-action="Index">Dashboard</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" asp-action="EditProfile">Edit Profile</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" asp-action="EditAccount">Edit Account</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-danger" asp-action="DeleteAccount">Delete Account</a>
-            </li>
-        </ul>
-    </div>
+    <partial name="_NavigationBar.cshtml" />
     <div class="col">
         <span class="h1">
             @userName

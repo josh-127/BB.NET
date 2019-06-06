@@ -1,0 +1,26 @@
+﻿@{ 
+    var items = new[]
+    {
+        ("Index", "Dashboard", ""),
+        ("EditProfile", "Edit Profile", ""),
+        ("EditAccount", "Edit Account", ""),
+        ("DeleteAccount", "Delete Account", "text-danger")
+    };
+}
+
+<div class="col-3">
+    <ul class="nav nav-pills flex-column">
+        @foreach (var (action, text, extraStyle) in items)
+        {
+            var style = $"nav-link {extraStyle}";
+            if (this.GetActionName() == action)
+            {
+                style += " active";
+            }
+
+            <li class="nav-item">
+                <a class="@style" asp-action="@action">@text</a>
+            </li>
+        }
+    </ul>
+</div>
