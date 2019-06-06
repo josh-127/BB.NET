@@ -30,7 +30,7 @@
                             @post.Author.UserName
                         </a>
                     </span>
-                    <i>&nbsp;Posted on @post.Created.ToString("MMM d, yyyy h:mm tt")</i>
+                    <span>&nbsp;@post.Name</span>
                 </div>
                 <div class="card-body">
                     <p>@post.Body</p>
@@ -45,6 +45,8 @@
                     }
                 </div>
                 <div class="card-footer text-right">
+                    <i>Posted on @post.Created.ToString("MMM d, yyyy h:mm tt")</i>
+                    &nbsp;
                     @{
                         var replyName = $"Re: {Model.Posts.First().Name}";
                     }
