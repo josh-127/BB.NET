@@ -1,17 +1,11 @@
-﻿@{ 
-    var items = new[]
-    {
-        ("Index", "Dashboard", ""),
-        ("EditProfile", "Edit Profile", ""),
-        ("EditAccount", "Edit Account", ""),
-        ("DeleteAccount", "Delete Account", "text-danger")
-    };
-}
-
+﻿
 <div class="col-3">
     <nav class="nav nav-pills flex-column">
-        @foreach (var (action, text, extraStyle) in items)
+        @foreach (var page in ViewBag.Pages)
         {
+            var action = page.Item1;
+            var text = page.Item2;
+            var extraStyle = page.Item3;
             var style = $"nav-link {extraStyle}";
             if (this.GetActionName() == action)
             {

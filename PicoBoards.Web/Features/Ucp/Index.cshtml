@@ -3,17 +3,7 @@
     var userName = User.FindFirstValue(ClaimTypes.Name);
 }
 
-<div class="row">
-    <div class="col">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item active" aria-current="page">
-                    User Control Panel
-                </li>
-            </ol>
-        </nav>
-    </div>
-</div>
+<partial name="_Breadcrumb.cshtml" />
 <div class="row">
     <partial name="_NavigationBar.cshtml" />
     <div class="col">

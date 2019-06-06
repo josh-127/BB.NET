@@ -1,0 +1,14 @@
+﻿@{
+    var pages = new[]
+    {
+        ("Index", "Dashboard", ""),
+        ("EditProfile", "Edit Profile", ""),
+        ("EditAccount", "Edit Account", ""),
+        ("DeleteAccount", "Delete Account", "text-danger")
+    };
+
+    var pageName = pages.First(p => this.GetActionName() == p.Item1).Item2;
+
+    ViewBag.Pages = pages;
+    ViewBag.PageName = pageName;
+}
