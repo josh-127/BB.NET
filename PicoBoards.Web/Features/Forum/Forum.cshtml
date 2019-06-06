@@ -1,38 +1,60 @@
 ﻿@model ForumDetails
 
-<h1>
-    <a asp-action="Forum" asp-route-id="@Model.ForumId">
-        @Model.Name
-    </a>
-</h1>
+<div class="row">
+    <div class="col">
+        <h1>
+            <a asp-action="Forum" asp-route-id="@Model.ForumId">
+                @Model.Name
+            </a>
+        </h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <p class="lead">@Model.Description</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <i>Created on @Model.Created</i>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <a class="btn btn-link" asp-action="NewTopic" asp-route-id="@Model.ForumId">
+            <h2>New Topic</h2>
+        </a>
+    </div>
+</div>
 
-<p>@Model.Description</p>
-<p>Created on @Model.Created</p>
+<div class="row">
+    <div class="col">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ var index = 1; }
 
-<h2>
-    <a asp-action="NewTopic" asp-route-id="@Model.ForumId">
-        New Topic
-    </a>
-</h2>
+                @foreach (var topic in Model.Topics)
+                {
+                    <tr>
+                        <td scope="row">@index</td>
+                        <td>
+                            <a asp-action="Topic" asp-route-id="@topic.TopicId">
+                                @topic.Name
+                            </a>
+                        </td>
+                        <td>@topic.Description</td>
+                    </tr>
 
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Description</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var topic in Model.Topics)
-        {
-            <tr>
-                <td>
-                    <a asp-action="Topic" asp-route-id="@topic.TopicId">
-                        @topic.Name
-                    </a>
-                </td>
-                <td>@topic.Description</td>
-            </tr>
-        }
-    </tbody>
-</table>
+                    ++index;
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
