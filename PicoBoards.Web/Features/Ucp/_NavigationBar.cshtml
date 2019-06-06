@@ -9,7 +9,7 @@
 }
 
 <div class="col-3">
-    <ul class="nav nav-pills flex-column">
+    <nav class="nav nav-pills flex-column">
         @foreach (var (action, text, extraStyle) in items)
         {
             var style = $"nav-link {extraStyle}";
@@ -18,9 +18,7 @@
                 style += " active";
             }
 
-            <li class="nav-item">
-                <a class="@style" asp-action="@action">@text</a>
-            </li>
+            <a class="@style" asp-action="@action">@text</a>
         }
-    </ul>
+    </nav>
 </div>
