@@ -2,20 +2,13 @@
 
 <partial name="_Breadcrumb.cshtml" />
 <div class="row">
+    <partial name="_NavigationBar.cshtml" />
     <div class="col">
         <h1>Delete Account</h1>
-    </div>
-</div>
-<div class="row">
-    <div class="col">
         <div class="validation-summary text-danger font-weight-bold"
              asp-validation-summary="ModelOnly">
         </div>
-    </div>
-</div>
-<form asp-action="DeleteAccount" method="post">
-    <div class="row">
-        <div class="col-4">
+        <form asp-action="DeleteAccount" method="post">
             <div class="form-group">
                 <label asp-for="Password"></label>
                 <div class="input-group">
@@ -37,6 +30,6 @@
                 <span class="text-danger font-weight-bold" asp-validation-for="ConfirmPassword"></span>
             </div>
             <button class="btn btn-danger" type="submit">Delete Account</button>
-        </div>
+        </form>
     </div>
-</form>
+</div>

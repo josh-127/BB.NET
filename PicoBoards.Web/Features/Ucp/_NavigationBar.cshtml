@@ -6,11 +6,8 @@
             var action = page.Item1;
             var text = page.Item2;
             var extraStyle = page.Item3;
-            var style = $"nav-link {extraStyle}";
-            if (this.GetActionName() == action)
-            {
-                style += " active";
-            }
+            var style = $"nav-link ";
+            style += this.GetActionName() == action ? "active" : extraStyle;
 
             <a class="@style" asp-action="@action">@text</a>
         }
