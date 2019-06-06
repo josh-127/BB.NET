@@ -1,21 +1,42 @@
 ﻿@model UserListingTable
 
-<h1>Users</h1>
+<div class="row">
+    <div class="col">
+        <h1>Users</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <table class="table table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Group</th>
+                    <th scope="col">Joined</th>
+                    <th scope="col">Last Active</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ var index = 1; }
 
-<table>
-    <tbody>
-        @foreach (var listing in Model)
-        {
-            <tr>
-                <td>
-                    <a asp-action="Profile" asp-controller="User" asp-route-id="@listing.UserId">
-                        @listing.UserName
-                    </a>
-                </td>
-                <td>@listing.GroupName</td>
-                <td>@listing.Created</td>
-                <td>@listing.LastActive</td>
-            </tr>
-        }
-    </tbody>
-</table>
+                @foreach (var listing in Model)
+                {
+                    <tr>
+                        <th scope="row">@index</th>
+                        <td>
+                            <a asp-action="Profile" asp-controller="User" asp-route-id="@listing.UserId">
+                                @listing.UserName
+                            </a>
+                        </td>
+                        <td>@listing.GroupName</td>
+                        <td>@listing.Created.ToString("MMM d, yyyy")</td>
+                        <td>@listing.LastActive.ToString("MMM d, yyyy h:mm tt")</td>
+                    </tr>
+
+                    ++index;
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
