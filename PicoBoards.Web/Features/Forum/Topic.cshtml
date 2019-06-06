@@ -1,57 +1,73 @@
 ﻿@model TopicDetails
 
-<h1>
-    <a asp-action="Topic" asp-route-id="@Model.TopicId">
-        @Model.Name
-    </a>
-</h1>
+<div class="row">
+    <div class="col">
+        <h1>
+            <a asp-action="Topic" asp-route-id="@Model.TopicId">
+                @Model.Name
+            </a>
+        </h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <p class="lead">@Model.Description</p>
+    </div>
+</div>
 
-<p>@Model.Description</p>
-
-<p><i>Created on @Model.Created</i></p>
+<p><i>[REMOVE THIS] Created on @Model.Created</i></p>
 
 @foreach (var post in Model.Posts)
 {
-    <div>
-        <b>
-            <a asp-action="Profile" asp-controller="User" asp-route-id="@post.Author.UserId">
-                @post.Author.UserName
-            </a>
-        </b>
-        <br />
-        <i>Posted on @post.Created</i>
-        <div style="border: 1px black solid;">
-            <p>@post.Body</p>
-
-            @if (post.Created != post.Modified)
-            {
-                <i>Edited on @post.Modified</i>
-            }
-
-            @if (post.AttachSignature)
-            {
-                <hr />
-                <p>@post.Author.Signature</p>
-            }
-
-            <p>
-                @{ 
-                    var replyName = $"Re: {Model.Posts.First().Name}";
-                }
-                <a asp-action="NewReply" asp-route-id="@Model.TopicId" asp-route-name="@replyName">
-                    Reply
-                </a>
-            </p>
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <span class="lead">
+                        <a asp-action="Profile"
+                            asp-controller="User"
+                            asp-route-id="@post.Author.UserId">
+                            @post.Author.UserName
+                        </a>
+                    </span>
+                    <i>&nbsp;Posted on @post.Created.ToString("MMM d, yyyy h:mm tt")</i>
+                </div>
+                <div class="card-body">
+                    <p>@post.Body</p>
+                    @if (post.Created != post.Modified)
+                    {
+                        <i>Edited on @post.Modified</i>
+                    }
+                    @if (post.AttachSignature)
+                    {
+                        <hr />
+                        <p>@post.Author.Signature</p>
+                    }
+                </div>
+                <div class="card-footer text-right">
+                    @{
+                        var replyName = $"Re: {Model.Posts.First().Name}";
+                    }
+                    <a asp-action="NewReply" asp-route-id="@Model.TopicId" asp-route-name="@replyName">
+                        Reply
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
     <br />
 }
 
-<h2>
-    @{
-        var defaultReplyName = $"Re: {Model.Posts.First().Name}";
-    }
-    <a asp-action="NewReply" asp-route-id="@Model.TopicId" asp-route-name="@defaultReplyName">
-        New Reply
-    </a>
-</h2>
+<div class="row">
+    <div class="col">
+        @{
+            var defaultReplyName = $"Re: {Model.Posts.First().Name}";
+        }
+        <a class="btn btn-link"
+            asp-action="NewReply"
+            asp-route-id="@Model.TopicId"
+            asp-route-name="@defaultReplyName">
+            <h2>New Reply</h2>
+        </a>
+    </div>
+</div>
