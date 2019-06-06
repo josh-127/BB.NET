@@ -6,17 +6,45 @@
 }
 else
 {
-    <h1>@Model.UserName</h1>
-    <h3>@Model.GroupName</h3>
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="row no-gutters">
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h1 class="card-title">@Model.UserName</h1>
+                            <h3 class="card-text">@Model.GroupName</h3>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <img class="card-img" src="~" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col">
+            <div class="card-deck">
+                <div class="card">
+                    <div class="card-body">
+                        <p>Email Address: @Model.EmailAddress</p>
 
-    <p>Email Address: @Model.EmailAddress</p>
+                        <p>Joined: @Model.Created</p>
+                        <p>Last Active: @Model.LastActive</p>
 
-    <p>Joined: @Model.Created</p>
-    <p>Last Active: @Model.LastActive</p>
-
-    <p>Birthday: @(Model.Birthday.HasValue ? Model.Birthday.Value.Date.ToString() : "not specified")</p>
-    <p>Location: @(Model.Location ?? "not specified")</p>
-
-    <p>Signature:</p>
-    <p>@Model?.Signature</p>
+                        <p>Birthday: @(Model.Birthday.HasValue ? Model.Birthday.Value.Date.ToString() : "not specified")</p>
+                        <p>Location: @(Model.Location ?? "not specified")</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <p>Signature:</p>
+                        <p>@Model?.Signature</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 }
