@@ -14,6 +14,7 @@ Forum software written in C# with the ASP.NET Core framework.
 | JetBrains Rider           | Any     |          |
 | Microsoft Visual Studio   | Any     |          |
 | Microsoft VSCode          | Any     |          |
+| MySQL Workbench CE        | 8.0.15  |          |
 
 ## Building on Command Line (Windows, macOS, Ubuntu, Debian, Fedora, CentOS, openSUSE, SLES, RHEL)
 
